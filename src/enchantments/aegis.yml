@@ -1,0 +1,4 @@
+enabled: true
+
+display-name: '&7Aegis %level%'
+max-level: 100

@@ -2,6 +2,9 @@ package me.ayush_03.runesenchant;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
+import me.ayush_03.runesenchant.utils.RuneUtils;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class Rune {
 
@@ -38,6 +41,12 @@ public class Rune {
     @Setter
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public void createItem() {
+        ItemStack rune = RuneUtils.getInstance().buildItemStack(Settings.getInstance().getItemId());
+        ItemMeta meta = rune.getItemMeta();
+
     }
 
 }

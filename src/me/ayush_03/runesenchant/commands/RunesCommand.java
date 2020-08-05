@@ -64,8 +64,6 @@ public class RunesCommand implements CommandExecutor {
                         int success = re.getConfig().getInt("success-rate");
                         int destroy = re.getConfig().getInt("destroy-rate");
 
-                        Random rand = new Random();
-                        
 
                     } else {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command!");

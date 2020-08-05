@@ -2,3 +2,10 @@ rune-item: 'EMERALD:0'
 
 success-rate: 92
 destroy-rate: 12
+
+slots-enabled: true
+slots: 5
+slot-display: '&6Slots: %slots%'
+
+protection-enabled: true
+protection-display: '&a&lPROTECTED'
