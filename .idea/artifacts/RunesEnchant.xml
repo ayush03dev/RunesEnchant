@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RunesEnchant">
+    <output-path>D:/Spigot 1.12.2/plugins</output-path>
+    <root id="archive" name="RunesEnchant.jar">
+      <element id="module-output" name="RunesEnchant" />
+    </root>
+  </artifact>
+</component>
