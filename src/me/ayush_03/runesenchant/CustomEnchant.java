@@ -1,5 +1,7 @@
 package me.ayush_03.runesenchant;
 
+import org.bukkit.ChatColor;
+
 public enum CustomEnchant {
 
     AEGIS(EnchantType.AXE);
@@ -29,5 +31,12 @@ public enum CustomEnchant {
 
     public EnchantmentConfig getConfig() {
         return config;
+    }
+
+    public String getDisplayName(int level) {
+        String displayName = config.getDisplayName();
+        displayName = displayName.replace("%level%", level + "");
+        displayName = ChatColor.translateAlternateColorCodes('&', displayName);
+        return displayName;
     }
 }

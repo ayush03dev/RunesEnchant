@@ -1,6 +1,7 @@
 package me.ayush_03.runesenchant.commands;
 
 import me.ayush_03.runesenchant.CustomEnchant;
+import me.ayush_03.runesenchant.Rune;
 import me.ayush_03.runesenchant.RunesEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,8 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.Random;
+import org.bukkit.inventory.ItemStack;
 
 public class RunesCommand implements CommandExecutor {
 
@@ -63,6 +63,17 @@ public class RunesCommand implements CommandExecutor {
 
                         int success = re.getConfig().getInt("success-rate");
                         int destroy = re.getConfig().getInt("destroy-rate");
+
+                        Rune rune = new Rune(ce, level, success, destroy);
+                        ItemStack item = rune.getItem();
+
+                        if (target.getInventory().firstEmpty() == -1) {
+                            target.getWorld().dropItem(target.getLocation(), item);
+                            // TODO: Send message.
+                        } else {
+                            target.getInventory().addItem(item);
+                            // TODO: Send message.
+                        }
 
 
                     } else {
