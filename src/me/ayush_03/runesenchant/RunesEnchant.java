@@ -1,5 +1,6 @@
 package me.ayush_03.runesenchant;
 
+import me.ayush_03.runesenchant.listeners.RuneApplyListener;
 import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -24,6 +25,10 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new RuneApplyListener(), this);
+
+        Settings.getInstance().setup(this);
+        FileManager.getInstance().setup(this);
     }
 
     @Override
