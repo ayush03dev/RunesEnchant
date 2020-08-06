@@ -2,6 +2,7 @@ package me.ayush_03.runesenchant;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
+import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import me.ayush_03.runesenchant.utils.RuneUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -22,6 +23,17 @@ public class Rune {
         this.successRate = successRate;
         this.destroyRate = destroyRate;
         this.runeItem = createItem();
+    }
+
+    public Rune(ItemStack item) {
+        if (isRune(item)) {
+            String[] args = HiddenStringUtils.extractHiddenString(item.getItemMeta().getDisplayName()).split(":");
+            this.ce = CustomEnchant.fromString(args[0]);
+            this.level = Integer.parseInt(args[1]);
+            this.successRate = Integer.parseInt(args[2]);
+            this.destroyRate = Integer.parseInt(args[3]);
+            this.runeItem = createItem();
+        }
     }
 
     @Getter
@@ -73,6 +85,8 @@ public class Rune {
         displayName = replace(displayName, "%level%", level + "");
         displayName = toColor(displayName);
 
+        String hidden = ce.toString() + ":" + level + ":" + successRate + ":" + destroyRate;
+
         meta.setDisplayName(displayName);
 
         List<String> list = new ArrayList<>();
@@ -83,10 +97,20 @@ public class Rune {
             line = toColor(line);
             list.add(line);
         });
+        meta.setLore(list);
 
         rune.setItemMeta(meta);
         return rune;
 
+    }
+
+    public static boolean isRune(ItemStack item) {
+        if (item.hasItemMeta()) {
+            if (item.getItemMeta().hasDisplayName() && item.getItemMeta().hasLore()) {
+                if (HiddenStringUtils.hasHiddenString(item.getItemMeta().getDisplayName())) return true;
+            }
+        }
+        return false;
     }
 
     private String replace(String original, String what, String with) {
