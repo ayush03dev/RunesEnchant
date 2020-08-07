@@ -59,7 +59,7 @@ public class RunesCommand implements CommandExecutor {
                             return true;
                         }
 
-                        RunesEnchant re = RunesEnchant.getInstane();
+                        RunesEnchant re = RunesEnchant.getInstance();
 
                         int success = re.getConfig().getInt("success-rate");
                         int destroy = re.getConfig().getInt("destroy-rate");

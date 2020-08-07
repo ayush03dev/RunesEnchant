@@ -87,13 +87,15 @@ public class Rune {
 
         String hidden = ce.toString() + ":" + level + ":" + successRate + ":" + destroyRate;
 
-        meta.setDisplayName(displayName);
+        meta.setDisplayName(displayName + HiddenStringUtils.encodeString(hidden));
 
         List<String> list = new ArrayList<>();
 
-        meta.getLore().forEach(line -> {
+       cfg.getLore().forEach(line -> {
             line = replace(line, "%enchant%", ce.getDisplayName(level));
             line = replace(line, "%level%", level + "");
+            line = line.replace("%success%", successRate + "");
+            line = line.replace("%destroy%", destroyRate + "");
             line = toColor(line);
             list.add(line);
         });
