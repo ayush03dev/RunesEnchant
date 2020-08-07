@@ -18,6 +18,7 @@ public class RuneApplyListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         if (e.getWhoClicked() instanceof Player) {
             Player p = (Player) e.getWhoClicked();
+            if (!p.hasPermission("rune.apply")) return;
             if (e.getAction() == InventoryAction.SWAP_WITH_CURSOR) {
                 if (e.getCursor() == null || e.getCurrentItem() == null) return;
 
@@ -34,12 +35,12 @@ public class RuneApplyListener implements Listener {
 
                     p.sendMessage(HiddenStringUtils.extractHiddenString(cursor.getItemMeta().getDisplayName()));
 
-                    if ((rand.nextInt(100)+1) < rune.getSuccessRate()) {
+                    if ((rand.nextInt(100) + 1) < rune.getSuccessRate()) {
                         // Successful
 
                     } else {
                         // Unsuccessful
-                        if ((rand.nextInt(100)+1) < rune.getDestroyRate()) {
+                        if ((rand.nextInt(100) + 1) < rune.getDestroyRate()) {
                             // TODO: Check if item has a protection..
                         }
 
@@ -48,5 +49,4 @@ public class RuneApplyListener implements Listener {
             }
         }
     }
-
 }
