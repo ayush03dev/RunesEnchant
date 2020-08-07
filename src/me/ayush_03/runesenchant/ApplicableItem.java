@@ -14,7 +14,6 @@ public class ApplicableItem {
     private int slots;
     private int lineIndex;
     private boolean initialized;
-    private Action action;
 
     public ApplicableItem(ItemStack item) {
         this.item = item;
@@ -32,14 +31,12 @@ public class ApplicableItem {
                         HiddenStringUtils.extractHiddenString(str).contains("slots:")) {
                     this.lineIndex = i;
                     this.initialized = true;
-                    this.action = Action.MODIFY;
                     break;
                 }
             }
 
             if (!initialized) {
                 this.lineIndex = lore.size();
-                action = Action.ADD;
             }
         } else {
             this.initialized = false;
@@ -70,7 +67,7 @@ public class ApplicableItem {
         String line = Settings.getInstance().getSlotsDisplay().replace("%slots%", slots + "");
         line = ChatColor.translateAlternateColorCodes('&', line);
 
-        if (action == Action.ADD) {
+        if (!initialized) {
             lore.add(line);
         } else {
             lore.set(lineIndex, line);
@@ -106,7 +103,7 @@ public class ApplicableItem {
                 if (initialized) {
                     if (Settings.getInstance().slotsEnabled()) {
                         if (slots == 0) return false;
-                        setSlots(slots-1);
+                        setSlots(slots - 1);
 
                         String slotDisplay = Settings.getInstance().getSlotsDisplay();
                         slotDisplay = slotDisplay.replace("%slots%", slots + "" + HiddenStringUtils.encodeString("slots:" + slots));
@@ -118,7 +115,7 @@ public class ApplicableItem {
                 } else {
                     // TODO: Add..
                     if (Settings.getInstance().slotsEnabled()) {
-                        setSlots(slots-1);
+                        setSlots(slots - 1);
                         String slotDisplay = Settings.getInstance().getSlotsDisplay();
                         slotDisplay = slotDisplay.replace("%slots%", slots + "" + HiddenStringUtils.encodeString("slots:" + slots));
                         slotDisplay = ChatColor.translateAlternateColorCodes('&', slotDisplay);
@@ -147,11 +144,19 @@ public class ApplicableItem {
         }
         return true;
     }
-//
-//    public void setLevel(CustomEnchant ce, int level) {
-//
-//    }
-//
+
+    public void setLevel(CustomEnchant ce, int level) {
+        if (level <= ce.getMaxLevel()) {
+            if (hasEnchantment(ce)) {
+                ItemMeta meta = item.getItemMeta();
+                List<String> lore = meta.getLore();
+                lore.set(getEnchantmnentIndex(ce), ce.getDisplayName(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
+                meta.setLore(lore);
+                item.setItemMeta(meta);
+            }
+        }
+    }
+
     public int getLevel(CustomEnchant ce) {
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
             for (String str : item.getItemMeta().getLore()) {
@@ -165,11 +170,6 @@ public class ApplicableItem {
         }
         return 0;
     }
-//
-//    public boolean canUpgrade(CustomEnchant ce) {
-//    }
-//
-//    }
 
     private int getAvailableSlots() {
         if (!Settings.getInstance().slotsEnabled()) return 1;
@@ -189,8 +189,17 @@ public class ApplicableItem {
         return Settings.getInstance().getSlots();
     }
 
-}
-
-enum Action {
-    MODIFY, ADD;
+    private int getEnchantmnentIndex(CustomEnchant ce) {
+        int index = -1;
+        for (String str : item.getItemMeta().getLore()) {
+            index++;
+            if (HiddenStringUtils.hasHiddenString(str) && HiddenStringUtils.extractHiddenString(str).contains("ce-")) {
+                String hidden = HiddenStringUtils.extractHiddenString(str);
+                hidden = hidden.replace("ce-", "");
+                String[] args = hidden.split(":");
+                if (ce == CustomEnchant.fromString(args[0])) return index;
+            }
+        }
+        return -1;
+    }
 }

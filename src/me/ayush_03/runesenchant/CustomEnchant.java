@@ -19,7 +19,7 @@ public enum CustomEnchant {
     }
 
     public int getMaxLevel() {
-        return 1;
+        return config.getMaxLevel();
     }
 
     public static CustomEnchant fromString(String str) {

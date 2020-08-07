@@ -46,5 +46,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         ItemStack i = p.getInventory().getItemInMainHand();
         ApplicableItem ai = new ApplicableItem(i);
         ai.addEnchantment(CustomEnchant.AEGIS, 1);
+        ai.setLevel(CustomEnchant.AEGIS, 3);
+        p.sendMessage("a");
     }
 }
