@@ -10,9 +10,11 @@ import java.util.List;
 
 public class ApplicableItem {
 
-    ItemStack item;
-    int slots;
-    int lineInex;
+    private ItemStack item;
+    private int slots;
+    private int lineIndex;
+    private boolean initialized;
+    private Action action;
 
     public ApplicableItem(ItemStack item) {
         this.item = item;
@@ -22,24 +24,26 @@ public class ApplicableItem {
 
             List<String> lore = item.getItemMeta().getLore();
 
-            if (Settings.getInstance().slotsEnabled() && slots == Settings.getInstance().getSlots()) {
-                this.lineInex = lore.size();
-                return;
-            }
-
             for (int i = 0; i < lore.size(); i++) {
 
                 String str = lore.get(i);
 
-                if (HiddenStringUtils.hasHiddenString(str) &&
+                if (Settings.getInstance().slotsEnabled() && HiddenStringUtils.hasHiddenString(str) &&
                         HiddenStringUtils.extractHiddenString(str).contains("slots:")) {
-                    this.lineInex = i;
+                    this.lineIndex = i;
+                    this.initialized = true;
+                    this.action = Action.MODIFY;
                     break;
                 }
             }
+
+            if (!initialized) {
+                this.lineIndex = lore.size();
+                action = Action.ADD;
+            }
         } else {
+            this.initialized = false;
             this.slots = Settings.getInstance().slotsEnabled() ? Settings.getInstance().getSlots() : 1;
-            this.lineInex = 0;
         }
     }
 
@@ -53,86 +57,140 @@ public class ApplicableItem {
 
     public void setSlots(int slots) {
         this.slots = slots;
+
         ItemMeta meta = item.getItemMeta();
-        List<String> lore = meta.getLore();
-        List<String> newLore = new ArrayList<>();
+        List<String> lore;
 
-        String line;
-
-        for (int i = 0; i < lore.size(); i++) {
-            if (i == lineNumber) {
-                line = Settings.getInstance().getSlotsDisplay().replace("%slots%", slots + "");
-                line = ChatColor.translateAlternateColorCodes('&', line);
-            } else {
-                line = lore.get(i);
-            }
-
-            newLore.add(line);
-            meta.setLore(newLore);
-            item.setItemMeta(meta);
+        if (meta.hasLore()) {
+            lore = meta.getLore();
+        } else {
+            lore = new ArrayList<>();
         }
+
+        String line = Settings.getInstance().getSlotsDisplay().replace("%slots%", slots + "");
+        line = ChatColor.translateAlternateColorCodes('&', line);
+
+        if (action == Action.ADD) {
+            lore.add(line);
+        } else {
+            lore.set(lineIndex, line);
+        }
+
+        meta.setLore(lore);
+        item.setItemMeta(meta);
     }
 
     public boolean hasEnchantment(CustomEnchant ce) {
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
             for (String str : item.getItemMeta().getLore()) {
-
+                if (HiddenStringUtils.hasHiddenString(str) && HiddenStringUtils.extractHiddenString(str).contains("ce-")) {
+                    String hidden = HiddenStringUtils.extractHiddenString(str);
+                    hidden = hidden.replace("ce-", "");
+                    String[] args = hidden.split(":");
+                    return ce == CustomEnchant.fromString(args[0]);
+                }
             }
         }
+        return false;
     }
 
-    public void addEnchantment(CustomEnchant ce, int level) {
+    public boolean addEnchantment(CustomEnchant ce, int level) {
         if (!hasEnchantment(ce)) {
-            this.slots--;
-            if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
+
+            ItemMeta meta = item.getItemMeta();
+//            if (meta == null) return false;
+
+            if (meta.hasLore()) {
+                List<String> lore = meta.getLore();
+
+                if (initialized) {
+                    if (Settings.getInstance().slotsEnabled()) {
+                        if (slots == 0) return false;
+                        setSlots(slots-1);
+
+                        String slotDisplay = Settings.getInstance().getSlotsDisplay();
+                        slotDisplay = slotDisplay.replace("%slots%", slots + "" + HiddenStringUtils.encodeString("slots:" + slots));
+                        slotDisplay = ChatColor.translateAlternateColorCodes('&', slotDisplay);
+
+                        lore.set(lineIndex, slotDisplay);
+                    }
+
+                } else {
+                    // TODO: Add..
+                    if (Settings.getInstance().slotsEnabled()) {
+                        setSlots(slots-1);
+                        String slotDisplay = Settings.getInstance().getSlotsDisplay();
+                        slotDisplay = slotDisplay.replace("%slots%", slots + "" + HiddenStringUtils.encodeString("slots:" + slots));
+                        slotDisplay = ChatColor.translateAlternateColorCodes('&', slotDisplay);
+                        lore.add(slotDisplay);
+                    }
+                }
+                lore.add(ce.getDisplayName(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
+                meta.setLore(lore);
+                item.setItemMeta(meta);
+                return true;
 
             } else {
                 List<String> list = new ArrayList<>();
                 if (Settings.getInstance().slotsEnabled()) {
                     String slotDisplay = Settings.getInstance().getSlotsDisplay();
-                    slotDisplay = slotDisplay.replace("%slots%", slots + "");
+                    slotDisplay = slotDisplay.replace("%slots%", slots + "" + HiddenStringUtils.encodeString("slots:" + slots));
                     slotDisplay = ChatColor.translateAlternateColorCodes('&', slotDisplay);
 
                     list.add(slotDisplay);
+                    list.add(ce.getDisplayName(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
+                    meta.setLore(list);
+                }
+            }
+
+            item.setItemMeta(meta);
+        }
+        return true;
+    }
+//
+//    public void setLevel(CustomEnchant ce, int level) {
+//
+//    }
+//
+    public int getLevel(CustomEnchant ce) {
+        if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
+            for (String str : item.getItemMeta().getLore()) {
+                if (HiddenStringUtils.hasHiddenString(str) && HiddenStringUtils.extractHiddenString(str).contains("ce-")) {
+                    String hidden = HiddenStringUtils.extractHiddenString(str);
+                    hidden = hidden.replace("ce-", "");
+                    String[] args = hidden.split(":");
+                    if (ce == CustomEnchant.fromString(args[0])) return Integer.parseInt(args[1]);
                 }
             }
         }
+        return 0;
     }
-
-    public void setLevel(CustomEnchant ce, int level) {
-
-    }
-
-    public int getLevel(CustomEnchant ce) {
-
-    }
-
-    public boolean canUpgrade(CustomEnchant ce) {
-
-    }
+//
+//    public boolean canUpgrade(CustomEnchant ce) {
+//    }
+//
+//    }
 
     private int getAvailableSlots() {
         if (!Settings.getInstance().slotsEnabled()) return 1;
 
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
-            List<String> lore =  item.getItemMeta().getLore();
-            boolean contains = false;
 
-            for (String str : lore) {
+            for (String str : item.getItemMeta().getLore()) {
                 if (HiddenStringUtils.hasHiddenString(str) &&
                         HiddenStringUtils.extractHiddenString(str).contains("slots:")) {
                     String hidden = HiddenStringUtils.extractHiddenString(str);
                     hidden = hidden.replace("slots:", "");
-                    int slots = Integer.parseInt(hidden);
-                    return slots;
+                    return Integer.parseInt(hidden);
                 }
             }
 
-        } else {
-            return Settings.getInstance().getSlots();
         }
-
-        return 0;
+        return Settings.getInstance().getSlots();
     }
 
+}
+
+enum Action {
+    MODIFY, ADD;
 }

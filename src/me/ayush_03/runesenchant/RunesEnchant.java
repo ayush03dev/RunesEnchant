@@ -3,7 +3,11 @@ package me.ayush_03.runesenchant;
 import me.ayush_03.runesenchant.commands.RunesCommand;
 import me.ayush_03.runesenchant.listeners.RuneApplyListener;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -34,5 +38,13 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
 
+    }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent e) {
+        Player p = e.getPlayer();
+        ItemStack i = p.getInventory().getItemInMainHand();
+        ApplicableItem ai = new ApplicableItem(i);
+        ai.addEnchantment(CustomEnchant.AEGIS, 1);
     }
 }
