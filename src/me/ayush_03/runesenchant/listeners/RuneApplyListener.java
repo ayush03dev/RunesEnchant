@@ -1,5 +1,7 @@
 package me.ayush_03.runesenchant.listeners;
 
+import me.ayush_03.runesenchant.ApplicableItem;
+import me.ayush_03.runesenchant.CustomEnchant;
 import me.ayush_03.runesenchant.Rune;
 import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import org.bukkit.Material;
@@ -30,8 +32,28 @@ public class RuneApplyListener implements Listener {
                 if (Rune.isRune(cursor)) {
                     e.setCancelled(true);
                     Rune rune = new Rune(cursor);
+                    CustomEnchant ce = rune.getEnchantment();
+                    int level = rune.getLevel();
+
+                    // TODO: ADD Messaging system...
+
+                    if (current.getType().toString().contains(ce.getType().toString())) {
+                        ApplicableItem item = new ApplicableItem(current);
+
+                        if (!item.hasEnchantment(ce)) {
+                            boolean success = item.addEnchantment(ce, level);
+
+                            if (success) {
+                                item.addEnchantment(ce, level);
+                                p.setItemOnCursor(new ItemStack(Material.AIR));
+                            }
+                        } else {
+
+                        }
+                    }
+
                     Random rand = new Random();
-                    p.setItemOnCursor(new ItemStack(Material.AIR));
+
 
                     p.sendMessage(HiddenStringUtils.extractHiddenString(cursor.getItemMeta().getDisplayName()));
 
