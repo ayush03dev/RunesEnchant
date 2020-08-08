@@ -2,8 +2,9 @@ package me.ayush_03.runesenchant.listeners;
 
 import me.ayush_03.runesenchant.ApplicableItem;
 import me.ayush_03.runesenchant.CustomEnchant;
+import me.ayush_03.runesenchant.Response;
 import me.ayush_03.runesenchant.Rune;
-import me.ayush_03.runesenchant.utils.HiddenStringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,38 +38,43 @@ public class RuneApplyListener implements Listener {
 
                     // TODO: ADD Messaging system...
 
-                    if (current.getType().toString().contains(ce.getType().toString())) {
+                    if (current.getType().toString().contains("_" + ce.getType().toString())) {
                         ApplicableItem item = new ApplicableItem(current);
 
                         if (!item.hasEnchantment(ce)) {
-                            boolean success = item.addEnchantment(ce, level);
+                            Response response = item.addEnchantment(ce, level);
 
-                            if (success) {
+                            if (response == Response.SUCCESS) {
                                 item.addEnchantment(ce, level);
                                 p.setItemOnCursor(new ItemStack(Material.AIR));
+                            } else {
+                                p.sendMessage(ChatColor.RED + "You do not have any slot left :(");
+                                return;
                             }
+
                         } else {
+                            if (item.getLevel(ce) == level) {
+                                if (level == ce.getMaxLevel()) {
+                                    p.sendMessage(ChatColor.RED + "You are already on a max level!");
+                                    return;
+                                }
 
+                                item.setLevel(ce, level+1);
+                                p.setItemOnCursor(new ItemStack(Material.AIR));
+                            } else {
+                                p.sendMessage(ChatColor.RED + "You already have an enchantment!");
+                                return;
+                            }
                         }
-                    }
-
-                    Random rand = new Random();
-
-
-                    p.sendMessage(HiddenStringUtils.extractHiddenString(cursor.getItemMeta().getDisplayName()));
-
-                    if ((rand.nextInt(100) + 1) < rune.getSuccessRate()) {
-                        // Successful
-
-                    } else {
-                        // Unsuccessful
-                        if ((rand.nextInt(100) + 1) < rune.getDestroyRate()) {
-                            // TODO: Check if item has a protection..
-                        }
-
                     }
                 }
             }
         }
+    }
+
+    private boolean chance(int successRate) {
+        int chance = new Random().nextInt(100)+1;
+        if (successRate <= chance) return true;
+        return false;
     }
 }

@@ -9,3 +9,5 @@ slot-display: '&6Slots: %slots%'
 
 protection-enabled: true
 protection-display: '&a&lPROTECTED'
+
+rune-stacking: true

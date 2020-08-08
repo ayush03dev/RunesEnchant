@@ -91,7 +91,7 @@ public class ApplicableItem {
         return false;
     }
 
-    public boolean addEnchantment(CustomEnchant ce, int level) {
+    public Response addEnchantment(CustomEnchant ce, int level) {
         if (!hasEnchantment(ce)) {
 
             ItemMeta meta = item.getItemMeta();
@@ -102,7 +102,7 @@ public class ApplicableItem {
 
                 if (initialized) {
                     if (Settings.getInstance().slotsEnabled()) {
-                        if (slots == 0) return false;
+                        if (slots == 0) return Response.NO_SLOT;
                         setSlots(slots - 1);
 
                         String slotDisplay = Settings.getInstance().getSlotsDisplay();
@@ -125,7 +125,7 @@ public class ApplicableItem {
                 lore.add(ce.getDisplayName(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
                 meta.setLore(lore);
                 item.setItemMeta(meta);
-                return true;
+                return Response.SUCCESS;
 
             } else {
                 List<String> list = new ArrayList<>();
@@ -142,7 +142,7 @@ public class ApplicableItem {
 
             item.setItemMeta(meta);
         }
-        return true;
+        return Response.SUCCESS;
     }
 
     public void setLevel(CustomEnchant ce, int level) {
