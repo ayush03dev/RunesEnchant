@@ -10,7 +10,8 @@ public enum CustomEnchant {
     private EnchantmentConfig config;
 
     CustomEnchant(EnchantType type) {
-        this.type = type;
+        EnchantType t = EnchantType.fromString(getConfig().getConfig().getString("enchant-type"));
+        this.type = t == null ? type : t;
         this.config = new EnchantmentConfig(this);
     }
 

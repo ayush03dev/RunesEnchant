@@ -25,4 +25,5 @@ public class EnchantmentConfig {
     public String getDisplayName() {
         return getConfig().getString("display-name");
     }
+
 }

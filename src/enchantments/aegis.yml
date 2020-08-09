@@ -2,3 +2,10 @@ enabled: true
 
 display-name: '&7Aegis %level%'
 max-level: 100
+
+enchant-type: 'AXE'
+
+chance:
+  expression: '(%level% + 1) * 2'
+  override:
+    level_1: 15
