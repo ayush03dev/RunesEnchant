@@ -38,7 +38,7 @@ public class RuneApplyListener implements Listener {
 
                     // TODO: ADD Messaging system...
 
-                    if (current.getType().toString().contains("_" + ce.getType().toString())) {
+                    if (ce.getType().isApplicableItem(current)) {
                         ApplicableItem item = new ApplicableItem(current);
 
                         if (!item.hasEnchantment(ce)) {
