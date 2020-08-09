@@ -6,7 +6,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ApplicableItem {
 
@@ -89,6 +91,22 @@ public class ApplicableItem {
             }
         }
         return false;
+    }
+
+    public Map<CustomEnchant, Integer> getAllCustomEnchantments() {
+        Map<CustomEnchant, Integer> map = new HashMap<>();
+
+        if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
+            for (String str : item.getItemMeta().getLore()) {
+                if (HiddenStringUtils.hasHiddenString(str) && HiddenStringUtils.extractHiddenString(str).contains("ce-")) {
+                    String hidden = HiddenStringUtils.extractHiddenString(str);
+                    hidden = hidden.replace("ce-", "");
+                    String[] args = hidden.split(":");
+                    map.put(CustomEnchant.fromString(args[0]), Integer.parseInt(args[1]));
+                }
+            }
+        }
+        return map;
     }
 
     public Response addEnchantment(CustomEnchant ce, int level) {
