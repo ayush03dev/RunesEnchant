@@ -58,4 +58,9 @@ public class EnchantmentEffect {
     public int generateRandom() {
         return new Random().nextInt(100)+1;
     }
+
+    public boolean proc(CustomEnchant ce, int level) {
+        if (generateRandom() <= getChance(ce, level)) return true;
+        return false;
+    }
 }

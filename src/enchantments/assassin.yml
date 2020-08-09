@@ -12,3 +12,6 @@ chance:
 
 potion-level:
   expression: '%level%'
+
+potion-duration:
+  expression: '(%level% + 1) * 5'
