@@ -55,7 +55,7 @@ public class EnchantmentEffect {
         }
     }
 
-    public int generateRadnom() {
+    public int generateRandom() {
         return new Random().nextInt(100)+1;
     }
 }
