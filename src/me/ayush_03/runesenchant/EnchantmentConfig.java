@@ -10,20 +10,20 @@ public class EnchantmentConfig {
         this.fc = FileManager.getInstance().getEnchantmentConfig(ce);
     }
 
-    public FileConfiguration getConfig() {
+    public FileConfiguration getConfigFile() {
         return fc;
     }
 
     public boolean isEnabled() {
-        return getConfig().getBoolean("enabled");
+        return getConfigFile().getBoolean("enabled");
     }
 
     public int getMaxLevel() {
-        return getConfig().getInt("max-level");
+        return getConfigFile().getInt("max-level");
     }
 
     public String getDisplayName() {
-        return getConfig().getString("display-name");
+        return getConfigFile().getString("display-name");
     }
 
 }

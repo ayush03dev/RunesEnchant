@@ -19,7 +19,7 @@ public enum CustomEnchant {
     private EnchantmentConfig config;
 
     CustomEnchant(EnchantType type) {
-        EnchantType t = EnchantType.fromString(getConfig().getConfig().getString("enchant-type"));
+        EnchantType t = EnchantType.fromString(getConfig().getConfigFile().getString("enchant-type"));
         this.type = t == null ? type : t;
         this.config = new EnchantmentConfig(this);
     }

@@ -113,7 +113,6 @@ public class ApplicableItem {
         if (!hasEnchantment(ce)) {
 
             ItemMeta meta = item.getItemMeta();
-//            if (meta == null) return false;
 
             if (meta.hasLore()) {
                 List<String> lore = meta.getLore();
