@@ -38,7 +38,6 @@ public enum CustomEnchant {
     }
 
     public static CustomEnchant fromString(String str) {
-        Bukkit.getPlayer("Ayush_03").sendMessage("Initialized");
         for (CustomEnchant ce : values()) {
             if (ce.toString().equalsIgnoreCase(str)) return ce;
         }
