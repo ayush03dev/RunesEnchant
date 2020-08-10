@@ -4,7 +4,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class EnchantmentConfig {
 
-    private FileConfiguration fc;
+    private final FileConfiguration fc;
 
     public EnchantmentConfig(CustomEnchant ce) {
         this.fc = FileManager.getInstance().getEnchantmentConfig(ce);

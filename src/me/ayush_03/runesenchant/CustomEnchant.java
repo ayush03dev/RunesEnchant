@@ -1,5 +1,6 @@
 package me.ayush_03.runesenchant;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public enum CustomEnchant {
@@ -19,9 +20,13 @@ public enum CustomEnchant {
     private EnchantmentConfig config;
 
     CustomEnchant(EnchantType type) {
-        EnchantType t = EnchantType.fromString(getConfig().getConfigFile().getString("enchant-type"));
-        this.type = t == null ? type : t;
         this.config = new EnchantmentConfig(this);
+        if (config.getConfigFile() != null) {
+            EnchantType t = EnchantType.fromString(config.getConfigFile().getString("enchant-type"));
+            this.type = t == null ? type : t;
+        } else {
+            this.type = type;
+        }
     }
 
     public EnchantType getType() {
@@ -33,6 +38,7 @@ public enum CustomEnchant {
     }
 
     public static CustomEnchant fromString(String str) {
+        Bukkit.getPlayer("Ayush_03").sendMessage("Initialized");
         for (CustomEnchant ce : values()) {
             if (ce.toString().equalsIgnoreCase(str)) return ce;
         }

@@ -93,6 +93,12 @@ public class ApplicableItem {
         return false;
     }
 
+    /**
+     *
+     * @return
+     * Returns a map of all enabled custom enchants
+     */
+
     public Map<CustomEnchant, Integer> getAllCustomEnchantments() {
         Map<CustomEnchant, Integer> map = new HashMap<>();
 
@@ -102,7 +108,16 @@ public class ApplicableItem {
                     String hidden = HiddenStringUtils.extractHiddenString(str);
                     hidden = hidden.replace("ce-", "");
                     String[] args = hidden.split(":");
-                    map.put(CustomEnchant.fromString(args[0]), Integer.parseInt(args[1]));
+                    CustomEnchant ce = CustomEnchant.fromString(args[0]);
+
+                    if (ce.getConfig().isEnabled()) {
+                        int level = Integer.parseInt(args[1]);
+                        if (level > ce.getMaxLevel()) {
+                            map.put(ce, ce.getMaxLevel());
+                        } else {
+                            map.put(ce, Integer.parseInt(args[1]));
+                        }
+                    }
                 }
             }
         }

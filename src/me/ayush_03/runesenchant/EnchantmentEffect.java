@@ -34,6 +34,7 @@ public class EnchantmentEffect {
 
     public int getValue(CustomEnchant ce, int level, String path) {
         FileConfiguration config = ce.getConfig().getConfigFile();
+        if (config == null) return 0;
         ConfigurationSection section = config.getConfigurationSection(path);
         if (section == null) return 0;
 

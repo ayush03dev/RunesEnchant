@@ -33,8 +33,6 @@ public class PVPEffects extends EnchantmentEffect implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, potionDuration, potionLevel-1));
                 }
             }
-
-
         }
     }
 }
