@@ -1,25 +1,33 @@
 package me.ayush_03.runesenchant;
 
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
 
 public class RuneConfig {
 
-    private FileConfiguration fc;
-    private CustomEnchant ce;
+    private final FileConfiguration fc;
+    private final ConfigurationSection section;
 
     public RuneConfig(CustomEnchant ce) {
         this.fc = FileManager.getInstance().getRuneConfig();
-        this.ce = ce;
+        this.section = fc.getConfigurationSection(ce.toString().toLowerCase());
     }
 
     public List<String> getLore() {
-        return fc.getStringList(ce.toString().toLowerCase() + ".lore");
+        if (section == null) {
+            return fc.getStringList("default.lore");
+        }
+        return fc.getStringList(section.getName() + ".lore");
     }
 
     public String getDisplayName() {
-        return fc.getString(ce.toString().toLowerCase() + ".display-name");
+        if (section == null) {
+            return fc.getString("default.display-name");
+        }
+        return fc.getString(section.getName() + ".display-name");
     }
 
 }

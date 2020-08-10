@@ -17,7 +17,7 @@ public class RunesCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("runes")) {
             if (args.length == 0) {
-                // TODO: Send all availalbe commands...
+                // TODO: Send all available commands...
                 return true;
             }
 

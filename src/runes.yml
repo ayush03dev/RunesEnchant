@@ -1,3 +1,10 @@
+default:
+  display-name: '&a&lRune of %enchantment% %level%'
+  lore:
+    - 'Line %success% %destroy%'
+    - '%level%'
+    - '%type%'
+
 aegis:
     display-name: '&a&lRune of Aegis %level%'
     lore:

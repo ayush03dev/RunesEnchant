@@ -4,6 +4,8 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import me.ayush_03.runesenchant.utils.RuneUtils;
+import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -81,7 +83,7 @@ public class Rune {
         RuneConfig cfg = new RuneConfig(ce);
 
         String displayName = cfg.getDisplayName();
-        displayName = replace(displayName, "%enchant%", ce.getDisplayName(level));
+        displayName = replace(displayName, "%enchant%", ChatColor.stripColor(ce.getDisplayName(level)));
         displayName = replace(displayName, "%level%", level + "");
         displayName = toColor(displayName);
 
@@ -92,10 +94,11 @@ public class Rune {
         List<String> list = new ArrayList<>();
 
        cfg.getLore().forEach(line -> {
-            line = replace(line, "%enchant%", ce.getDisplayName(level));
+            line = replace(line, "%enchant%", ChatColor.stripColor(ce.getDisplayName(level)));
             line = replace(line, "%level%", level + "");
             line = line.replace("%success%", successRate + "");
             line = line.replace("%destroy%", destroyRate + "");
+            line = line.replace("%type%", WordUtils.capitalize(ce.getType().toString().toLowerCase().replace("_", " ")));
             line = toColor(line);
             list.add(line);
         });
