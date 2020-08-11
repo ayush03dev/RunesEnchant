@@ -25,21 +25,24 @@ public class ApplicableItem {
 
             List<String> lore = item.getItemMeta().getLore();
 
-            for (int i = 0; i < lore.size(); i++) {
+            if (Settings.getInstance().slotsEnabled()) {
 
-                String str = lore.get(i);
+                for (int i = 0; i < lore.size(); i++) {
 
-                if (Settings.getInstance().slotsEnabled() && HiddenStringUtils.hasHiddenString(str) &&
-                        HiddenStringUtils.extractHiddenString(str).contains("slots:")) {
-                    this.lineIndex = i;
-                    this.initialized = true;
-                    break;
+                    String str = lore.get(i);
+
+                    if (HiddenStringUtils.hasHiddenString(str) &&
+                            HiddenStringUtils.extractHiddenString(str).contains("slots:")) {
+                        this.lineIndex = i;
+                        this.initialized = true;
+                        break;
+                    }
+                }
+                if (!initialized) {
+                    this.lineIndex = lore.size();
                 }
             }
 
-            if (!initialized) {
-                this.lineIndex = lore.size();
-            }
         } else {
             this.initialized = false;
             this.slots = Settings.getInstance().slotsEnabled() ? Settings.getInstance().getSlots() : 1;
@@ -68,6 +71,7 @@ public class ApplicableItem {
 
         String line = Settings.getInstance().getSlotsDisplay().replace("%slots%", slots + "");
         line = ChatColor.translateAlternateColorCodes('&', line);
+        line = line + HiddenStringUtils.encodeString("slots:" + slots);
 
         if (!initialized) {
             lore.add(line);
@@ -122,7 +126,7 @@ public class ApplicableItem {
         return map;
     }
 
-    public Response addEnchantment(CustomEnchant ce, int level) {
+    public Response verifyAddEnchantment(CustomEnchant ce, int level) {
         if (!hasEnchantment(ce)) {
 
             ItemMeta meta = item.getItemMeta();
@@ -132,47 +136,27 @@ public class ApplicableItem {
 
                 if (initialized) {
                     if (Settings.getInstance().slotsEnabled()) {
-                        if (slots == 0) return Response.NO_SLOT;
-                        setSlots(slots - 1);
-
-                        String slotDisplay = Settings.getInstance().getSlotsDisplay();
-                        slotDisplay = slotDisplay.replace("%slots%", slots + "" + HiddenStringUtils.encodeString("slots:" + slots));
-                        slotDisplay = ChatColor.translateAlternateColorCodes('&', slotDisplay);
-
-                        lore.set(lineIndex, slotDisplay);
+                        if (slots == 0) return Response.ERROR_NO_SLOT;
                     }
-
-                } else {
-                    // TODO: Add..
-                    if (Settings.getInstance().slotsEnabled()) {
-                        setSlots(slots - 1);
-                        String slotDisplay = Settings.getInstance().getSlotsDisplay();
-                        slotDisplay = slotDisplay.replace("%slots%", slots + "" + HiddenStringUtils.encodeString("slots:" + slots));
-                        slotDisplay = ChatColor.translateAlternateColorCodes('&', slotDisplay);
-                        lore.add(slotDisplay);
-                    }
-                }
-                lore.add(ce.getDisplayName(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
-                meta.setLore(lore);
-                item.setItemMeta(meta);
-                return Response.SUCCESS;
-
-            } else {
-                List<String> list = new ArrayList<>();
-                if (Settings.getInstance().slotsEnabled()) {
-                    String slotDisplay = Settings.getInstance().getSlotsDisplay();
-                    slotDisplay = slotDisplay.replace("%slots%", slots + "" + HiddenStringUtils.encodeString("slots:" + slots));
-                    slotDisplay = ChatColor.translateAlternateColorCodes('&', slotDisplay);
-
-                    list.add(slotDisplay);
-                    list.add(ce.getDisplayName(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
-                    meta.setLore(list);
                 }
             }
-
-            item.setItemMeta(meta);
+        } else {
+            return Response.ERROR_EXSTS;
         }
-        return Response.SUCCESS;
+        return Response.AVAILABLE;
+    }
+
+    public void addEnchantment(CustomEnchant ce, int level) {
+            List<String> lore;
+            ItemMeta meta = item.getItemMeta();
+            if (meta.hasLore()) {
+                lore = meta.getLore();
+            } else {
+                lore = new ArrayList<>();
+            }
+            lore.add(ce.getDisplayName(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
+            meta.setLore(lore);
+            item.setItemMeta(meta);
     }
 
     public void setLevel(CustomEnchant ce, int level) {
@@ -231,5 +215,28 @@ public class ApplicableItem {
             }
         }
         return -1;
+    }
+
+    public boolean hasProtectionCharm() {
+        if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
+            for (String str : item.getItemMeta().getLore()) {
+                if (HiddenStringUtils.hasHiddenString(str) && HiddenStringUtils.extractHiddenString(str).contains("pc-PROTECTION"))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public int getProtectionCharmLeft() {
+        if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
+            for (String str : item.getItemMeta().getLore()) {
+                if (HiddenStringUtils.hasHiddenString(str) && HiddenStringUtils.extractHiddenString(str).contains("pc-PROTECTION")) {
+                    String hiddden = HiddenStringUtils.extractHiddenString(str);
+                    String[] args = hiddden.split(":");
+                    return Integer.parseInt(args[2]);
+                }
+            }
+        }
+        return 0;
     }
 }

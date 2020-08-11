@@ -1,6 +1,7 @@
 package me.ayush_03.runesenchant;
 
 import me.ayush_03.runesenchant.utils.HiddenStringUtils;
+import me.ayush_03.runesenchant.utils.RuneUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -10,14 +11,15 @@ import java.util.List;
 
 public class ProtectionCharm {
 
-    int level, left, index;
-    ItemStack item;
-    ProtectionCharmConfig config;
+    private int level, left, index;
+    private final ItemStack item;
+    private ProtectionCharmConfig config;
 
     public ProtectionCharm(int level) {
         this.level = level;
         this.config = new ProtectionCharmConfig(level);
         this.left = config.getStartingDurability(level);
+        this.item = createItem();
     }
 
     public ProtectionCharm(ItemStack item) {
@@ -32,8 +34,8 @@ public class ProtectionCharm {
                     hidden = hidden.replace("pc-", "");
                     String[] args = hidden.split(":");
 
-                    this.level = Integer.parseInt(args[0]);
-                    this.left = Integer.parseInt(args[1]);
+                    this.level = Integer.parseInt(args[1]);
+                    this.left = Integer.parseInt(args[2]);
                     this.index = counter;
                     this.config = new ProtectionCharmConfig(level, left);
                     break;
@@ -62,6 +64,10 @@ public class ProtectionCharm {
         item.setItemMeta(meta);
     }
 
+    public void addToLore(List<String> lore) {
+        lore.add(config.getLoreDisplay() + HiddenStringUtils.encodeString("pc-PROTECTION:" + level + ":" + left));
+    }
+
     public void setLevel(int level) {
         this.level = level;
         ItemMeta meta = item.getItemMeta();
@@ -75,7 +81,29 @@ public class ProtectionCharm {
         return left;
     }
 
-    public void createItem() {
+    public ItemStack createItem() {
+        ItemStack item = RuneUtils.getInstance().buildItemStack(config.getItemId());
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(config.getItemDisplayName() + HiddenStringUtils.encodeString("pc-PROTECTION:" + level + ":" + left));
+        meta.setLore(config.getItemLore());
+        item.setItemMeta(meta);
+        return item;
+    }
 
+    public static boolean isProtectionCharmItem(ItemStack item) {
+        if (item.hasItemMeta() && item.getItemMeta().hasLore() && item.getItemMeta().hasDisplayName()) {
+            String displayName = item.getItemMeta().getDisplayName();
+            if (HiddenStringUtils.hasHiddenString(displayName)) {
+                if (HiddenStringUtils.extractHiddenString(displayName).contains("pc-PROTECTION")) return true;
+            }
+        }
+        return false;
+    }
+
+    public static String[] getProtectionCharmData(ItemStack protectionCharmItem) {
+        if (isProtectionCharmItem(protectionCharmItem)) {
+            return HiddenStringUtils.extractHiddenString(protectionCharmItem.getItemMeta().getDisplayName()).split(":");
+        }
+        return null;
     }
 }

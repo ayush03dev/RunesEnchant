@@ -29,7 +29,7 @@ public class Rune {
     public Rune(ItemStack item) {
         if (isRune(item)) {
             String[] args = HiddenStringUtils.extractHiddenString(item.getItemMeta().getDisplayName()).split(":");
-            this.ce = CustomEnchant.fromString(args[0]);
+            this.ce = CustomEnchant.fromString(args[0].replace("ce-", ""));
             this.level = Integer.parseInt(args[1]);
             this.successRate = Integer.parseInt(args[2]);
             this.destroyRate = Integer.parseInt(args[3]);
@@ -86,7 +86,7 @@ public class Rune {
         displayName = replace(displayName, "%level%", level + "");
         displayName = toColor(displayName);
 
-        String hidden = ce.toString() + ":" + level + ":" + successRate + ":" + destroyRate;
+        String hidden = "ce-" + ce.toString() + ":" + level + ":" + successRate + ":" + destroyRate;
 
         meta.setDisplayName(displayName + HiddenStringUtils.encodeString(hidden));
 
@@ -111,7 +111,8 @@ public class Rune {
     public static boolean isRune(ItemStack item) {
         if (item.hasItemMeta()) {
             if (item.getItemMeta().hasDisplayName() && item.getItemMeta().hasLore()) {
-                if (HiddenStringUtils.hasHiddenString(item.getItemMeta().getDisplayName())) return true;
+                if (HiddenStringUtils.hasHiddenString(item.getItemMeta().getDisplayName())
+                && HiddenStringUtils.extractHiddenString(item.getItemMeta().getDisplayName()).contains("ce-")) return true;
             }
         }
         return false;

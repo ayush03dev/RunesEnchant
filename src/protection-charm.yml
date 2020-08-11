@@ -2,6 +2,7 @@ enabled: true
 max-level: 3
 
 item:
+  item-id: 'PAPER:0'
   display-name: '&d&lPROTECTION CHARM &7&l%level%'
   lore:
     - 'Adds a protection'

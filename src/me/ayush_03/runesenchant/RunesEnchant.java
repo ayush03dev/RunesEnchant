@@ -4,6 +4,7 @@ import me.ayush_03.runesenchant.commands.RunesCommand;
 import me.ayush_03.runesenchant.effects.PVPEffects;
 import me.ayush_03.runesenchant.listeners.RuneApplyListener;
 
+import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,6 +35,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 
         saveResource("enchantments" + File.separator + "aegis.yml", false);
         saveResource("runes.yml", false);
+        saveResource("protection-charm.yml", false);
         saveDefaultConfig();
     }
 
@@ -45,10 +47,13 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
-        ItemStack i = p.getInventory().getItemInMainHand();
-        ApplicableItem ai = new ApplicableItem(i);
-        ai.addEnchantment(CustomEnchant.AEGIS, 1);
-        ai.setLevel(CustomEnchant.AEGIS, 3);
-        p.sendMessage("a");
+        ProtectionCharm pc = new ProtectionCharm(1);
+        p.getInventory().addItem(pc.createItem());
+
+//        ItemStack i = p.getInventory().getItemInMainHand();
+//        ApplicableItem ai = new ApplicableItem(i);
+//        ai.addEnchantment(CustomEnchant.AEGIS, 1);
+//        ai.setLevel(CustomEnchant.AEGIS, 3);
+//        p.sendMessage("a");
     }
 }
