@@ -3,7 +3,6 @@ package me.ayush_03.runesenchant.effects;
 import me.ayush_03.runesenchant.ApplicableItem;
 import me.ayush_03.runesenchant.CustomEnchant;
 import me.ayush_03.runesenchant.EnchantmentEffect;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

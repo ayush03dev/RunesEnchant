@@ -40,4 +40,14 @@ public class FileManager {
         return YamlConfiguration.loadConfiguration(f);
     }
 
+    public FileConfiguration getProtectionCharmConfig() {
+        File dir = p.getDataFolder();
+
+        if (!dir.exists()) dir.mkdir();
+        File f = new File(dir + File.separator + "protection-charm.yml");
+
+        if (!f.exists()) return null;
+        return YamlConfiguration.loadConfiguration(f);
+    }
+
 }

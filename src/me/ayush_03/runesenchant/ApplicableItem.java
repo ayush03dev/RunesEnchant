@@ -94,9 +94,7 @@ public class ApplicableItem {
     }
 
     /**
-     *
-     * @return
-     * Returns a map of all enabled custom enchants
+     * @return Returns a map of all enabled custom enchants
      */
 
     public Map<CustomEnchant, Integer> getAllCustomEnchantments() {

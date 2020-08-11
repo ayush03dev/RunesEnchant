@@ -1,0 +1,13 @@
+enabled: true
+max-level: 3
+
+item:
+  display-name: '&d&lPROTECTION CHARM &7&l%level%'
+  lore:
+    - 'Adds a protection'
+    - '%left%'
+
+in-lore-display: '&d&lPROTECTION CHARM &7&l%level%'
+
+durability:
+  expression: '%level% * 3'

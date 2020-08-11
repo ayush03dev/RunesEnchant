@@ -11,3 +11,6 @@ protection-enabled: true
 protection-display: '&a&lPROTECTED'
 
 rune-stacking: true
+
+rune-drag-drop: true
+enchanter: true
