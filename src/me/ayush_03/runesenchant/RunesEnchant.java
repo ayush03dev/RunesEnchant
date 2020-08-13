@@ -2,6 +2,7 @@ package me.ayush_03.runesenchant;
 
 import me.ayush_03.runesenchant.commands.RunesCommand;
 import me.ayush_03.runesenchant.effects.PVPEffects;
+import me.ayush_03.runesenchant.gui.EnchanterGUI;
 import me.ayush_03.runesenchant.listeners.EnchanterGUIListener;
 import me.ayush_03.runesenchant.listeners.RuneApplyListener;
 
@@ -36,6 +37,11 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         saveResource("enchantments" + File.separator + "aegis.yml", false);
         saveResource("runes.yml", false);
         saveResource("protection-charm.yml", false);
+        saveResource("resurrection-stone.yml", false);
+        saveResource("enchanter.yml", false);
+        saveResource("luck-stone.yml", false);
+
+
         saveDefaultConfig();
     }
 
@@ -47,8 +53,16 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
-        ProtectionCharm pc = new ProtectionCharm(1);
-        p.getInventory().addItem(pc.createItem());
+
+        if (e.getMessage().equalsIgnoreCase("pc")) {
+            ProtectionCharm pc = new ProtectionCharm(1);
+            p.getInventory().addItem(pc.createItem());
+            return;
+        }
+
+        if (e.getMessage().equalsIgnoreCase("enchanter")) {
+            p.openInventory(new EnchanterGUI().createEnchanterGUI(p));
+        }
 
 //        ItemStack i = p.getInventory().getItemInMainHand();
 //        ApplicableItem ai = new ApplicableItem(i);

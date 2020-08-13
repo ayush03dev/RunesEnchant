@@ -30,7 +30,7 @@ public class EnchanterGUI {
         ItemStack demoRune = RuneUtils.getInstance().buildItemStack(Settings.getInstance().getItemId());
         ItemMeta runeMeta = demoRune.getItemMeta();
         runeMeta.setDisplayName("Place Rune here" + HiddenStringUtils.encodeString("demo-item"));
-        demoItem.setItemMeta(runeMeta);
+        demoRune.setItemMeta(runeMeta);
 
         inv.setItem(19, demoItem);
         inv.setItem(21, demoRune);
