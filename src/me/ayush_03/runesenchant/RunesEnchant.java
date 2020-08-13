@@ -2,14 +2,13 @@ package me.ayush_03.runesenchant;
 
 import me.ayush_03.runesenchant.commands.RunesCommand;
 import me.ayush_03.runesenchant.effects.PVPEffects;
+import me.ayush_03.runesenchant.listeners.EnchanterGUIListener;
 import me.ayush_03.runesenchant.listeners.RuneApplyListener;
 
-import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -28,6 +27,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new RuneApplyListener(), this);
         getServer().getPluginManager().registerEvents(new PVPEffects(), this);
+        getServer().getPluginManager().registerEvents(new EnchanterGUIListener(), this);
         getCommand("runes").setExecutor(new RunesCommand());
 
         Settings.getInstance().setup(this);

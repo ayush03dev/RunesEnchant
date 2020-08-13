@@ -50,4 +50,35 @@ public class FileManager {
         return YamlConfiguration.loadConfiguration(f);
     }
 
+    public FileConfiguration getResurrectionStoneConfig() {
+        File dir = p.getDataFolder();
+
+        if (!dir.exists()) dir.mkdir();
+        File f = new File(dir + File.separator + "resurrection-stone.yml");
+
+        if (!f.exists()) return null;
+        return YamlConfiguration.loadConfiguration(f);
+    }
+
+    public FileConfiguration getLuckStoneConfig() {
+        File dir = p.getDataFolder();
+
+        if (!dir.exists()) dir.mkdir();
+        File f = new File(dir + File.separator + "enchanter.yml");
+
+        if (!f.exists()) return null;
+        return YamlConfiguration.loadConfiguration(f);
+    }
+
+    public FileConfiguration getEnchanterConfig() {
+        File dir = p.getDataFolder();
+
+        if (!dir.exists()) dir.mkdir();
+        File f = new File(dir + File.separator + "enchanter.yml");
+
+        if (!f.exists()) return null;
+        return YamlConfiguration.loadConfiguration(f);
+    }
+
+
 }

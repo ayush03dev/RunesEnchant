@@ -74,34 +74,6 @@ public class RuneApplyListener implements Listener {
                                         p.sendMessage(ChatColor.RED + "UNSUCCESSFUL MATE :(");
                                     }
                                 }
-
-//                                if (item.hasProtectionCharm()) {
-//                                    if (Settings.getInstance().slotsEnabled()) {
-//                                        item.setSlots(item.getSlots() - 1);
-//                                    }
-//                                    ProtectionCharm pc = new ProtectionCharm(current);
-//                                    pc.setLeft(pc.getLeft() - 1);
-//
-//                                } else {
-//                                    if (!chance(rune.getSuccessRate())) {
-//                                        if (chance(rune.getDestroyRate())) {
-//                                            // Destroy...
-//                                            p.sendMessage(ChatColor.RED + "DESTORYED :(");
-//                                            e.setCurrentItem(new ItemStack(Material.AIR));
-//                                            p.setItemOnCursor(new ItemStack(Material.AIR));
-//                                            current.setType(Material.AIR);
-//                                            return;
-//                                        }
-//                                        p.setItemOnCursor(new ItemStack(Material.AIR));
-//                                        p.sendMessage(ChatColor.RED + "UNSUCCESSFUL MATE :(");
-//                                        // Remove rune, send message.
-//                                        return;
-//                                    }
-//                                }
-//                                p.setItemOnCursor(new ItemStack(Material.AIR));
-//                                item.addEnchantment(ce, level);
-//                                p.sendMessage(ChatColor.GREEN + "SUCCESSFUL! :D");
-
                             } else {
                                 p.sendMessage(ChatColor.RED + "You do not have any slot left :(");
                                 return;
