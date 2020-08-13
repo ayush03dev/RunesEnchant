@@ -55,7 +55,6 @@ public class FileManager {
 
         if (!dir.exists()) dir.mkdir();
         File f = new File(dir + File.separator + "resurrection-stone.yml");
-
         if (!f.exists()) return null;
         return YamlConfiguration.loadConfiguration(f);
     }
@@ -64,7 +63,7 @@ public class FileManager {
         File dir = p.getDataFolder();
 
         if (!dir.exists()) dir.mkdir();
-        File f = new File(dir + File.separator + "enchanter.yml");
+        File f = new File(dir + File.separator + "luck-stone.yml");
 
         if (!f.exists()) return null;
         return YamlConfiguration.loadConfiguration(f);

@@ -64,6 +64,10 @@ public class RunesEnchant extends JavaPlugin implements Listener {
             p.openInventory(new EnchanterGUI().createEnchanterGUI(p));
         }
 
+        if (e.getMessage().equalsIgnoreCase("rs")) {
+            p.getInventory().addItem(new ResurrectionStone().getItem());
+        }
+
 //        ItemStack i = p.getInventory().getItemInMainHand();
 //        ApplicableItem ai = new ApplicableItem(i);
 //        ai.addEnchantment(CustomEnchant.AEGIS, 1);

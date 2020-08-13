@@ -36,7 +36,7 @@ public class LuckStone {
         return config.getIncrease();
     }
 
-    public ItemStack createItem() {
+    public ItemStack getItem() {
         ItemStack item = RuneUtils.getInstance().buildItemStack(config.getItemId());
         if (item == null) return null;
 

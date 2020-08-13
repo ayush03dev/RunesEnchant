@@ -21,6 +21,8 @@ public class RuneApplyListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         if (e.getWhoClicked() instanceof Player) {
             Player p = (Player) e.getWhoClicked();
+            if (e.getInventory().getHolder() != null && e.getInventory().getHolder() instanceof GUIHolder) return;
+
             if (!p.hasPermission("rune.apply")) return;
             if (e.getAction() == InventoryAction.SWAP_WITH_CURSOR) {
                 if (e.getCursor() == null || e.getCurrentItem() == null) return;
