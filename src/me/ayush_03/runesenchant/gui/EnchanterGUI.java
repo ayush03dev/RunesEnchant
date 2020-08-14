@@ -16,12 +16,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class EnchanterGUI {
 
+    private final String demoString = HiddenStringUtils.encodeString("demo-item");
+
+
     public Inventory createEnchanterGUI(Player p) {
         FileConfiguration fc = FileManager.getInstance().getEnchanterConfig();
         String title = ChatColor.translateAlternateColorCodes('&', fc.getString("gui-title"));
 
         Inventory inv = Bukkit.createInventory(new GUIHolder(p), 54, title);
-        String demoString = HiddenStringUtils.encodeString("demo-item");
+
 
         ItemStack demoItem = new ItemStack(Material.DIAMOND_PICKAXE);
         ItemMeta itemMeta = demoItem.getItemMeta();
@@ -68,7 +71,7 @@ public class EnchanterGUI {
 
             ItemStack glass = new ItemStack(mat);
             ItemMeta glassMeta = glass.getItemMeta();
-            glassMeta.setDisplayName(demoString);
+            glassMeta.setDisplayName(HiddenStringUtils.encodeString("glass"));
             glass.setItemMeta(glassMeta);
 
             inv.setItem(i, glass);
@@ -87,6 +90,56 @@ public class EnchanterGUI {
         // TODO: [] [] [] [] [Item] [] [] [] []
         // TODO: [] [] [] [] [] [] [] [] []
         return inv;
+    }
+
+    public ItemStack getDemoItem() {
+        ItemStack demoItem = new ItemStack(Material.DIAMOND_PICKAXE);
+        ItemMeta itemMeta = demoItem.getItemMeta();
+        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
+        itemMeta.setDisplayName("Place item here" + demoString);
+        demoItem.setItemMeta(itemMeta);
+        return demoItem;
+    }
+
+    public ItemStack getDemoRune() {
+        ItemStack demoRune = RuneUtils.getInstance().buildItemStack(Settings.getInstance().getItemId());
+        ItemMeta runeMeta = demoRune.getItemMeta();
+        runeMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        runeMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
+        runeMeta.setDisplayName("Place Rune here" + demoString);
+        demoRune.setItemMeta(runeMeta);
+        return demoRune;
+    }
+
+    public ItemStack getDemoResurrectionStone() {
+        ItemStack demoResurrection = new ResurrectionStone().getItem();
+        ItemMeta resurrectionItemMeta = demoResurrection.getItemMeta();
+        resurrectionItemMeta.setDisplayName("Place the resurrection stone here" + demoString);
+        resurrectionItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        resurrectionItemMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
+        resurrectionItemMeta.setLore(null);
+        demoResurrection.setItemMeta(resurrectionItemMeta);
+        return demoResurrection;
+    }
+
+    public ItemStack getDemoLuckStone() {
+        ItemStack demoLuck = new ItemStack(new LuckStone(1).getItem().getType());
+        ItemMeta luckMeta = demoLuck.getItemMeta();
+        luckMeta.setDisplayName("Place the luck stone here" + demoString);
+        luckMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        luckMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
+        luckMeta.setLore(null);
+        demoLuck.setItemMeta(luckMeta);
+        return demoLuck;
+    }
+
+    public ItemStack getResultantItem() {
+        ItemStack resultant = new ItemStack(Material.REDSTONE_BLOCK);
+        ItemMeta meta = resultant.getItemMeta();
+        meta.setDisplayName("§a§lClick to Enchant" + HiddenStringUtils.encodeString("btn"));
+        resultant.setItemMeta(meta);
+        return resultant;
     }
 
 }

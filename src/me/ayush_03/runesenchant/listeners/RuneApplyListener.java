@@ -91,8 +91,11 @@ public class RuneApplyListener implements Listener {
                                 item.setLevel(ce, level+1);
                                 p.setItemOnCursor(new ItemStack(Material.AIR));
                             } else {
-                                p.sendMessage(ChatColor.RED + "You already have an enchantment!");
-                                return;
+                                if (level > item.getLevel(ce)) {
+                                    item.setLevel(ce, level);
+                                    p.setItemOnCursor(new ItemStack(Material.AIR));
+
+                                }
                             }
                         }
                     }

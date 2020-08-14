@@ -8,7 +8,8 @@ public enum EnchanterItemMessage {
     NOT_APPLICABLE("The item is not applicable with the Rune"),
     NOT_PROTECTED("Enchanting process won't be protected"),
     PROTECTED("Enchanting is protected"),
-    CHANCES("");
+    MAX_LEVEL("Enchantment already at a max level"),
+    LOW_LEVEL("Level lower than the existing level");
 
     private final String message;
 
