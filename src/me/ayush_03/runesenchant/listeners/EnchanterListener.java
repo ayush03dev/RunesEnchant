@@ -10,14 +10,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class EnchanterGUIListener implements Listener {
+public class EnchanterListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
@@ -32,12 +35,14 @@ public class EnchanterGUIListener implements Listener {
 
                     if (slot == resultSlot) {
                         ItemStack btn = e.getCurrentItem();
-                        if (btn.getType() == Material.REDSTONE_BLOCK) {
+                        if (btn.getType() == Material.REDSTONE_BLOCK || btn.getType() == Material.BARRIER) {
                             e.setCancelled(true);
                             return;
                         }
 
                         if (btn.getType() == Material.EMERALD_BLOCK) {
+
+                            e.setCancelled(true);
 
                             ItemStack rStone = inv.getItem(23);
                             ItemStack lStone = inv.getItem(25);
@@ -55,15 +60,63 @@ public class EnchanterGUIListener implements Listener {
                             Rune rune = new Rune(inv.getItem(21));
                             ApplicableItem item = new ApplicableItem(inv.getItem(19));
 
-                            int netSuccess = rune.getSuccessRate() + ls.getIncrease();
+                            int netSuccess = rune.getSuccessRate();
+                            if (ls != null) {
+                                netSuccess += + ls.getIncrease();
+                            }
                             int destroy = rune.getDestroyRate();
                             CustomEnchant ce = rune.getEnchantment();
 
-                            if (!item.hasEnchantment(ce)) {
-                                
-                            }
+                            int level = item.getLevel(ce);
 
+                            if (chance(netSuccess)) {
+
+                                if (level == 0) {
+                                    item.addEnchantment(ce, level+1);
+                                } else {
+                                    int setLevel;
+                                    if (rune.getLevel() == level) {
+                                        setLevel = level+1;
+                                    } else {
+                                        setLevel = rune.getLevel();
+                                    }
+                                    item.setLevel(ce, setLevel);
+                                }
+
+                                for (int i = 0; i < 54; i++) {
+                                    inv.setItem(i, getGlassPane(GlassColor.GREEN));
+                                }
+
+                                inv.setItem(resultSlot, item.getItemStack());
+
+                            } else {
+                                for (int i = 0; i < 54; i++) {
+                                    inv.setItem(i, getGlassPane(GlassColor.RED));
+                                }
+                                if (chance(destroy)) {
+
+                                    if (rs != null) {
+                                        inv.setItem(resultSlot, item.getItemStack());
+                                        return;
+                                    }
+
+                                    // TODO: Check if protection charm is enabled or not..
+
+                                    if (item.hasProtectionCharm()) {
+                                        ItemStack itemStack = item.getItemStack();
+                                        ProtectionCharm pc = new ProtectionCharm(itemStack);
+                                        pc.setLeft(pc.getLeft() - 1);
+                                        inv.setItem(resultSlot, itemStack);
+                                        return;
+                                    }
+
+                                    inv.setItem(resultSlot, new ItemStack(Material.BARRIER));
+                                } else {
+                                    inv.setItem(resultSlot, item.getItemStack());
+                                }
+                            }
                         }
+                        return;
                     }
 
                     if (e.getRawSlot() < 45) {
@@ -145,8 +198,6 @@ public class EnchanterGUIListener implements Listener {
                                 demo = null;
                             }
 
-                            System.out.println("HERE");
-
                             new BukkitRunnable() {
 
                                 @Override
@@ -171,7 +222,30 @@ public class EnchanterGUIListener implements Listener {
                         if (!Rune.isRune(current) && !ResurrectionStone.isRessurectionStone(current)
                                 && !LuckStone.isLuckStone(current) && current.getType() != Material.DIAMOND_SWORD) {
                             e.setCancelled(true);
-                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onClose(InventoryCloseEvent e) {
+        if (e.getPlayer() instanceof Player) {
+            Player p = (Player) e.getPlayer();
+            Inventory inv = e.getInventory();
+            if (inv.getHolder() != null && inv.getHolder() instanceof GUIHolder) {
+                GUIHolder holder = new GUIHolder(p);
+
+                if (holder.getPlayer().getUniqueId().equals(p.getUniqueId())) {
+                    for (ItemStack item : inv.getContents()) {
+                        if (item != null && item.getType() != Material.AIR) {
+                            if (!isGlass(item) && !isDemoItem(item)
+                            && item.getType() != Material.EMERALD_BLOCK &&
+                            item.getType() != Material.REDSTONE_BLOCK &&
+                            item.getType() != Material.BARRIER) {
+                                p.getWorld().dropItem(p.getLocation(), item);
+                            }
                         }
                     }
                 }
@@ -199,6 +273,34 @@ public class EnchanterGUIListener implements Listener {
             }
         }
         return false;
+    }
+
+    private ItemStack getGlassPane(GlassColor color) {
+        ItemStack item;
+        Material mat;
+
+        if (color == GlassColor.GREEN) {
+            try {
+                mat = Material.GREEN_STAINED_GLASS_PANE;
+                item = new ItemStack(mat);
+            } catch (NoSuchFieldError e) {
+                mat = Material.matchMaterial("STAINED_GLASS_PANE");
+                item = new ItemStack(mat, 1, (byte) 13);
+            }
+        } else {
+            try {
+                mat = Material.GREEN_STAINED_GLASS_PANE;
+                item = new ItemStack(mat);
+            } catch (NoSuchFieldError e) {
+                mat = Material.matchMaterial("STAINED_GLASS_PANE");
+                item = new ItemStack(mat, 1, (byte) 14);
+            }
+        }
+
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(HiddenStringUtils.encodeString("glass"));
+        item.setItemMeta(meta);
+        return item;
     }
 
     private EnchanterItemMessage[] getMessages(Inventory inv) {
@@ -266,4 +368,14 @@ public class EnchanterGUIListener implements Listener {
         return array;
     }
 
+    private boolean chance(int successRate) {
+        int chance = new Random().nextInt(100)+1;
+        System.out.println(successRate + " : " + chance);
+        if (chance <= successRate) return true;
+        return false;
+    }
+}
+
+enum GlassColor {
+    RED, GREEN;
 }

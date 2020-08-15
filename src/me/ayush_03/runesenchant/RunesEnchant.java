@@ -3,7 +3,7 @@ package me.ayush_03.runesenchant;
 import me.ayush_03.runesenchant.commands.RunesCommand;
 import me.ayush_03.runesenchant.effects.PVPEffects;
 import me.ayush_03.runesenchant.gui.EnchanterGUI;
-import me.ayush_03.runesenchant.listeners.EnchanterGUIListener;
+import me.ayush_03.runesenchant.listeners.EnchanterListener;
 import me.ayush_03.runesenchant.listeners.RuneApplyListener;
 
 import org.bukkit.entity.Player;
@@ -28,7 +28,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new RuneApplyListener(), this);
         getServer().getPluginManager().registerEvents(new PVPEffects(), this);
-        getServer().getPluginManager().registerEvents(new EnchanterGUIListener(), this);
+        getServer().getPluginManager().registerEvents(new EnchanterListener(), this);
         getCommand("runes").setExecutor(new RunesCommand());
 
         Settings.getInstance().setup(this);
@@ -66,6 +66,11 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 
         if (e.getMessage().equalsIgnoreCase("rs")) {
             p.getInventory().addItem(new ResurrectionStone().getItem());
+        }
+
+        if (e.getMessage().equalsIgnoreCase("ls")) {
+            p.getInventory().addItem(new LuckStone(1).getItem());
+
         }
 
 //        ItemStack i = p.getInventory().getItemInMainHand();
