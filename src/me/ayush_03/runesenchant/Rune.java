@@ -5,9 +5,13 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import me.ayush_03.runesenchant.utils.RuneUtils;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,17 @@ public class Rune {
 
     public Rune(ItemStack item) {
         if (isRune(item)) {
-            String[] args = HiddenStringUtils.extractHiddenString(item.getItemMeta().getDisplayName()).split(":");
+
+            String[] args;
+
+            if (RunesEnchant.is13()) {
+                ItemMeta meta = item.getItemMeta();
+                RunesEnchant instance = RunesEnchant.getInstance();
+                PersistentDataContainer data = meta.getPersistentDataContainer();
+                args = data.get(new NamespacedKey(instance, "runesenchant.data"), PersistentDataType.STRING).split(":");
+            } else {
+                args = HiddenStringUtils.extractHiddenString(item.getItemMeta().getDisplayName()).split(":");
+            }
             this.ce = CustomEnchant.fromString(args[0].replace("ce-", ""));
             this.level = Integer.parseInt(args[1]);
             this.successRate = Integer.parseInt(args[2]);
@@ -86,9 +100,16 @@ public class Rune {
         displayName = replace(displayName, "%level%", level + "");
         displayName = toColor(displayName);
 
-        String hidden = "ce-" + ce.toString() + ":" + level + ":" + successRate + ":" + destroyRate;
+        RunesEnchant re = RunesEnchant.getInstance();
+        String hidden = "ce-" + ce.toString() + ':' + level + ':' + successRate + ':' + destroyRate;
 
-        meta.setDisplayName(displayName + HiddenStringUtils.encodeString(hidden));
+        if (RunesEnchant.is13()) {
+            PersistentDataContainer data = meta.getPersistentDataContainer();
+            data.set(new NamespacedKey(re, "runesenchant.data"), PersistentDataType.STRING, hidden);
+            meta.setDisplayName(displayName + HiddenStringUtils.encodeString(hidden));
+        } else {
+            meta.setDisplayName(displayName + HiddenStringUtils.encodeString(hidden));
+        }
 
         List<String> list = new ArrayList<>();
 
@@ -111,6 +132,12 @@ public class Rune {
     public static boolean isRune(ItemStack item) {
         if (item.hasItemMeta()) {
             if (item.getItemMeta().hasDisplayName() && item.getItemMeta().hasLore()) {
+
+                if (RunesEnchant.is13()) {
+                    PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
+                    return data.has(new NamespacedKey(RunesEnchant.getInstance(), "runesenchant.data"), PersistentDataType.STRING);
+                }
+
                 if (HiddenStringUtils.hasHiddenString(item.getItemMeta().getDisplayName())
                 && HiddenStringUtils.extractHiddenString(item.getItemMeta().getDisplayName()).contains("ce-")) return true;
             }

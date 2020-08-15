@@ -31,8 +31,9 @@ public class RuneApplyListener implements Listener {
                 ItemStack current = e.getCurrentItem();
 
                 if (cursor.getType() == Material.AIR || current.getType() == Material.AIR) return;
-
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', cursor.getItemMeta().getDisplayName()));
                 if (Rune.isRune(cursor)) {
+                    p.sendMessage("YEAH!");
                     e.setCancelled(true);
                     Rune rune = new Rune(cursor);
                     CustomEnchant ce = rune.getEnchantment();

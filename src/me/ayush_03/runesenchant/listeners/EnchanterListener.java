@@ -167,14 +167,22 @@ public class EnchanterListener implements Listener {
 
                                 // TODO: TO fix this, we need to add delay.
 
-                                if (hasErrors(inv)) {
-                                    inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
-                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
-                                    return;
-                                }
+                            new BukkitRunnable() {
 
-                                inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
-                                new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+                                @Override
+                                public void run() {
+
+                                    if (hasErrors(inv)) {
+                                        inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
+                                        new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+                                        return;
+                                    }
+
+                                    inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
+                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+                                }
+                             }.runTaskLaterAsynchronously(Bukkit.getPluginManager().getPlugin("RunesEnchant"), 5);
+
 
                         } else if (e.getAction() == InventoryAction.PICKUP_ALL) {
                             ItemStack current = e.getCurrentItem();

@@ -6,10 +6,14 @@ import me.ayush_03.runesenchant.gui.EnchanterGUI;
 import me.ayush_03.runesenchant.listeners.EnchanterListener;
 import me.ayush_03.runesenchant.listeners.RuneApplyListener;
 
+import me.ayush_03.runesenchant.utils.HiddenStringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -17,10 +21,10 @@ import java.io.File;
 public class RunesEnchant extends JavaPlugin implements Listener {
 
     private static RunesEnchant instance;
-
     public static RunesEnchant getInstance() {
         return instance;
     }
+    public static int version;
 
     @Override
     public void onEnable() {
@@ -30,6 +34,8 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new PVPEffects(), this);
         getServer().getPluginManager().registerEvents(new EnchanterListener(), this);
         getCommand("runes").setExecutor(new RunesCommand());
+        String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        RunesEnchant.version = Integer.parseInt(version.replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));
 
         Settings.getInstance().setup(this);
         FileManager.getInstance().setup(this);
@@ -54,6 +60,12 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
 
+        ItemStack i = p.getInventory().getItemInMainHand();
+
+        i.getItemMeta().getPersistentDataContainer().getKeys().forEach(nk -> {
+            p.sendMessage(nk.getKey());
+        });
+
         if (e.getMessage().equalsIgnoreCase("pc")) {
             ProtectionCharm pc = new ProtectionCharm(1);
             p.getInventory().addItem(pc.createItem());
@@ -73,10 +85,22 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 
         }
 
+        if (e.getMessage().equalsIgnoreCase("test")) {
+            ItemStack item = p.getInventory().getItemInMainHand();
+            ItemMeta meta = item.getItemMeta();
+            p.sendMessage(meta.getDisplayName());
+            p.sendMessage(HiddenStringUtils.extractHiddenString(meta.getDisplayName()));
+            System.out.println(meta.getDisplayName());
+        }
+
 //        ItemStack i = p.getInventory().getItemInMainHand();
 //        ApplicableItem ai = new ApplicableItem(i);
 //        ai.addEnchantment(CustomEnchant.AEGIS, 1);
 //        ai.setLevel(CustomEnchant.AEGIS, 3);
 //        p.sendMessage("a");
+    }
+
+    public static boolean is13() {
+        return version >= 13;
     }
 }
