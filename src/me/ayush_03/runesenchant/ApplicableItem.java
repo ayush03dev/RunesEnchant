@@ -88,12 +88,27 @@ public class ApplicableItem {
 
         String line = Settings.getInstance().getSlotsDisplay().replace("%slots%", slots + "");
         line = ChatColor.translateAlternateColorCodes('&', line);
-        line = line + HiddenStringUtils.encodeString("slots:" + slots);
 
-        if (!initialized) {
-            lore.add(line);
+        if (RunesEnchant.is13()) {
+            PersistentDataContainer data = meta.getPersistentDataContainer();
+            if (!initialized) {
+                data.set(new NamespacedKey(RunesEnchant.getInstance(), "re.slots"), PersistentDataType.STRING,
+                        slots + ":" + lore.size());
+                lore.add(line);
+            } else {
+                lore.set(lineIndex, line);
+                data.set(new NamespacedKey(RunesEnchant.getInstance(), "re.slots"), PersistentDataType.STRING,
+                        slots + ":" + lineIndex);
+            }
         } else {
-            lore.set(lineIndex, line);
+
+            line = line + HiddenStringUtils.encodeString("slots:" + slots);
+
+            if (!initialized) {
+                lore.add(line);
+            } else {
+                lore.set(lineIndex, line);
+            }
         }
 
         meta.setLore(lore);

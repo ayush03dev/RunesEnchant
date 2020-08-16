@@ -106,7 +106,7 @@ public class Rune {
         if (RunesEnchant.is13()) {
             PersistentDataContainer data = meta.getPersistentDataContainer();
             data.set(new NamespacedKey(re, "runesenchant.data"), PersistentDataType.STRING, hidden);
-            meta.setDisplayName(displayName + HiddenStringUtils.encodeString(hidden));
+            meta.setDisplayName(displayName);
         } else {
             meta.setDisplayName(displayName + HiddenStringUtils.encodeString(hidden));
         }

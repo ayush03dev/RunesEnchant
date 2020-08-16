@@ -3,9 +3,12 @@ package me.ayush_03.runesenchant;
 import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import me.ayush_03.runesenchant.utils.RuneUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +30,27 @@ public class ResurrectionStone {
         }
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(displayName + HiddenStringUtils.encodeString("rs-RESURRECTION"));
+        if (RunesEnchant.is13()) {
+            PersistentDataContainer data = meta.getPersistentDataContainer();
+            data.set(new NamespacedKey(RunesEnchant.getInstance(), "re.rs"), PersistentDataType.STRING, "true");
+            meta.setDisplayName(displayName);
+        } else {
+            meta.setDisplayName(displayName + HiddenStringUtils.encodeString("rs-RESURRECTION"));
+        }
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
     }
 
     public static boolean isRessurectionStone(ItemStack item) {
-        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()
-                && HiddenStringUtils.hasHiddenString(item.getItemMeta().getDisplayName())) {
-            if (HiddenStringUtils.extractHiddenString(item.getItemMeta().getDisplayName()).contains("rs-")) return true;
+        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+            if (RunesEnchant.is13()) {
+                PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
+                return data.has(new NamespacedKey(RunesEnchant.getInstance(), "re.rs"), PersistentDataType.STRING);
+            } else {
+                if (HiddenStringUtils.hasHiddenString(item.getItemMeta().getDisplayName()) && HiddenStringUtils.extractHiddenString(item.getItemMeta().getDisplayName()).contains("rs-"))
+                    return true;
+            }
         }
         return false;
     }

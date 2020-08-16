@@ -4,7 +4,9 @@ import me.ayush_03.runesenchant.*;
 import me.ayush_03.runesenchant.gui.EnchanterGUI;
 import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +16,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -264,9 +268,15 @@ public class EnchanterListener implements Listener {
     private boolean isDemoItem(ItemStack item) {
         if (item == null || item.getType() == Material.AIR) return true;
         if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-            String display = item.getItemMeta().getDisplayName();
-            if (HiddenStringUtils.hasHiddenString(display)) {
-                return HiddenStringUtils.extractHiddenString(display).contains("demo");
+
+            if (RunesEnchant.is13()) {
+                PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
+                return data.has(new NamespacedKey(RunesEnchant.getInstance(), "re.demo"), PersistentDataType.STRING);
+            } else {
+                String display = item.getItemMeta().getDisplayName();
+                if (HiddenStringUtils.hasHiddenString(display)) {
+                    return HiddenStringUtils.extractHiddenString(display).contains("demo");
+                }
             }
         }
         return false;
@@ -275,9 +285,14 @@ public class EnchanterListener implements Listener {
     private boolean isGlass(ItemStack item) {
         if (item == null || item.getType() == Material.AIR) return true;
         if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-            String display = item.getItemMeta().getDisplayName();
-            if (HiddenStringUtils.hasHiddenString(display)) {
-                return HiddenStringUtils.extractHiddenString(display).contains("glass");
+            if (RunesEnchant.is13()) {
+                PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
+                return data.has(new NamespacedKey(RunesEnchant.getInstance(), "re.glass"), PersistentDataType.STRING);
+            } else {
+                String display = item.getItemMeta().getDisplayName();
+                if (HiddenStringUtils.hasHiddenString(display)) {
+                    return HiddenStringUtils.extractHiddenString(display).contains("glass");
+                }
             }
         }
         return false;
@@ -297,7 +312,7 @@ public class EnchanterListener implements Listener {
             }
         } else {
             try {
-                mat = Material.GREEN_STAINED_GLASS_PANE;
+                mat = Material.RED_STAINED_GLASS_PANE;
                 item = new ItemStack(mat);
             } catch (NoSuchFieldError e) {
                 mat = Material.matchMaterial("STAINED_GLASS_PANE");
@@ -306,7 +321,14 @@ public class EnchanterListener implements Listener {
         }
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(HiddenStringUtils.encodeString("glass"));
+
+        if (RunesEnchant.is13()) {
+            PersistentDataContainer data = meta.getPersistentDataContainer();
+            data.set(new NamespacedKey(RunesEnchant.getInstance(), "re.glass"), PersistentDataType.STRING, "true");
+            meta.setDisplayName(ChatColor.BLACK + "");
+        } else {
+            meta.setDisplayName(HiddenStringUtils.encodeString("glass"));
+        }
         item.setItemMeta(meta);
         return item;
     }

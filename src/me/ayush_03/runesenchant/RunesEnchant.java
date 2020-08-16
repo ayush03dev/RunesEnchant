@@ -15,6 +15,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 
@@ -24,7 +25,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     public static RunesEnchant getInstance() {
         return instance;
     }
-    public static int version;
+    private static int version;
 
     @Override
     public void onEnable() {
@@ -62,10 +63,6 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 
         ItemStack i = p.getInventory().getItemInMainHand();
 
-        i.getItemMeta().getPersistentDataContainer().getKeys().forEach(nk -> {
-            p.sendMessage(nk.getKey());
-        });
-
         if (e.getMessage().equalsIgnoreCase("pc")) {
             ProtectionCharm pc = new ProtectionCharm(1);
             p.getInventory().addItem(pc.createItem());
@@ -73,7 +70,13 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         }
 
         if (e.getMessage().equalsIgnoreCase("enchanter")) {
-            p.openInventory(new EnchanterGUI().createEnchanterGUI(p));
+            new BukkitRunnable() {
+
+                @Override
+                public void run() {
+                    p.openInventory(new EnchanterGUI().createEnchanterGUI(p));
+                }
+            }.runTaskLater(this, 1);
         }
 
         if (e.getMessage().equalsIgnoreCase("rs")) {
