@@ -66,7 +66,7 @@ public class EnchanterListener implements Listener {
 
                             int netSuccess = rune.getSuccessRate();
                             if (ls != null) {
-                                netSuccess += + ls.getIncrease();
+                                netSuccess += +ls.getIncrease();
                             }
                             int destroy = rune.getDestroyRate();
                             CustomEnchant ce = rune.getEnchantment();
@@ -76,11 +76,11 @@ public class EnchanterListener implements Listener {
                             if (chance(netSuccess)) {
 
                                 if (level == 0) {
-                                    item.addEnchantment(ce, level+1);
+                                    item.addEnchantment(ce, level + 1);
                                 } else {
                                     int setLevel;
                                     if (rune.getLevel() == level) {
-                                        setLevel = level+1;
+                                        setLevel = level + 1;
                                     } else {
                                         setLevel = rune.getLevel();
                                     }
@@ -163,29 +163,47 @@ public class EnchanterListener implements Listener {
                                 return;
                             }
 
-                                if (isDemoItem(current)) {
-                                    e.setCancelled(true);
-                                    e.setCurrentItem(cursor);
-                                    p.setItemOnCursor(new ItemStack(Material.AIR));
-                                }
+                            if (isDemoItem(current)) {
+                                e.setCancelled(true);
+                                e.setCurrentItem(cursor);
+                                p.setItemOnCursor(new ItemStack(Material.AIR));
+                            }
 
-                                // TODO: TO fix this, we need to add delay.
-
+                            // TODO: TO fix this, we need to add delay.
                             new BukkitRunnable() {
 
                                 @Override
                                 public void run() {
-
-                                    if (hasErrors(inv)) {
-                                        inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
-                                        new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
-                                        return;
-                                    }
-
-                                    inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
-                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+                                    update(inv, resultSlot);
                                 }
-                             }.runTaskLaterAsynchronously(Bukkit.getPluginManager().getPlugin("RunesEnchant"), 5);
+                            }.runTaskLater(RunesEnchant.getInstance(), 5);
+
+//                            new BukkitRunnable() {
+//
+//                                @Override
+//                                public void run() {
+//
+//                                    if (hasErrors(inv)) {
+//                                        inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
+//                                        new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+//                                        return;
+//                                    }
+//
+//                                    inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
+//                                    Rune rune = new Rune(inv.getItem(21));
+//                                    ApplicableItem item = new ApplicableItem(inv.getItem(19));
+//                                    int netLevel= rune.getLevel() + item.getLevel(rune.getEnchantment());
+//                                    LuckStone ls = null;
+//
+//                                    if (LuckStone.isLuckStone(inv.getItem(25))) {
+//                                        ls = new LuckStone(inv.getItem(25));
+//                                    }
+//
+////                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+//                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(rune, netLevel, ls, getMessages(inv));
+//
+//                                }
+//                             }.runTaskLaterAsynchronously(Bukkit.getPluginManager().getPlugin("RunesEnchant"), 5);
 
 
                         } else if (e.getAction() == InventoryAction.PICKUP_ALL) {
@@ -214,17 +232,35 @@ public class EnchanterListener implements Listener {
 
                                 @Override
                                 public void run() {
-                                    e.setCurrentItem(demo);
-                                    if (hasErrors(inv)) {
-                                                inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
-                                                new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
-                                                return;
-                                            }
 
-                                            inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
-                                            new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+                                    update(inv, resultSlot);
+                                    e.setCurrentItem(demo);
                                 }
-                            }.runTaskLaterAsynchronously(Bukkit.getPluginManager().getPlugin("RunesEnchant"), 5);
+                            }.runTaskLater(RunesEnchant.getInstance(), 5);
+
+
+//                            new BukkitRunnable() {
+//
+//                                @Override
+//                                public void run() {
+//                                    e.setCurrentItem(demo);
+//                                    if (hasErrors(inv)) {
+//                                                inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
+//                                                new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+//                                                return;
+//                                            }
+//
+//                                    inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
+//                                    ApplicableItem item = new ApplicableItem(inv.getItem(19));
+//                                    Rune rune = new Rune(inv.getItem(21));
+//                                    int netLevel = rune.getLevel() + item.getLevel(rune.getEnchantment());
+//
+//                                    LuckStone ls = new LuckStone(inv.getItem(25));
+////                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+//                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(rune, netLevel, ls, getMessages(inv));
+//
+//                                }
+//                            }.runTaskLaterAsynchronously(Bukkit.getPluginManager().getPlugin("RunesEnchant"), 5);
 
                         }
 
@@ -253,9 +289,9 @@ public class EnchanterListener implements Listener {
                     for (ItemStack item : inv.getContents()) {
                         if (item != null && item.getType() != Material.AIR) {
                             if (!isGlass(item) && !isDemoItem(item)
-                            && item.getType() != Material.EMERALD_BLOCK &&
-                            item.getType() != Material.REDSTONE_BLOCK &&
-                            item.getType() != Material.BARRIER) {
+                                    && item.getType() != Material.EMERALD_BLOCK &&
+                                    item.getType() != Material.REDSTONE_BLOCK &&
+                                    item.getType() != Material.BARRIER) {
                                 p.getWorld().dropItem(p.getLocation(), item);
                             }
                         }
@@ -340,9 +376,11 @@ public class EnchanterListener implements Listener {
         ItemStack item = inv.getItem(19);
         ItemStack rune = inv.getItem(21);
         ItemStack protection = inv.getItem(23);
+        ItemStack luck = inv.getItem(25);
 
         if (isDemoItem(item) && isDemoItem(rune)) {
-            messageList.add(EnchanterItemMessage.UNCHANGED);;
+            messageList.add(EnchanterItemMessage.UNCHANGED);
+            ;
         } else if (isDemoItem(item)) {
             messageList.add(EnchanterItemMessage.NO_ITEM);
         } else if (isDemoItem(rune)) {
@@ -368,6 +406,15 @@ public class EnchanterListener implements Listener {
                     }
                 }
 
+                messageList.add(EnchanterItemMessage.RESULT_ENCHANTMENT);
+
+                if (!isDemoItem(luck)) {
+                    messageList.add(EnchanterItemMessage.LUCK_APPLIED);
+                }
+
+                messageList.add(EnchanterItemMessage.SUCCESS_RATE);
+                messageList.add(EnchanterItemMessage.DESTROY_RATE);
+
                 if (isDemoItem(protection)) {
                     messageList.add(EnchanterItemMessage.NOT_PROTECTED);
                 } else {
@@ -383,8 +430,8 @@ public class EnchanterListener implements Listener {
     private boolean hasErrors(Inventory inv) {
         for (EnchanterItemMessage msg : getMessages(inv)) {
             if (msg == EnchanterItemMessage.NO_ITEM || msg == EnchanterItemMessage.NO_RUNE
-            || msg == EnchanterItemMessage.UNCHANGED || msg == EnchanterItemMessage.NOT_APPLICABLE
-            || msg == EnchanterItemMessage.LOW_LEVEL || msg == EnchanterItemMessage.MAX_LEVEL) return true;
+                    || msg == EnchanterItemMessage.UNCHANGED || msg == EnchanterItemMessage.NOT_APPLICABLE
+                    || msg == EnchanterItemMessage.LOW_LEVEL || msg == EnchanterItemMessage.MAX_LEVEL) return true;
         }
         return false;
     }
@@ -399,10 +446,43 @@ public class EnchanterListener implements Listener {
     }
 
     private boolean chance(int successRate) {
-        int chance = new Random().nextInt(100)+1;
+        int chance = new Random().nextInt(100) + 1;
         System.out.println(successRate + " : " + chance);
         if (chance <= successRate) return true;
         return false;
+    }
+
+
+    private void update(Inventory inv, int resultSlot) {
+
+        if (hasErrors(inv)) {
+            inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
+            new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+            return;
+        }
+
+        inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
+        Rune rune = new Rune(inv.getItem(21));
+        ApplicableItem item = new ApplicableItem(inv.getItem(19));
+        int netLevel = rune.getLevel();
+        int additionalLevel = rune.getLevel();
+        int existingLevel = item.getLevel(rune.getEnchantment());
+
+        if (additionalLevel == existingLevel) {
+            netLevel = existingLevel + 1;
+        } else {
+            if (additionalLevel > existingLevel) {
+                netLevel = additionalLevel;
+            }
+        }
+        LuckStone ls = null;
+
+        if (LuckStone.isLuckStone(inv.getItem(25))) {
+            ls = new LuckStone(inv.getItem(25));
+        }
+
+//                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+        new EnchanterResultant(inv.getItem(resultSlot)).setMessages(rune, netLevel, ls, getMessages(inv));
     }
 }
 

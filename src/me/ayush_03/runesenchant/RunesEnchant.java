@@ -17,8 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
-
 public class RunesEnchant extends JavaPlugin implements Listener {
 
     private static RunesEnchant instance;
@@ -41,14 +39,17 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         Settings.getInstance().setup(this);
         FileManager.getInstance().setup(this);
 
-        saveResource("enchantments" + File.separator + "aegis.yml", false);
+        for (CustomEnchant ce : CustomEnchant.values()) {
+            try {
+                saveResource("enchantments/" + ce.toString().toLowerCase() + ".yml", false);
+            } catch (IllegalArgumentException ex) {}
+        }
+
         saveResource("runes.yml", false);
         saveResource("protection-charm.yml", false);
         saveResource("resurrection-stone.yml", false);
         saveResource("enchanter.yml", false);
         saveResource("luck-stone.yml", false);
-
-
         saveDefaultConfig();
     }
 

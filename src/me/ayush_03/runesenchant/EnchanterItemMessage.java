@@ -9,7 +9,11 @@ public enum EnchanterItemMessage {
     NOT_PROTECTED("Enchanting process won't be protected"),
     PROTECTED("Enchanting is protected"),
     MAX_LEVEL("Enchantment already at a max level"),
-    LOW_LEVEL("Level lower than the existing level");
+    LOW_LEVEL("Level lower than the existing level"),
+    LUCK_APPLIED("§d§lLuck Stone %level% §7§l(§a§l+%increase%% Success Rate§7§l)"),
+    RESULT_ENCHANTMENT("%enchantment%"),
+    SUCCESS_RATE("§a§l%success%% Success Rate"),
+    DESTROY_RATE("§c§l%destroy%% Destroy Rate");
 
     private final String message;
 
