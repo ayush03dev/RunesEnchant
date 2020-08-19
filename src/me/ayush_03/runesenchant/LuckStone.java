@@ -2,7 +2,6 @@ package me.ayush_03.runesenchant;
 
 import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import me.ayush_03.runesenchant.utils.RuneUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -71,6 +70,7 @@ public class LuckStone {
     }
 
     public static boolean isLuckStone(ItemStack item) {
+        if (item == null) return false;
         if (item.hasItemMeta()) {
             if (RunesEnchant.is13()) {
                 PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();

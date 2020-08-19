@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -143,6 +144,11 @@ public class EnchanterListener implements Listener {
 
                             if (cursor == null || cursor.getType() == Material.AIR) return;
 
+                            if (!isDemoItem(current)) {
+                                e.setCancelled(true);
+                                return;
+                            }
+
                             if (slot == 19) {
                                 if (cursor.getType() != Material.DIAMOND_SWORD) {
                                     e.setCancelled(true);
@@ -166,45 +172,10 @@ public class EnchanterListener implements Listener {
                             if (isDemoItem(current)) {
                                 e.setCancelled(true);
                                 e.setCurrentItem(cursor);
+                                update(inv, slot, InventoryAction.SWAP_WITH_CURSOR, resultSlot, e.getCursor(),
+                                        current);
                                 p.setItemOnCursor(new ItemStack(Material.AIR));
                             }
-
-                            // TODO: TO fix this, we need to add delay.
-                            new BukkitRunnable() {
-
-                                @Override
-                                public void run() {
-                                    update(inv, resultSlot);
-                                }
-                            }.runTaskLater(RunesEnchant.getInstance(), 5);
-
-//                            new BukkitRunnable() {
-//
-//                                @Override
-//                                public void run() {
-//
-//                                    if (hasErrors(inv)) {
-//                                        inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
-//                                        new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
-//                                        return;
-//                                    }
-//
-//                                    inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
-//                                    Rune rune = new Rune(inv.getItem(21));
-//                                    ApplicableItem item = new ApplicableItem(inv.getItem(19));
-//                                    int netLevel= rune.getLevel() + item.getLevel(rune.getEnchantment());
-//                                    LuckStone ls = null;
-//
-//                                    if (LuckStone.isLuckStone(inv.getItem(25))) {
-//                                        ls = new LuckStone(inv.getItem(25));
-//                                    }
-//
-////                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
-//                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(rune, netLevel, ls, getMessages(inv));
-//
-//                                }
-//                             }.runTaskLaterAsynchronously(Bukkit.getPluginManager().getPlugin("RunesEnchant"), 5);
-
 
                         } else if (e.getAction() == InventoryAction.PICKUP_ALL) {
                             ItemStack current = e.getCurrentItem();
@@ -228,40 +199,12 @@ public class EnchanterListener implements Listener {
                                 demo = null;
                             }
 
-                            new BukkitRunnable() {
 
-                                @Override
-                                public void run() {
-
-                                    update(inv, resultSlot);
-                                    e.setCurrentItem(demo);
-                                }
-                            }.runTaskLater(RunesEnchant.getInstance(), 5);
-
-
-//                            new BukkitRunnable() {
-//
-//                                @Override
-//                                public void run() {
-//                                    e.setCurrentItem(demo);
-//                                    if (hasErrors(inv)) {
-//                                                inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
-//                                                new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
-//                                                return;
-//                                            }
-//
-//                                    inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
-//                                    ApplicableItem item = new ApplicableItem(inv.getItem(19));
-//                                    Rune rune = new Rune(inv.getItem(21));
-//                                    int netLevel = rune.getLevel() + item.getLevel(rune.getEnchantment());
-//
-//                                    LuckStone ls = new LuckStone(inv.getItem(25));
-////                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
-//                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(rune, netLevel, ls, getMessages(inv));
-//
-//                                }
-//                            }.runTaskLaterAsynchronously(Bukkit.getPluginManager().getPlugin("RunesEnchant"), 5);
-
+                            update(inv, slot, InventoryAction.PICKUP_ALL, resultSlot, e.getCursor(),
+                                    current);
+                            e.setCancelled(true);
+                            e.setCurrentItem(demo);
+                            p.setItemOnCursor(current);
                         }
 
                     } else {
@@ -284,54 +227,34 @@ public class EnchanterListener implements Listener {
             Inventory inv = e.getInventory();
             if (inv.getHolder() != null && inv.getHolder() instanceof GUIHolder) {
                 GUIHolder holder = new GUIHolder(p);
+                // 19 23 25 27
+                ItemStack item = inv.getItem(19);
+                ItemStack rune = inv.getItem(21);
+                ItemStack rs = inv.getItem(23);
+                ItemStack ls = inv.getItem(25);
+                ItemStack result = inv.getItem(40);
 
-                if (holder.getPlayer().getUniqueId().equals(p.getUniqueId())) {
-                    for (ItemStack item : inv.getContents()) {
-                        if (item != null && item.getType() != Material.AIR) {
-                            if (!isGlass(item) && !isDemoItem(item)
-                                    && item.getType() != Material.EMERALD_BLOCK &&
-                                    item.getType() != Material.REDSTONE_BLOCK &&
-                                    item.getType() != Material.BARRIER) {
-                                p.getWorld().dropItem(p.getLocation(), item);
-                            }
+                ItemStack[] arr = new ItemStack[] {item, rune, rs, ls, result};
+                    for (ItemStack itemStack : arr) {
+                        if (!isGlass(itemStack) && !isDemoItem(itemStack)
+                                && itemStack.getType() != Material.EMERALD_BLOCK &&
+                                itemStack.getType() != Material.REDSTONE_BLOCK &&
+                                itemStack.getType() != Material.BARRIER) {
+                            p.getWorld().dropItem(p.getLocation(), itemStack);
                         }
                     }
-                }
             }
         }
     }
 
     private boolean isDemoItem(ItemStack item) {
         if (item == null || item.getType() == Material.AIR) return true;
-        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-
-            if (RunesEnchant.is13()) {
-                PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
-                return data.has(new NamespacedKey(RunesEnchant.getInstance(), "re.demo"), PersistentDataType.STRING);
-            } else {
-                String display = item.getItemMeta().getDisplayName();
-                if (HiddenStringUtils.hasHiddenString(display)) {
-                    return HiddenStringUtils.extractHiddenString(display).contains("demo");
-                }
-            }
-        }
-        return false;
+        return item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.ARROW_DAMAGE);
     }
 
     private boolean isGlass(ItemStack item) {
         if (item == null || item.getType() == Material.AIR) return true;
-        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-            if (RunesEnchant.is13()) {
-                PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
-                return data.has(new NamespacedKey(RunesEnchant.getInstance(), "re.glass"), PersistentDataType.STRING);
-            } else {
-                String display = item.getItemMeta().getDisplayName();
-                if (HiddenStringUtils.hasHiddenString(display)) {
-                    return HiddenStringUtils.extractHiddenString(display).contains("glass");
-                }
-            }
-        }
-        return false;
+        return item.getType().toString().contains("GLASS_PANE");
     }
 
     private ItemStack getGlassPane(GlassColor color) {
@@ -369,14 +292,11 @@ public class EnchanterListener implements Listener {
         return item;
     }
 
-    private EnchanterItemMessage[] getMessages(Inventory inv) {
+    private EnchanterItemMessage[] getMessages(ItemStack item,
+                                               ItemStack rune, ItemStack protection, ItemStack
+                                                       luck) {
         // 19, 21, 23, 25 --- 31
         List<EnchanterItemMessage> messageList = new ArrayList<>(4);
-
-        ItemStack item = inv.getItem(19);
-        ItemStack rune = inv.getItem(21);
-        ItemStack protection = inv.getItem(23);
-        ItemStack luck = inv.getItem(25);
 
         if (isDemoItem(item) && isDemoItem(rune)) {
             messageList.add(EnchanterItemMessage.UNCHANGED);
@@ -427,14 +347,16 @@ public class EnchanterListener implements Listener {
         return toArray(messageList);
     }
 
-    private boolean hasErrors(Inventory inv) {
-        for (EnchanterItemMessage msg : getMessages(inv)) {
+
+    private boolean hasErrors(ItemStack item, ItemStack rune, ItemStack rs, ItemStack ls) {
+        for (EnchanterItemMessage msg : getMessages(item, rune, rs, ls)) {
             if (msg == EnchanterItemMessage.NO_ITEM || msg == EnchanterItemMessage.NO_RUNE
                     || msg == EnchanterItemMessage.UNCHANGED || msg == EnchanterItemMessage.NOT_APPLICABLE
                     || msg == EnchanterItemMessage.LOW_LEVEL || msg == EnchanterItemMessage.MAX_LEVEL) return true;
         }
         return false;
     }
+
 
     private EnchanterItemMessage[] toArray(List<EnchanterItemMessage> list) {
         EnchanterItemMessage[] array = new EnchanterItemMessage[list.size()];
@@ -447,17 +369,70 @@ public class EnchanterListener implements Listener {
 
     private boolean chance(int successRate) {
         int chance = new Random().nextInt(100) + 1;
-        System.out.println(successRate + " : " + chance);
         if (chance <= successRate) return true;
         return false;
     }
 
+    private void update(Inventory inv, int slot, InventoryAction action, int resultSlot,
+                        ItemStack cursor, ItemStack current) {
 
-    private void update(Inventory inv, int resultSlot) {
+        // 19 21 23 25
+        ItemStack r = null;
+        ItemStack i = null;
+        ItemStack protection = null;
+        ItemStack luck = null;
 
-        if (hasErrors(inv)) {
+        if (slot == 19) {
+            if (action == InventoryAction.SWAP_WITH_CURSOR) {
+                i = cursor;
+            } else {
+                if (isDemoItem(current)) {
+                    i = new EnchanterGUI().getDemoItem();
+                }
+            }
+            r = inv.getItem(21);
+            protection = inv.getItem(23);
+            luck = inv.getItem(25);
+
+        } else if (slot == 21) {
+            if (action == InventoryAction.SWAP_WITH_CURSOR) {
+                r = cursor;
+            } else {
+                if (isDemoItem(current)) {
+                    r = new EnchanterGUI().getDemoRune();
+                }
+            }
+            i = inv.getItem(19);
+            protection = inv.getItem(23);
+            luck = inv.getItem(25);
+        } else if (slot == 23) {
+            if (action == InventoryAction.SWAP_WITH_CURSOR) {
+                protection = cursor;
+            } else {
+                if (isDemoItem(current)) {
+                    protection = new EnchanterGUI().getDemoResurrectionStone();
+                }
+            }
+            i = inv.getItem(19);
+            r = inv.getItem(21);
+            luck = inv.getItem(25);
+
+        } else if (slot == 25) {
+            if (action == InventoryAction.SWAP_WITH_CURSOR) {
+                luck = cursor;
+            } else {
+                if (isDemoItem(current)) {
+                    luck = new EnchanterGUI().getDemoLuckStone();
+                }
+            }
+            i = inv.getItem(19);
+            r = inv.getItem(21);
+            protection = inv.getItem(23);
+        }
+
+        if (hasErrors(i, r, protection, luck)) {
             inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
-            new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
+            new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(i, r, protection, luck));
             return;
         }
 
@@ -475,14 +450,14 @@ public class EnchanterListener implements Listener {
                 netLevel = additionalLevel;
             }
         }
+
         LuckStone ls = null;
 
-        if (LuckStone.isLuckStone(inv.getItem(25))) {
-            ls = new LuckStone(inv.getItem(25));
+        if (LuckStone.isLuckStone(luck)) {
+            ls = new LuckStone(luck);
         }
 
-//                                    new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(inv));
-        new EnchanterResultant(inv.getItem(resultSlot)).setMessages(rune, netLevel, ls, getMessages(inv));
+        new EnchanterResultant(inv.getItem(resultSlot)).setMessages(rune, netLevel, ls, getMessages(i, r, protection, luck));
     }
 }
 
