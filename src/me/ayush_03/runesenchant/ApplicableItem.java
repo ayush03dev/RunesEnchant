@@ -1,18 +1,15 @@
 package me.ayush_03.runesenchant;
 
 import me.ayush_03.runesenchant.utils.HiddenStringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ApplicableItem {
 
@@ -211,9 +208,9 @@ public class ApplicableItem {
                 data.set(new NamespacedKey(RunesEnchant.getInstance(), "re.ce." + ce.toString()), PersistentDataType.STRING,
                         level + ":" + lore.size());
 
-                lore.add(ce.getDisplayName(level));
+                lore.add(ce.getLoreDisplay(level));
             } else {
-                lore.add(ce.getDisplayName(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
+                lore.add(ce.getLoreDisplay(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
             }
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -228,10 +225,10 @@ public class ApplicableItem {
                     int index = getEnchantmnentIndex(ce);
                     PersistentDataContainer data = meta.getPersistentDataContainer();
                     data.set(new NamespacedKey(instance, "re.ce." + ce.toString()), PersistentDataType.STRING, level + ":" + index);
-                    lore.set(index, ce.getDisplayName(level));
+                    lore.set(index, ce.getLoreDisplay(level));
 
                 } else {
-                    lore.set(getEnchantmnentIndex(ce), ce.getDisplayName(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
+                    lore.set(getEnchantmnentIndex(ce), ce.getLoreDisplay(level) + HiddenStringUtils.encodeString("ce-" + ce.toString() + ":" + level));
                 }
                 meta.setLore(lore);
                 item.setItemMeta(meta);
@@ -337,5 +334,13 @@ public class ApplicableItem {
             }
         }
         return 0;
+    }
+
+    public static boolean isSupportedItem(ItemStack item) {
+        Material type = item.getType();
+        String[] toCheck = new String[] {"_AXE", "_PICKAXE", "_SWORD", "BOW", "_BOOTS",
+        "_HELMET", "_CHESTPLATE", "_LEGGINGS", "_HOE"};
+
+        return Arrays.stream(toCheck).anyMatch(str -> type.toString().contains(str));
     }
 }

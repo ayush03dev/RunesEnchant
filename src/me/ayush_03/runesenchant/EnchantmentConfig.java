@@ -22,8 +22,11 @@ public class EnchantmentConfig {
         return getConfigFile().getInt("max-level");
     }
 
+    public String getLoreDisplay() {
+        return getConfigFile().getString("lore-display");
+    }
+
     public String getDisplayName() {
         return getConfigFile().getString("display-name");
     }
-
 }

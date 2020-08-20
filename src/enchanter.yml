@@ -1,1 +1,33 @@
 gui-title: '&d&lEnchanter'
+
+error-button:
+  lore:
+    - '&cError:'
+    - ''
+    - '%error%'
+
+enchant-button:
+  lore:
+    - '&7%enchantment% %level%'
+    - '&7&m---------------'
+    - ''
+    - '%luck-applied-message%\n'
+    - '%success-rate-message%'
+    - '%destroy-rate-message%'
+    - '%check-protection-message%'
+    - ''
+    - '&7Click to enchant!'
+
+
+lore-messages:
+  default: '&7Place the Rune and the item to enchant'
+  no-item: '&cPlace the item'
+  no-rune: '&cPlace the Rune'
+  not-applicable: '&cThe item is not applicable with the applied Rune!'
+  not-protected: '&c&lEnchanting is not protected!'
+  protected: '&a&lEnchanting is protected'
+  max-level: '&cEnchantment on the item is already on a max level'
+  low-level: '&cEnchantment on the item is on a higher level than the Rune'
+  luck-applied: '&d&lLuck Stone %level% &7&l(&a&l+%increase%% Success Rate&7&l)'
+  success-rate: '&a&lSuccess Rate: %success-rate% %'
+  destroy-rate: '&c&lDestroy Rate: %destroy-rate% %'

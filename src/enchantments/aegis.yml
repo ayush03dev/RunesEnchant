@@ -1,6 +1,9 @@
 enabled: true
 
-display-name: '&7Aegis %level%'
+display-name: 'Aegis'
+
+lore-display: '&7Aegis %level%'
+
 max-level: 100
 
 enchant-type: 'AXE'

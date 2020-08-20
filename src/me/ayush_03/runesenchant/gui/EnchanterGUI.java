@@ -23,7 +23,7 @@ public class EnchanterGUI {
 
         ItemStack resultant = new ItemStack(Material.REDSTONE_BLOCK);
         ItemMeta meta = resultant.getItemMeta();
-        meta.setDisplayName("§a§lClick to Enchant");
+        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "NOT READY");
         resultant.setItemMeta(meta);
 
         for (int i = 0; i < 54; i++) {
@@ -36,6 +36,7 @@ public class EnchanterGUI {
 
             ItemStack glass = new ItemStack(mat);
             ItemMeta glassMeta = glass.getItemMeta();
+            glassMeta.setDisplayName(ChatColor.BLACK + "");
             glass.setItemMeta(glassMeta);
 
             inv.setItem(i, glass);
@@ -45,6 +46,7 @@ public class EnchanterGUI {
         inv.setItem(21, getDemoRune());
         inv.setItem(23, getDemoResurrectionStone());
         inv.setItem(25, getDemoLuckStone());
+        new EnchanterResultant(resultant).setErrorMessage(EnchanterItemMessage.DEFAULT);
         inv.setItem(40, resultant);
 
         return inv;
@@ -53,6 +55,7 @@ public class EnchanterGUI {
     public ItemStack getDemoItem() {
         ItemStack demoItem = new ItemStack(Material.DIAMOND_PICKAXE);
         ItemMeta itemMeta = demoItem.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.YELLOW + "Place item here");
         itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         itemMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
         demoItem.setItemMeta(itemMeta);
@@ -62,6 +65,7 @@ public class EnchanterGUI {
     public ItemStack getDemoRune() {
         ItemStack demoRune = RuneUtils.getInstance().buildItemStack(Settings.getInstance().getItemId());
         ItemMeta runeMeta = demoRune.getItemMeta();
+        runeMeta.setDisplayName(ChatColor.YELLOW + "Place Rune here");
         runeMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         runeMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
         demoRune.setItemMeta(runeMeta);
@@ -71,6 +75,7 @@ public class EnchanterGUI {
     public ItemStack getDemoResurrectionStone() {
         ItemStack demoResurrection = new ResurrectionStone().getItem();
         ItemMeta resurrectionItemMeta = demoResurrection.getItemMeta();
+        resurrectionItemMeta.setDisplayName(ChatColor.YELLOW + "Place Resurrection Stone here");
         resurrectionItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         resurrectionItemMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
         resurrectionItemMeta.setLore(null);
@@ -81,6 +86,7 @@ public class EnchanterGUI {
     public ItemStack getDemoLuckStone() {
         ItemStack demoLuck = new ItemStack(new LuckStone(1).getItem().getType());
         ItemMeta luckMeta = demoLuck.getItemMeta();
+        luckMeta.setDisplayName(ChatColor.YELLOW + "Place Luck Stone here");
         luckMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         luckMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
         luckMeta.setLore(null);

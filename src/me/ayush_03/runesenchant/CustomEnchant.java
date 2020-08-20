@@ -48,10 +48,14 @@ public enum CustomEnchant {
         return config;
     }
 
-    public String getDisplayName(int level) {
-        String displayName = config.getDisplayName();
+    public String getLoreDisplay(int level) {
+        String displayName = config.getLoreDisplay();
         displayName = displayName.replace("%level%", level + "");
         displayName = ChatColor.translateAlternateColorCodes('&', displayName);
         return displayName;
+    }
+
+    public String getDisplayName() {
+        return config.getDisplayName();
     }
 }

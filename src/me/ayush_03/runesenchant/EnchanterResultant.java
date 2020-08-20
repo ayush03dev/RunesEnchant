@@ -1,72 +1,88 @@
 package me.ayush_03.runesenchant;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class EnchanterResultant {
 
     ItemStack item;
     ItemMeta meta;
+    FileConfiguration config;
 
     public EnchanterResultant(ItemStack item) {
         this.item = item;
         this.meta = item.getItemMeta();
+        this.config = FileManager.getInstance().getEnchanterConfig();
     }
 
-    public void setMessages(EnchanterItemMessage... messages) {
-        List<String> lore = new ArrayList<>();
+    public void setReadyMessages(Rune rune, LuckStone ls, EnchanterItemMessage... messages) {
+        List<String> list = config.getStringList("enchant-button.lore");
 
-        for (EnchanterItemMessage msg : messages) {
-            lore.add(msg.toString());
+        int net = rune.getSuccessRate();
+        if (ls != null) {
+            net += ls.getIncrease();
+        }
+        if (net > 100) {
+            net = 100;
+        }
+
+        List<String> lore = new ArrayList<>();
+        for (String str : list) {
+
+            if (str.contains("%luck-applied-message%") && ls == null) continue;
+
+            if (Arrays.asList(messages).contains(EnchanterItemMessage.PROTECTED)) {
+                str = str.replace("%check-protection-message%", EnchanterItemMessage.PROTECTED.getMessage());
+            } else {
+                str = str.replace("%check-protection-message%", EnchanterItemMessage.NOT_PROTECTED.getMessage());
+
+            }
+
+            str = str.replace("%enchantment%", rune.getEnchantment().getDisplayName());
+            str = str.replace("%level%", rune.getLevel() + "");
+
+            if (ls != null) {
+                str = str.replace("%luck-applied-message%", EnchanterItemMessage.LUCK_APPLIED.getMessage()
+                        .replace("%level%", ls.getLevel() + "").replace("%increase%", ls.getIncrease() + ""));
+
+                if (str.contains("<br>")) {
+                    str = str.replace("<br>", "");
+                    str = ChatColor.translateAlternateColorCodes('&', str);
+                    lore.add(str);
+                    lore.add("");
+                    continue;
+                }
+            }
+            str =  str.replace("%success-rate-message%",EnchanterItemMessage.SUCCESS_RATE.getMessage().replace(
+                    "%success-rate%", net + ""));
+            str = str.replace("%destroy-rate-message%", EnchanterItemMessage.DESTROY_RATE.getMessage().
+                    replace("%destroy-rate%", rune.getDestroyRate() + ""));
+
+            str = ChatColor.translateAlternateColorCodes('&', str);
+
+            lore.add(str);
         }
 
         meta.setLore(lore);
         item.setItemMeta(meta);
     }
 
-
-    public void setMessages(Rune rune, int netEnchantmentLevel, LuckStone ls, EnchanterItemMessage... messages) {
+    public void setErrorMessage(EnchanterItemMessage errorMessage) {
+        List<String> list = config.getStringList("error-button.lore");
         List<String> lore = new ArrayList<>();
 
-        for (EnchanterItemMessage msg : messages) {
-            String message = msg.toString();
-
-            if (msg == EnchanterItemMessage.RESULT_ENCHANTMENT) {
-                if (rune == null) continue;
-                message = message.replace("%enchantment%", rune.getEnchantment().getDisplayName(netEnchantmentLevel));
-                lore.add(message);
-                lore.add("§7§m------------------");
-                lore.add("");
-                continue;
-            }
-
-            if (msg == EnchanterItemMessage.LUCK_APPLIED) {
-                if (ls == null) continue;
-                message= message.replace("%level%", ls.getLevel() + "");
-                message = message.replace("%increase%", ls.getIncrease() + "");
-            } else if (msg == EnchanterItemMessage.SUCCESS_RATE) {
-                int net = rune.getSuccessRate();
-                if (ls != null) {
-                   net += ls.getIncrease();
-                }
-                if (net > 100) {
-                    net = 100;
-                }
-                message = message.replace("%success%", net + "");
-            } else if (msg == EnchanterItemMessage.DESTROY_RATE) {
-                message = message.replace("%destroy%", rune.getDestroyRate() + "");
-            }
-
-            lore.add(message);
-        }
-
+        list.forEach(str -> {
+            str = str.replace("%error%", errorMessage.getMessage());
+            str = ChatColor.translateAlternateColorCodes('&', str);
+            lore.add(str);
+        });
         meta.setLore(lore);
         item.setItemMeta(meta);
     }
-
 }

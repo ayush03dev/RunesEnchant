@@ -1,6 +1,9 @@
 enabled: true
 
-display-name: '&7Assassin %level%'
+lore-display: '&7Assassin %level%'
+
+display-name: 'Assassin'
+
 max-level: 3
 
 enchant-type: 'SWORD'

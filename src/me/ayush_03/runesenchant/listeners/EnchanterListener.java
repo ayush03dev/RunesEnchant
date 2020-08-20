@@ -2,11 +2,9 @@ package me.ayush_03.runesenchant.listeners;
 
 import me.ayush_03.runesenchant.*;
 import me.ayush_03.runesenchant.gui.EnchanterGUI;
-import me.ayush_03.runesenchant.utils.HiddenStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,11 +12,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -33,10 +30,17 @@ public class EnchanterListener implements Listener {
             Player p = (Player) e.getWhoClicked();
             if (e.getInventory().getHolder() instanceof GUIHolder) {
                 GUIHolder holder = new GUIHolder(p);
-                if (holder.getPlayer().getUniqueId() == p.getUniqueId()) {
-                    Inventory inv = e.getInventory();
-                    int resultSlot = 40; // To be reset later...
+                if (holder.getPlayer().getUniqueId().equals(p.getUniqueId())) {
+
+                   if (e.getAction() == InventoryAction.COLLECT_TO_CURSOR || e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+                       e.setCancelled(true);
+                       return;
+                   }
+
+                    // To be reset later...
+                    int resultSlot = 40;
                     int slot = e.getRawSlot();
+                    Inventory inv = e.getInventory();
 
                     if (slot == resultSlot) {
                         ItemStack btn = e.getCurrentItem();
@@ -149,8 +153,14 @@ public class EnchanterListener implements Listener {
                                 return;
                             }
 
+                            if (cursor.getAmount() != 1) {
+                                e.setCancelled(true);
+                                p.sendMessage(ChatColor.RED + "Amount of item cannot be more than 1!");
+                                return;
+                            }
+
                             if (slot == 19) {
-                                if (cursor.getType() != Material.DIAMOND_SWORD) {
+                                if (!ApplicableItem.isSupportedItem(cursor)) {
                                     e.setCancelled(true);
                                     return;
                                 }
@@ -199,7 +209,6 @@ public class EnchanterListener implements Listener {
                                 demo = null;
                             }
 
-
                             update(inv, slot, InventoryAction.PICKUP_ALL, resultSlot, e.getCursor(),
                                     current);
                             e.setCancelled(true);
@@ -211,7 +220,8 @@ public class EnchanterListener implements Listener {
                         ItemStack current = e.getCurrentItem();
                         if (current == null || current.getType() == Material.AIR) return;
                         if (!Rune.isRune(current) && !ResurrectionStone.isRessurectionStone(current)
-                                && !LuckStone.isLuckStone(current) && current.getType() != Material.DIAMOND_SWORD) {
+                                && !LuckStone.isLuckStone(current) && !ApplicableItem.isSupportedItem(current)) {
+//                                && !LuckStone.isLuckStone(current) && current.getType() != Material.DIAMOND_SWORD) {
                             e.setCancelled(true);
                         }
                     }
@@ -247,6 +257,20 @@ public class EnchanterListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onDrag(InventoryDragEvent e) {
+        if (e.getWhoClicked() instanceof Player) {
+            if (e.getInventory().getHolder() instanceof GUIHolder) {
+                for (int i : e.getRawSlots()) {
+                    if (i < 54) {
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
     private boolean isDemoItem(ItemStack item) {
         if (item == null || item.getType() == Material.AIR) return true;
         return item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.ARROW_DAMAGE);
@@ -278,16 +302,8 @@ public class EnchanterListener implements Listener {
                 item = new ItemStack(mat, 1, (byte) 14);
             }
         }
-
         ItemMeta meta = item.getItemMeta();
-
-        if (RunesEnchant.is13()) {
-            PersistentDataContainer data = meta.getPersistentDataContainer();
-            data.set(new NamespacedKey(RunesEnchant.getInstance(), "re.glass"), PersistentDataType.STRING, "true");
-            meta.setDisplayName(ChatColor.BLACK + "");
-        } else {
-            meta.setDisplayName(HiddenStringUtils.encodeString("glass"));
-        }
+        meta.setDisplayName(ChatColor.BLACK + "");
         item.setItemMeta(meta);
         return item;
     }
@@ -299,7 +315,7 @@ public class EnchanterListener implements Listener {
         List<EnchanterItemMessage> messageList = new ArrayList<>(4);
 
         if (isDemoItem(item) && isDemoItem(rune)) {
-            messageList.add(EnchanterItemMessage.UNCHANGED);
+            messageList.add(EnchanterItemMessage.DEFAULT);
             ;
         } else if (isDemoItem(item)) {
             messageList.add(EnchanterItemMessage.NO_ITEM);
@@ -335,7 +351,7 @@ public class EnchanterListener implements Listener {
                 messageList.add(EnchanterItemMessage.SUCCESS_RATE);
                 messageList.add(EnchanterItemMessage.DESTROY_RATE);
 
-                if (isDemoItem(protection)) {
+                if (isDemoItem(protection) && !new ApplicableItem(item).hasProtectionCharm()) {
                     messageList.add(EnchanterItemMessage.NOT_PROTECTED);
                 } else {
                     messageList.add(EnchanterItemMessage.PROTECTED);
@@ -351,7 +367,7 @@ public class EnchanterListener implements Listener {
     private boolean hasErrors(ItemStack item, ItemStack rune, ItemStack rs, ItemStack ls) {
         for (EnchanterItemMessage msg : getMessages(item, rune, rs, ls)) {
             if (msg == EnchanterItemMessage.NO_ITEM || msg == EnchanterItemMessage.NO_RUNE
-                    || msg == EnchanterItemMessage.UNCHANGED || msg == EnchanterItemMessage.NOT_APPLICABLE
+                    || msg == EnchanterItemMessage.DEFAULT || msg == EnchanterItemMessage.NOT_APPLICABLE
                     || msg == EnchanterItemMessage.LOW_LEVEL || msg == EnchanterItemMessage.MAX_LEVEL) return true;
         }
         return false;
@@ -431,12 +447,22 @@ public class EnchanterListener implements Listener {
         }
 
         if (hasErrors(i, r, protection, luck)) {
-            inv.setItem(resultSlot, new ItemStack(Material.REDSTONE_BLOCK));
-            new EnchanterResultant(inv.getItem(resultSlot)).setMessages(getMessages(i, r, protection, luck));
+            ItemStack redstoneBlock = new ItemStack(Material.REDSTONE_BLOCK);
+            ItemMeta itemMeta = redstoneBlock.getItemMeta();
+            itemMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "NOT READY");
+            redstoneBlock.setItemMeta(itemMeta);
+            inv.setItem(resultSlot, redstoneBlock);
+            new EnchanterResultant(inv.getItem(resultSlot)).setErrorMessage(getMessages(i, r, protection, luck)[0]);
             return;
         }
 
-        inv.setItem(resultSlot, new ItemStack(Material.EMERALD_BLOCK));
+        ItemStack emeraldBlock = new ItemStack(Material.EMERALD_BLOCK);
+        ItemMeta itemMeta = emeraldBlock.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "ENCHANT");
+        emeraldBlock.setItemMeta(itemMeta);
+        emeraldBlock.setItemMeta(itemMeta);
+
+        inv.setItem(resultSlot, emeraldBlock);
         Rune rune = new Rune(inv.getItem(21));
         ApplicableItem item = new ApplicableItem(inv.getItem(19));
         int netLevel = rune.getLevel();
@@ -457,7 +483,11 @@ public class EnchanterListener implements Listener {
             ls = new LuckStone(luck);
         }
 
-        new EnchanterResultant(inv.getItem(resultSlot)).setMessages(rune, netLevel, ls, getMessages(i, r, protection, luck));
+        if (hasErrors(item.getItemStack(), r, protection, luck)) {
+            new EnchanterResultant(inv.getItem(resultSlot)).setErrorMessage(getMessages(i, r, protection, luck)[0]);
+        } else {
+            new EnchanterResultant(inv.getItem(resultSlot)).setReadyMessages(rune, ls, getMessages(i, r, protection, luck));
+        }
     }
 }
 
