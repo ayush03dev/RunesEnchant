@@ -23,7 +23,6 @@ public class PVPEffects extends EnchantmentEffect implements Listener {
 
             ApplicableItem item = new ApplicableItem(damager.getInventory().getItemInMainHand());
             Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
-            System.out.println(enchants);
 
             if (enchants.containsKey(CustomEnchant.ASSASSIN)) {
                 CustomEnchant ce = CustomEnchant.ASSASSIN;

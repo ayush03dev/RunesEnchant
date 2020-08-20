@@ -1,6 +1,8 @@
 package me.ayush_03.runesenchant;
 
+import com.codingforcookies.armorequip.ArmorListener;
 import me.ayush_03.runesenchant.commands.RunesCommand;
+import me.ayush_03.runesenchant.effects.ArmorEffects;
 import me.ayush_03.runesenchant.effects.PVPEffects;
 import me.ayush_03.runesenchant.gui.EnchanterGUI;
 import me.ayush_03.runesenchant.listeners.EnchanterListener;
@@ -32,6 +34,8 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new RuneApplyListener(), this);
         getServer().getPluginManager().registerEvents(new PVPEffects(), this);
         getServer().getPluginManager().registerEvents(new EnchanterListener(), this);
+        getServer().getPluginManager().registerEvents(new ArmorListener(null), this);
+        getServer().getPluginManager().registerEvents(new ArmorEffects(), this);
         getCommand("runes").setExecutor(new RunesCommand());
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         RunesEnchant.version = Integer.parseInt(version.replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));

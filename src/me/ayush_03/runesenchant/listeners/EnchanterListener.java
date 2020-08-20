@@ -81,7 +81,8 @@ public class EnchanterListener implements Listener {
                             if (chance(netSuccess)) {
 
                                 if (level == 0) {
-                                    item.addEnchantment(ce, level + 1);
+                                    item.addEnchantment(ce, rune.getLevel());
+
                                 } else {
                                     int setLevel;
                                     if (rune.getLevel() == level) {
@@ -486,7 +487,7 @@ public class EnchanterListener implements Listener {
         if (hasErrors(item.getItemStack(), r, protection, luck)) {
             new EnchanterResultant(inv.getItem(resultSlot)).setErrorMessage(getMessages(i, r, protection, luck)[0]);
         } else {
-            new EnchanterResultant(inv.getItem(resultSlot)).setReadyMessages(rune, ls, getMessages(i, r, protection, luck));
+            new EnchanterResultant(inv.getItem(resultSlot)).setReadyMessages(rune, ls, netLevel, getMessages(i, r, protection, luck));
         }
     }
 }

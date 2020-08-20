@@ -1,6 +1,5 @@
 package me.ayush_03.runesenchant;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public enum CustomEnchant {

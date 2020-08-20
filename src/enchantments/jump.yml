@@ -1,0 +1,12 @@
+enabled: true
+
+lore-display: '&7Jump %level%'
+
+display-name: 'Jump'
+
+max-level: 3
+
+enchant-type: 'BOOTS'
+
+potion-level:
+  expression: '%level%'

@@ -10,8 +10,7 @@ enchant-type: 'SWORD'
 
 chance:
   expression: '(%level% + 1) * 2'
-  override:
-    level_1: 15
+  level_1: 15
 
 potion-level:
   expression: '%level%'

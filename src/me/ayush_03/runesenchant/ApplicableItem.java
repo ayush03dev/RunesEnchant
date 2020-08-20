@@ -341,6 +341,6 @@ public class ApplicableItem {
         String[] toCheck = new String[] {"_AXE", "_PICKAXE", "_SWORD", "BOW", "_BOOTS",
         "_HELMET", "_CHESTPLATE", "_LEGGINGS", "_HOE"};
 
-        return Arrays.stream(toCheck).anyMatch(str -> type.toString().contains(str));
+        return Arrays.stream(toCheck).anyMatch(str -> type.toString().endsWith(str));
     }
 }

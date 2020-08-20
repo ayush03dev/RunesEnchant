@@ -45,7 +45,7 @@ public class EnchantmentEffect {
             if (expression == null) return 0;
 
             try {
-                return ExpressionResolver.getInstance().solve(expression);
+                return ExpressionResolver.getInstance().solve(expression.replace("%level%", level + ""));
             } catch (ScriptException e) {
                 e.printStackTrace();
                 System.out.println("Invalid expression!");

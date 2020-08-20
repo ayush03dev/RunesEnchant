@@ -21,7 +21,7 @@ public class EnchanterResultant {
         this.config = FileManager.getInstance().getEnchanterConfig();
     }
 
-    public void setReadyMessages(Rune rune, LuckStone ls, EnchanterItemMessage... messages) {
+    public void setReadyMessages(Rune rune, LuckStone ls, int netLevel, EnchanterItemMessage... messages) {
         List<String> list = config.getStringList("enchant-button.lore");
 
         int net = rune.getSuccessRate();
@@ -45,7 +45,7 @@ public class EnchanterResultant {
             }
 
             str = str.replace("%enchantment%", rune.getEnchantment().getDisplayName());
-            str = str.replace("%level%", rune.getLevel() + "");
+            str = str.replace("%level%", netLevel + "");
 
             if (ls != null) {
                 str = str.replace("%luck-applied-message%", EnchanterItemMessage.LUCK_APPLIED.getMessage()
