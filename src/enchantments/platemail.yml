@@ -1,0 +1,16 @@
+enabled: true
+
+lore-display: '&7Platemail %level%'
+
+display-name: 'Platemail'
+
+max-level: 3
+
+enchant-type: 'CHESTPLATE'
+
+potion-level:
+  resistance:
+    expression: '%level%'
+
+  slowness:
+    expression: '%level%'

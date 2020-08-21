@@ -32,6 +32,23 @@ public class ArmorEffects extends EnchantmentEffect implements Listener {
             if (enchants.containsKey(CustomEnchant.JUMP)) {
                 p.removePotionEffect(PotionEffectType.JUMP);
             }
+
+            if (enchants.containsKey(CustomEnchant.STRENGTH)) {
+                p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+            }
+
+            if (enchants.containsKey(CustomEnchant.SWIMMER)) {
+                p.removePotionEffect(PotionEffectType.WATER_BREATHING);
+            }
+
+            if (enchants.containsKey(CustomEnchant.PLATEMAIL)) {
+                p.removePotionEffect(PotionEffectType.SLOW);
+                p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+            }
+
+            if (enchants.containsKey(CustomEnchant.LUMOS)) {
+                p.removePotionEffect(PotionEffectType.NIGHT_VISION);
+            }
         }
 
         if (e.getNewArmorPiece() != null) {
@@ -50,8 +67,30 @@ public class ArmorEffects extends EnchantmentEffect implements Listener {
                         getValue(CustomEnchant.JUMP, level, "potion-level") - 1));
             }
 
+            if (enchants.containsKey(CustomEnchant.STRENGTH) && CustomEnchant.STRENGTH.getConfig().isEnabled()) {
+                int level = enchants.get(CustomEnchant.STRENGTH);
+                p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE,
+                        getValue(CustomEnchant.STRENGTH, level, "potion-level") - 1));
+            }
+
+            if (enchants.containsKey(CustomEnchant.SWIMMER) && CustomEnchant.SWIMMER.getConfig().isEnabled()) {
+                int level = enchants.get(CustomEnchant.SWIMMER);
+                p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE,
+                        getValue(CustomEnchant.SWIMMER, level, "potion-level") - 1));
+            }
+
+            if (enchants.containsKey(CustomEnchant.LUMOS) && CustomEnchant.LUMOS.getConfig().isEnabled()) {
+                p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0));
+            }
+
+            if (enchants.containsKey(CustomEnchant.PLATEMAIL) && CustomEnchant.PLATEMAIL.getConfig().isEnabled()) {
+                int level = enchants.get(CustomEnchant.PLATEMAIL);
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE,
+                        getValue(CustomEnchant.PLATEMAIL, level, "potion-level.slowness") - 1));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE,
+                        getValue(CustomEnchant.PLATEMAIL, level, "potion-level.resistance") - 1));
+            }
+
         }
-
     }
-
 }

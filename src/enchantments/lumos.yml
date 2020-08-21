@@ -1,0 +1,9 @@
+enabled: true
+
+lore-display: '&7Lumos %level%'
+
+display-name: 'Lumos'
+
+max-level: 1
+
+enchant-type: 'HELMET'

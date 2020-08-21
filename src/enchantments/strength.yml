@@ -1,0 +1,12 @@
+enabled: true
+
+lore-display: '&7Strength %level%'
+
+display-name: 'Strength'
+
+max-level: 3
+
+enchant-type: 'CHESTPLATE'
+
+potion-level:
+  expression: '%level%'

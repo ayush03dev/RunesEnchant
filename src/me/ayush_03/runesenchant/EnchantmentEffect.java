@@ -15,10 +15,10 @@ public class EnchantmentEffect {
 
         if (section == null) return 0;
 
-        int override = config.getConfigFile().getInt(section + "level_" + level);
+        int override = config.getConfigFile().getInt(section.getName() + "level_" + level);
 
         if (override == 0) {
-            String expression = config.getConfigFile().getString(section + ".expression");
+            String expression = config.getConfigFile().getString(section.getName() + ".expression");
             if (expression == null) return 0;
             try {
                 return ExpressionResolver.getInstance().solve(expression);
