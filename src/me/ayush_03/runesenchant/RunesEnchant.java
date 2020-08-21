@@ -19,6 +19,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+
 public class RunesEnchant extends JavaPlugin implements Listener {
 
     private static RunesEnchant instance;
@@ -34,7 +36,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new RuneApplyListener(), this);
         getServer().getPluginManager().registerEvents(new PVPEffects(), this);
         getServer().getPluginManager().registerEvents(new EnchanterListener(), this);
-        getServer().getPluginManager().registerEvents(new ArmorListener(null), this);
+        getServer().getPluginManager().registerEvents(new ArmorListener(new ArrayList<>()), this);
         getServer().getPluginManager().registerEvents(new ArmorEffects(), this);
         getCommand("runes").setExecutor(new RunesCommand());
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];

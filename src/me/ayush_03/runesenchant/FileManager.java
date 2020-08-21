@@ -9,8 +9,9 @@ import java.io.File;
 public class FileManager {
 
     private Plugin p;
+    private File dataFolder;
 
-    private static FileManager instance = new FileManager();
+    private static final FileManager instance = new FileManager();
 
     public static FileManager getInstance() {
         return instance;
@@ -18,6 +19,9 @@ public class FileManager {
 
     public void setup(Plugin p) {
         this.p = p;
+        File dir = p.getDataFolder();
+        if (!dir.exists()) dir.mkdir();
+        this.dataFolder = dir;
     }
 
     public FileConfiguration getEnchantmentConfig(CustomEnchant ce) {
@@ -31,50 +35,41 @@ public class FileManager {
     }
 
     public FileConfiguration getRuneConfig() {
-        File dir = p.getDataFolder();
-
-        if (!dir.exists()) dir.mkdir();
-        File f = new File(dir + File.separator + "runes.yml");
+        File f = new File(dataFolder + File.separator + "runes.yml");
 
         if (!f.exists()) return null;
         return YamlConfiguration.loadConfiguration(f);
     }
 
     public FileConfiguration getProtectionCharmConfig() {
-        File dir = p.getDataFolder();
-
-        if (!dir.exists()) dir.mkdir();
-        File f = new File(dir + File.separator + "protection-charm.yml");
+        File f = new File(dataFolder + File.separator + "protection-charm.yml");
 
         if (!f.exists()) return null;
         return YamlConfiguration.loadConfiguration(f);
     }
 
     public FileConfiguration getResurrectionStoneConfig() {
-        File dir = p.getDataFolder();
-
-        if (!dir.exists()) dir.mkdir();
-        File f = new File(dir + File.separator + "resurrection-stone.yml");
+        File f = new File(dataFolder + File.separator + "resurrection-stone.yml");
         if (!f.exists()) return null;
         return YamlConfiguration.loadConfiguration(f);
     }
 
     public FileConfiguration getLuckStoneConfig() {
-        File dir = p.getDataFolder();
-
-        if (!dir.exists()) dir.mkdir();
-        File f = new File(dir + File.separator + "luck-stone.yml");
+        File f = new File(dataFolder + File.separator + "luck-stone.yml");
 
         if (!f.exists()) return null;
         return YamlConfiguration.loadConfiguration(f);
     }
 
     public FileConfiguration getEnchanterConfig() {
-        File dir = p.getDataFolder();
+        File f = new File(dataFolder + File.separator + "enchanter.yml");
 
-        if (!dir.exists()) dir.mkdir();
-        File f = new File(dir + File.separator + "enchanter.yml");
+        if (!f.exists()) return null;
+        return YamlConfiguration.loadConfiguration(f);
+    }
 
+    public FileConfiguration getGroupConfig(String groupName) {
+        File f = new File(dataFolder + File.separator + groupName.toLowerCase() + ".yml");
         if (!f.exists()) return null;
         return YamlConfiguration.loadConfiguration(f);
     }

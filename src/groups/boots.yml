@@ -1,0 +1,9 @@
+display-item-id: 'DIAMOND_BOOTS:0'
+
+description: 'All the boots enchantments here'
+
+display-name: '&cBoots Enchantments'
+
+enchantments:
+  - 'speed'
+  - 'jump'
