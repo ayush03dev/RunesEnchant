@@ -1,0 +1,18 @@
+enabled: true
+
+lore-display: '&7Turmoil %level%'
+
+display-name: 'Turmoil'
+
+max-level: 3
+
+enchant-type: 'AXE'
+
+chance:
+  expression: '%level% * 2'
+
+potion-level:
+  expression: '%level%'
+
+potion-duration:
+  expression: '(%level% + 1) * 5'

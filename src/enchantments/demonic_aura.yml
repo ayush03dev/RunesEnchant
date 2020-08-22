@@ -1,0 +1,19 @@
+enabled: true
+
+lore-display: '&7Demonic Aura %level%'
+
+display-name: 'Demonic Aura'
+
+max-level: 3
+
+enchant-type: 'ARMOR'
+
+chance:
+  expression: '(%level% + 1) * 2'
+  level_1: 15
+
+potion-level:
+  expression: '%level%'
+
+potion-duration:
+  expression: '(%level% + 1) * 3'

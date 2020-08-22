@@ -1,0 +1,18 @@
+enabled: true
+
+lore-display: '&7Corruption %level%'
+
+display-name: 'Corruption'
+
+max-level: 5
+
+enchant-type: 'AXE'
+
+chance:
+  expression: '%level% * 2'
+
+potion-level:
+  expression: '%level%'
+
+potion-duration:
+  expression: '(%level% + 1) * 5'

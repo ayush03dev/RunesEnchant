@@ -1,0 +1,20 @@
+# https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html
+
+enabled: true
+
+lore-display: '&7Battlecry %level%'
+
+display-name: 'Battlecry'
+
+max-level: 3
+
+enchant-type: 'AXE'
+
+chance:
+  expression: '(%level% + 1) * 2'
+
+remove-potions:
+  - 'WITHER'
+  - 'WEAKNESS'
+  - 'CONFUSION'
+  - 'BLINDNESS'

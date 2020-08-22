@@ -1,0 +1,21 @@
+# https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html
+
+enabled: true
+
+lore-display: '&7Holy Smite %level%'
+
+display-name: 'Holy Smite'
+
+max-level: 3
+
+enchant-type: 'AXE'
+
+chance:
+  expression: '(%level% + 1) * 2'
+  level_1: 15
+
+remove-potions:
+  - 'ABSORPTION'
+  - 'SPEED'
+  - 'JUMP'
+  - 'INCREASE_DAMAGE'
