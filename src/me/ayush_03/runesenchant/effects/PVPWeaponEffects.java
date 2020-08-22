@@ -1,6 +1,7 @@
 package me.ayush_03.runesenchant.effects;
 
 import me.ayush_03.runesenchant.ApplicableItem;
+import me.ayush_03.runesenchant.ConfigDataType;
 import me.ayush_03.runesenchant.CustomEnchant;
 import me.ayush_03.runesenchant.EnchantmentEffect;
 import org.bukkit.Bukkit;
@@ -16,7 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.List;
 import java.util.Map;
 
-public class PVPEffects extends EnchantmentEffect implements Listener {
+public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
 
     @EventHandler
     public void weaponListner(EntityDamageByEntityEvent e) {
@@ -34,8 +35,8 @@ public class PVPEffects extends EnchantmentEffect implements Listener {
                 CustomEnchant ce = CustomEnchant.ASSASSIN;
                 int level = enchants.get(ce);
                 if (proc(ce, level)) {
-                    int potionLevel = getValue(ce, level, "potion-level");
-                    int potionDuration = getValue(ce, level, "potion-duration");
+                    int potionLevel = (int) getValue(ce, level, "potion-level");
+                    int potionDuration = (int) getValue(ce, level, "potion-duration");
                     en.addPotionEffect(new PotionEffect(PotionEffectType.POISON, potionDuration * 20, potionLevel - 1));
                 }
             }
@@ -44,8 +45,8 @@ public class PVPEffects extends EnchantmentEffect implements Listener {
                 CustomEnchant ce = CustomEnchant.CORRUPTION;
                 int level = enchants.get(ce);
                 if (proc(ce, level)) {
-                    int potionLevel = getValue(ce, level, "potion-level");
-                    int potionDuration = getValue(ce, level, "potion-duration");
+                    int potionLevel = (int) getValue(ce, level, "potion-level");
+                    int potionDuration = (int) getValue(ce, level, "potion-duration");
                     en.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, potionDuration * 20, potionLevel - 1));
                 }
             }
@@ -54,8 +55,8 @@ public class PVPEffects extends EnchantmentEffect implements Listener {
                 CustomEnchant ce = CustomEnchant.TURMOIL;
                 int level = enchants.get(ce);
                 if (proc(ce, level)) {
-                    int potionLevel = getValue(ce, level, "potion-level");
-                    int potionDuration = getValue(ce, level, "potion-duration");
+                    int potionLevel = (int) getValue(ce, level, "potion-level");
+                    int potionDuration = (int) getValue(ce, level, "potion-duration");
                     en.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, potionDuration * 20, potionLevel - 1));
                 }
             }
@@ -64,8 +65,8 @@ public class PVPEffects extends EnchantmentEffect implements Listener {
                 CustomEnchant ce = CustomEnchant.HEX;
                 int level = enchants.get(ce);
                 if (proc(ce, level)) {
-                    int potionLevel = getValue(ce, level, "potion-level");
-                    int potionDuration = getValue(ce, level, "potion-duration");
+                    int potionLevel = (int) getValue(ce, level, "potion-level");
+                    int potionDuration = (int) getValue(ce, level, "potion-duration");
                     en.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, potionDuration * 20, potionLevel - 1));
                 }
             }
@@ -114,32 +115,17 @@ public class PVPEffects extends EnchantmentEffect implements Listener {
                     });
                 }
             }
-        }
-    }
 
-    public void armorListener(EntityDamageByEntityEvent e) {
-        // TODO: Later check if entity is instance of Player as well...
-
-//        if (e.getDamager() instanceof Player) {
-            LivingEntity en = (LivingEntity) e.getEntity();
-            Player damager = (Player) e.getDamager();
-
-            Player p = (Player) en;
-
-            for (ItemStack armor : getArmor(p)) {
-                ApplicableItem item = new ApplicableItem(armor);
-                Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
-
-                if (enchants.containsKey(CustomEnchant.DEMONIC_AURA)) {
-                    CustomEnchant ce = CustomEnchant.DEMONIC_AURA;
-                    int level = enchants.get(ce);
+            if (enchants.containsKey(CustomEnchant.EXECUTE)) {
+                CustomEnchant ce = CustomEnchant.EXECUTE;
+                int level = enchants.get(ce);
+                if (damager.isSneaking()) {
                     if (proc(ce, level)) {
-                        int potionLevel = getValue(ce, level, "potion-level");
-                        int potionDuration = getValue(ce, level, "potion-duration");
-                        en.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, potionDuration * 20, potionLevel -1));
+                        float multiplier = getValue(ce, level, "multiplier");
+                        e.setDamage(e.getDamage() * multiplier);
                     }
                 }
             }
-//        }
+        }
     }
 }

@@ -1,0 +1,19 @@
+enabled: true
+
+lore-display: '&7Execute %level%'
+
+display-name: 'Execute'
+
+max-level: 5
+
+enchant-type: 'WEAPON'
+
+chance:
+  expression: '(%level% + 1) * 2'
+
+multiplier:
+  level_1: 1.2
+  level_2: 1.4
+  level_3: 1.5
+  level_4: 1.75
+  level_5: 2

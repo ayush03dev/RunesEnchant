@@ -2,8 +2,10 @@ package me.ayush_03.runesenchant;
 
 import com.codingforcookies.armorequip.ArmorListener;
 import me.ayush_03.runesenchant.commands.RunesCommand;
-import me.ayush_03.runesenchant.effects.ArmorEffects;
-import me.ayush_03.runesenchant.effects.PVPEffects;
+import me.ayush_03.runesenchant.effects.NonPVPArmorEffects;
+import me.ayush_03.runesenchant.effects.PVPArmorEffects;
+import me.ayush_03.runesenchant.effects.PotionArmorEffects;
+import me.ayush_03.runesenchant.effects.PVPWeaponEffects;
 import me.ayush_03.runesenchant.gui.EnchanterGUI;
 import me.ayush_03.runesenchant.listeners.EnchanterListener;
 import me.ayush_03.runesenchant.listeners.RuneApplyListener;
@@ -34,10 +36,15 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         instance = this;
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new RuneApplyListener(), this);
-        getServer().getPluginManager().registerEvents(new PVPEffects(), this);
+        getServer().getPluginManager().registerEvents(new PVPWeaponEffects(), this);
         getServer().getPluginManager().registerEvents(new EnchanterListener(), this);
         getServer().getPluginManager().registerEvents(new ArmorListener(new ArrayList<>()), this);
-        getServer().getPluginManager().registerEvents(new ArmorEffects(), this);
+        getServer().getPluginManager().registerEvents(new PotionArmorEffects(), this);
+        getServer().getPluginManager().registerEvents(new PVPArmorEffects(), this);
+        getServer().getPluginManager().registerEvents(new NonPVPArmorEffects(), this);
+
+
+
         getCommand("runes").setExecutor(new RunesCommand());
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         RunesEnchant.version = Integer.parseInt(version.replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));

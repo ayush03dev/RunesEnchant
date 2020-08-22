@@ -58,4 +58,8 @@ public enum CustomEnchant {
     public String getDisplayName() {
         return config.getDisplayName();
     }
+
+    public boolean isEnabled() {
+        return config.isEnabled();
+    }
 }

@@ -17,10 +17,10 @@ public enum EnchantType {
         String name = item.getType().toString();
 
         if (this == ARMOR) {
-            return name.contains("_HELMET") || name.contains("_CHESTPLATE")
-                    || name.contains("_LEGGINGS") || name.contains("_BOOTS");
+            return name.endsWith("_HELMET") || name.endsWith("_CHESTPLATE")
+                    || name.endsWith("_LEGGINGS") || name.endsWith("_BOOTS");
         } else if (this == WEAPON) {
-            return name.contains("_SWORD") || name.contains("_sAXE");
+            return name.endsWith("_SWORD") || name.endsWith("_AXE");
         } else {
             return name.contains("_" + toString());
         }

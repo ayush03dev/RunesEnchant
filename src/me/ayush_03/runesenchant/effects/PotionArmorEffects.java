@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
 
-public class ArmorEffects extends EnchantmentEffect implements Listener {
+public class PotionArmorEffects extends EnchantmentEffect implements Listener {
 
     // SPEED, JUMP
 
@@ -58,25 +58,25 @@ public class ArmorEffects extends EnchantmentEffect implements Listener {
             if (enchants.containsKey(CustomEnchant.SPEED) && CustomEnchant.SPEED.getConfig().isEnabled()) {
                 int level = enchants.get(CustomEnchant.SPEED);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE,
-                        getValue(CustomEnchant.SPEED, level, "potion-level") - 1));
+                        (int) getValue(CustomEnchant.SPEED, level, "potion-level") - 1));
             }
 
             if (enchants.containsKey(CustomEnchant.JUMP) && CustomEnchant.JUMP.getConfig().isEnabled()) {
                 int level = enchants.get(CustomEnchant.JUMP);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE,
-                        getValue(CustomEnchant.JUMP, level, "potion-level") - 1));
+                        (int) getValue(CustomEnchant.JUMP, level, "potion-level") - 1));
             }
 
             if (enchants.containsKey(CustomEnchant.STRENGTH) && CustomEnchant.STRENGTH.getConfig().isEnabled()) {
                 int level = enchants.get(CustomEnchant.STRENGTH);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE,
-                        getValue(CustomEnchant.STRENGTH, level, "potion-level") - 1));
+                        (int) getValue(CustomEnchant.STRENGTH, level, "potion-level") - 1));
             }
 
             if (enchants.containsKey(CustomEnchant.SWIMMER) && CustomEnchant.SWIMMER.getConfig().isEnabled()) {
                 int level = enchants.get(CustomEnchant.SWIMMER);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE,
-                        getValue(CustomEnchant.SWIMMER, level, "potion-level") - 1));
+                        (int) getValue(CustomEnchant.SWIMMER, level, "potion-level") - 1));
             }
 
             if (enchants.containsKey(CustomEnchant.LUMOS) && CustomEnchant.LUMOS.getConfig().isEnabled()) {
@@ -86,9 +86,9 @@ public class ArmorEffects extends EnchantmentEffect implements Listener {
             if (enchants.containsKey(CustomEnchant.PLATEMAIL) && CustomEnchant.PLATEMAIL.getConfig().isEnabled()) {
                 int level = enchants.get(CustomEnchant.PLATEMAIL);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE,
-                        getValue(CustomEnchant.PLATEMAIL, level, "potion-level.slowness") - 1));
+                        (int) getValue(CustomEnchant.PLATEMAIL, level, "potion-level.slowness") - 1));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE,
-                        getValue(CustomEnchant.PLATEMAIL, level, "potion-level.resistance") - 1));
+                        (int) getValue(CustomEnchant.PLATEMAIL, level, "potion-level.resistance") - 1));
             }
 
         }

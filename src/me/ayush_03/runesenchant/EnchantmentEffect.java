@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class EnchantmentEffect {
+public abstract class EnchantmentEffect {
 
     public float getChance(CustomEnchant ce, int level) {
         EnchantmentConfig config = ce.getConfig();
@@ -38,13 +38,13 @@ public class EnchantmentEffect {
         }
     }
 
-    public int getValue(CustomEnchant ce, int level, String path) {
+    public float getValue(CustomEnchant ce, int level, String path) {
         FileConfiguration config = ce.getConfig().getConfigFile();
         if (config == null) return 0;
         ConfigurationSection section = config.getConfigurationSection(path);
         if (section == null) return 0;
 
-        int value = config.getInt(path + ".level_" + level);
+        float value = (float) config.getDouble(path + ".level_" + level);
         if (value == 0) {
 
             String expression = config.getString(path + ".expression");
@@ -66,6 +66,29 @@ public class EnchantmentEffect {
         FileConfiguration config = ce.getConfig().getConfigFile();
         if (config == null) return null;
         return config.get(path);
+    }
+
+    public Object get(CustomEnchant ce, int level, String path, ConfigDataType type) {
+        FileConfiguration config = ce.getConfig().getConfigFile();
+        if (config == null) return null;
+
+        if (type == ConfigDataType.INTEGER) {
+            return config.getInt(path);
+        }
+
+        if (type == ConfigDataType.FLOAT) {
+            return config.getDouble(path);
+        }
+
+        if (type == ConfigDataType.LIST) {
+            return config.getString(path);
+        }
+
+        if (type == ConfigDataType.BOOLEAN) {
+            return config.getBoolean(path);
+        }
+
+        return null;
     }
 
 //    public int generateRandom() {

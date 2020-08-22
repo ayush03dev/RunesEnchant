@@ -10,5 +10,3 @@ enchant-type: 'AXE'
 
 chance:
   expression: '(%level% + 1) * 2'
-  override:
-    level_1: 15

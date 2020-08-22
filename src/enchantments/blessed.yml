@@ -1,0 +1,12 @@
+enabled: true
+
+display-name: 'Blessed'
+
+lore-display: '&aBlessed &b%level%'
+
+max-level: 1
+
+enchant-type: 'ARMOR'
+
+chance:
+  expression: '(%level% + 1) * 2'
