@@ -1,0 +1,12 @@
+enabled: true
+
+lore-display: '&7Pyromaniac %level%'
+
+display-name: 'Pyromaniac'
+
+max-level: 5
+
+enchant-type: 'ARMOR'
+
+chance:
+  expression: '(%level% + 1) * 2'
