@@ -41,6 +41,8 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new NonPVPArmorEffects(), this);
         getServer().getPluginManager().registerEvents(new ToolEffects(), this);
         getServer().getPluginManager().registerEvents(new PVEWeaponEffects(), this);
+        getServer().getPluginManager().registerEvents(new ArrowEffects(), this);
+
 
         getCommand("runes").setExecutor(new RunesCommand());
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];

@@ -112,6 +112,22 @@ public class ApplicableItem {
         item.setItemMeta(meta);
     }
 
+    public boolean hasEnchantments() {
+        if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
+            if (RunesEnchant.is13()) {
+                return !item.getItemMeta().getPersistentDataContainer().isEmpty();
+            }
+
+            for (String str : item.getItemMeta().getLore()) {
+                if (HiddenStringUtils.hasHiddenString(str) && HiddenStringUtils.extractHiddenString(str).contains("ce-")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public boolean hasEnchantment(CustomEnchant ce) {
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
 

@@ -3,6 +3,8 @@ package me.ayushdev.runesenchant.effects;
 import me.ayushdev.runesenchant.ApplicableItem;
 import me.ayushdev.runesenchant.CustomEnchant;
 import me.ayushdev.runesenchant.EnchantmentEffect;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
 
@@ -21,12 +24,28 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
 
         // TODO: Later check if entity is instance of Player as well...
 
-        if (e.getDamager() instanceof Player) {
+        if (e.getDamager() instanceof Player || e.getDamager() instanceof Arrow) {
             LivingEntity en = (LivingEntity) e.getEntity();
-            Player damager = (Player) e.getDamager();
 
-            ApplicableItem item = new ApplicableItem(damager.getItemInHand());
-            Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
+            Player damager = null;
+            Map<CustomEnchant, Integer> enchants = null;
+
+            if (e.getDamager() instanceof Arrow) {
+                Arrow a = (Arrow) e.getDamager();
+                if (a.hasMetadata("re.enchants")) {
+                    damager = Bukkit.getPlayer((String) Objects.requireNonNull(a.getMetadata("re.shooter").get(0).value()));
+                    enchants = (Map<CustomEnchant, Integer>) a.getMetadata("re.enchants").get(0).value();
+                }
+            } else {
+                damager = (Player) e.getDamager();
+                enchants = new ApplicableItem(damager.getItemInHand()).getAllCustomEnchantments();
+            }
+
+            if (enchants == null || damager == null) return;
+
+//
+//            ApplicableItem item = new ApplicableItem(damager.getItemInHand());
+//            Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
 
             if (enchants.containsKey(CustomEnchant.ASSASSIN)) {
                 CustomEnchant ce = CustomEnchant.ASSASSIN;
@@ -114,10 +133,12 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                 if (proc(ce, level)) {
                     List<String> list = (List<String>) get(ce, level, "remove-potions");
                     en.getWorld().strikeLightning(en.getLocation());
+                    final Player localDamager = damager;
                     list.forEach(str -> {
                         PotionEffectType type = PotionEffectType.getByName(str);
                         if (type != null) {
-                            damager.removePotionEffect(type);
+//                            damager.removePotionEffect(type);
+                            localDamager.removePotionEffect(type);
                         }
                     });
                 }

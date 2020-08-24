@@ -20,9 +20,11 @@ public enum EnchantType {
             return name.endsWith("_HELMET") || name.endsWith("_CHESTPLATE")
                     || name.endsWith("_LEGGINGS") || name.endsWith("_BOOTS");
         } else if (this == WEAPON) {
-            return name.endsWith("_SWORD") || name.endsWith("_AXE");
+            return name.endsWith("_SWORD") || name.endsWith("_AXE") || name.endsWith("BOW");
+        } if (this == BOW) {
+            return name.equalsIgnoreCase("BOW");
         } else {
-            return name.contains("_" + toString());
+            return name.contains('_' + toString());
         }
     }
 }
