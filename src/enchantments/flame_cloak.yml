@@ -1,0 +1,15 @@
+enabled: true
+
+lore-display: '&7Flame Cloak 7%level%'
+
+display-name: 'Flame Cloak'
+
+max-level: 3
+
+enchant-type: 'ARMOR'
+
+chance:
+  expression: '(%level% + 1) * 2'
+
+fire-duration:
+  expression: '%level% + 2'

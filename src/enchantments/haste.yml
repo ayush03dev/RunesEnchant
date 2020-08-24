@@ -1,0 +1,15 @@
+enabled: true
+
+lore-display: '&7Haste %level%'
+
+display-name: 'Haste'
+
+max-level: 3
+
+enchant-type: 'PICKAXE'
+
+chance:
+  expression: '(%level% + 1) * 2'
+
+potion-level:
+  expression: '%level%'

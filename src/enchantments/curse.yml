@@ -1,0 +1,20 @@
+enabled: true
+
+lore-display: '&7Curse %level%'
+
+display-name: 'Curse'
+
+max-level: 3
+
+enchant-type: 'WEAPON'
+
+chance:
+  level_1: 1.45
+  level_2: 2.1
+  leveL_3: 2.6
+
+potion-level:
+  expression: '%level%'
+
+potion-duration:
+  expression: '(%level% + 1) * 3'

@@ -1,6 +1,6 @@
 enabled: true
 
-lore-display: '&7Execute %level%'
+lore-display: '&7Crushing %level%'
 
 display-name: 'Execute'
 

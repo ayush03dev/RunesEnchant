@@ -1,6 +1,6 @@
 name: RunesEnchant
 version: 1.0
-main: me.ayush_03.runesenchant.RunesEnchant
+main: me.ayushdev.runesenchant.RunesEnchant
 desscription: The famous RunesEnchant plugin is back boys!
 api-version: 1.16
 

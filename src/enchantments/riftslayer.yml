@@ -1,0 +1,17 @@
+enabled: true
+
+lore-display: '&7Riftslayer %level%'
+
+display-name: 'Riftslayer'
+
+max-level: 3
+
+enchant-type: 'SWORD'
+
+chance:
+  expression: '100'
+
+damage-multiplier:
+  level_1: 1.2
+  level_2: 2.4
+  level_3: 3

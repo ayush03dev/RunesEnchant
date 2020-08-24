@@ -1,0 +1,9 @@
+enabled: true
+
+lore-display: '&7Eyepatch %level%'
+
+display-name: 'Eyepatch'
+
+max-level: 1
+
+enchant-type: 'HELMET'
