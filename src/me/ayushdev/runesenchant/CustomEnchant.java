@@ -14,7 +14,8 @@ public enum CustomEnchant {
     RIFTSLAYER(EnchantType.SWORD), PETRIFY(EnchantType.AXE), EYEPATCH(EnchantType.HELMET), PLUNDER(EnchantType.WEAPON),
     MISCHIEF(EnchantType.WEAPON), SHADOWSTEP(EnchantType.ARMOR), DEMON_SIPHON(EnchantType.SWORD),
     LUMBERJACK(EnchantType.AXE), MOLTEN(EnchantType.CHESTPLATE), STRENGTH(EnchantType.CHESTPLATE), HASTE(EnchantType.PICKAXE),
-    SWIMMER(EnchantType.HELMET), FEATHERFALL(EnchantType.BOOTS), REVERSAL(EnchantType.WEAPON);
+    SWIMMER(EnchantType.HELMET), FEATHERFALL(EnchantType.BOOTS), REVERSAL(EnchantType.WEAPON),
+    WILD_MARK(EnchantType.BOW), DETONATE(EnchantType.BOW), TRIPLET(EnchantType.BOW);
 
     private EnchantType type;
     private EnchantmentConfig config;

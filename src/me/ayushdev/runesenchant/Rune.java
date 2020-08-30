@@ -14,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Rune {
 
@@ -26,6 +27,26 @@ public class Rune {
         this.level = level;
         this.successRate = successRate;
         this.destroyRate = destroyRate;
+        this.runeItem = createItem();
+    }
+
+    public Rune(CustomEnchant ce, int level) {
+        this.ce = ce;
+        this.level = level;
+
+        RuneConfig cfg = new RuneConfig(ce);
+        this.successRate = cfg.getSuccessRate();
+        this.destroyRate = cfg.getDestroyRate();
+
+        Random rand = new Random();
+        if (successRate == -1) {
+            this.successRate = rand.nextInt(100)+1;
+        }
+
+        if (destroyRate == -1) {
+            this.destroyRate = rand.nextInt(100)+1;
+        }
+
         this.runeItem = createItem();
     }
 
@@ -90,9 +111,10 @@ public class Rune {
     }
 
     private ItemStack createItem() {
-        ItemStack rune = RuneUtils.getInstance().buildItemStack(Settings.getInstance().getItemId());
-        ItemMeta meta = rune.getItemMeta();
+//        ItemStack rune = RuneUtils.getInstance().buildItemStack(Settings.getInstance().getItemId());
         RuneConfig cfg = new RuneConfig(ce);
+        ItemStack rune = RuneUtils.getInstance().buildItemStack(cfg.getItemId());
+        ItemMeta meta = rune.getItemMeta();
 
         String displayName = cfg.getDisplayName();
         displayName = replace(displayName, "%enchantment%", ce.getDisplayName());

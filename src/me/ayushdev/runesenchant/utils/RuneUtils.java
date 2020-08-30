@@ -3,6 +3,8 @@ package me.ayushdev.runesenchant.utils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Random;
+
 public class RuneUtils {
 
     private static final RuneUtils instance = new RuneUtils();
@@ -25,5 +27,9 @@ public class RuneUtils {
         }
 
         return new ItemStack(mat, 1, data);
+    }
+
+    public int getRandomRate() {
+        return new Random().nextInt(100)+1;
     }
 }
