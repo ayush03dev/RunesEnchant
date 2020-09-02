@@ -18,6 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class RunesEnchant extends JavaPlugin implements Listener {
@@ -62,6 +63,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         saveResource("resurrection-stone.yml", false);
         saveResource("enchanter.yml", false);
         saveResource("luck-stone.yml", false);
+        saveResource(new File("groups" + File.separator + "boots.yml").getPath(), false);
         saveDefaultConfig();
     }
 

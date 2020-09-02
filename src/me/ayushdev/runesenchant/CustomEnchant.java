@@ -63,4 +63,8 @@ public enum CustomEnchant {
     public boolean isEnabled() {
         return config.isEnabled();
     }
+
+    public String getDescription() {
+        return config.getConfigFile().getString("description");
+    }
 }

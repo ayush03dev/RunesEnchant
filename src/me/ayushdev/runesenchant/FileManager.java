@@ -5,6 +5,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileManager {
 
@@ -69,10 +71,22 @@ public class FileManager {
     }
 
     public FileConfiguration getGroupConfig(String groupName) {
-        File f = new File(dataFolder + File.separator + groupName.toLowerCase() + ".yml");
+        File dir = new File(p.getDataFolder() + File.separator + "groups");
+        if (!dir.exists()) dir.mkdirs();
+
+        File f = new File(dir + File.separator + groupName.toLowerCase() + ".yml");
         if (!f.exists()) return null;
         return YamlConfiguration.loadConfiguration(f);
     }
 
+    public List<String> listGroupNames() {
+        List<String> list = new ArrayList<>();
+        File dir = new File(p.getDataFolder() + File.separator + "groups");
+        if (!dir.exists()) dir.mkdirs();
 
+        for (File f : dir.listFiles()) {
+            list.add(f.getName().replace(".yml", "").toLowerCase());
+        }
+        return list;
+    }
 }

@@ -3,6 +3,7 @@ package me.ayushdev.runesenchant;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,14 @@ public class EnchantmentGroup {
     public EnchantmentGroup(String name) {
         this.name = name;
         this.fc = FileManager.getInstance().getGroupConfig(name);
+    }
+
+    public static boolean exists(String name) {
+        return FileManager.getInstance().getGroupConfig(name.toLowerCase()) != null;
+    }
+
+    public static List<String> getAllGroups() {
+        return FileManager.getInstance().listGroupNames();
     }
 
     public String getDescription() {
@@ -49,5 +58,9 @@ public class EnchantmentGroup {
             });
         }
         return enchants;
+    }
+
+    public String getDisplayItemId() {
+        return fc.getString("display-item-id");
     }
 }
