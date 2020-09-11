@@ -1,0 +1,15 @@
+enabled: true
+
+display-name: 'Wolves'
+
+lore-display: '&7Wolves %level%'
+
+max-level: 5
+
+enchant-type: 'ARMOR'
+
+chance:
+  expression: '%level%'
+
+amount:
+  expression: '%level%'

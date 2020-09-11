@@ -1,0 +1,12 @@
+enabled: true
+
+display-name: 'Zeus'
+
+lore-display: '&7Zeus %level%'
+
+max-level: 3
+
+enchant-type: 'BOW'
+
+chance:
+  expression: '%level% + 0.5'

@@ -1,0 +1,9 @@
+enabled: true
+
+display-name: 'Lumberjack'
+
+lore-display: '&7Lumberjack %level%'
+
+max-level: 1
+
+enchant-type: 'AXE'

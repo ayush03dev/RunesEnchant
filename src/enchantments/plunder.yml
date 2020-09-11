@@ -1,0 +1,12 @@
+enabled: true
+
+display-name: 'Plunder'
+
+lore-display: '&7Plunder %level%'
+
+max-level: 3
+
+enchant-type: 'AXE'
+
+xp-multiplier:
+  expression: '%level% + 0.5'

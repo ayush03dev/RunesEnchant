@@ -1,8 +1,13 @@
-display-item-id: 'DIAMOND_BOOTS:0'
-
 description: 'All the boots enchantments here'
 
-display-name: '&cBoots Enchantments'
+price: 250
+
+shop-display:
+  item-id: 'DIAMOND_BOOTS:0'
+  display-name: '&cBoots Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
 
 enchantments:
   - 'speed'

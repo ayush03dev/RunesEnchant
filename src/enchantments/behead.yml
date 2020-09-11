@@ -1,0 +1,12 @@
+enabled: true
+
+display-name: 'Behead'
+
+lore-display: '&7Behead %level%'
+
+max-level: 3
+
+enchant-type: 'SWORD'
+
+chance:
+  expression: '%level% * 25'

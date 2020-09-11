@@ -4,12 +4,17 @@ import me.ayushdev.runesenchant.ApplicableItem;
 import me.ayushdev.runesenchant.CustomEnchant;
 import me.ayushdev.runesenchant.EnchantmentEffect;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -84,6 +89,16 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                     int potionLevel = (int) getValue(ce, level, "potion-level");
                     int potionDuration = (int) getValue(ce, level, "potion-duration");
                     en.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, potionDuration * 20, potionLevel - 1));
+                }
+            }
+
+            if (enchants.containsKey(CustomEnchant.PETRIFY)) {
+                CustomEnchant ce = CustomEnchant.PETRIFY;
+                int level = enchants.get(ce);
+                if (proc(ce, level)) {
+                    int potionLevel = (int) getValue(ce, level, "potion-level");
+                    int potionDuration = (int) getValue(ce, level, "potion-duration");
+                    en.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, potionDuration * 20, potionLevel - 1));
                 }
             }
 
@@ -163,6 +178,67 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                     e.setDamage(e.getDamage() * multiplier);
                 }
             }
+
+            if (enchants.containsKey(CustomEnchant.LIFESTEAL)) {
+                CustomEnchant ce = CustomEnchant.LIFESTEAL;
+                int level = enchants.get(ce);
+                if (proc(ce, level)) {
+                    float percent = getValue(ce, level, "health-percent");
+                    double health = en.getHealth();
+                    double transfer = (percent / 100f) * health;
+                    en.setHealth(en.getHealth() - transfer);
+                    damager.setHealth(damager.getHealth() + transfer);
+                }
+            }
+
+            if (enchants.containsKey(CustomEnchant.REVERSAL)) {
+                CustomEnchant ce = CustomEnchant.REVERSAL;
+                int level = enchants.get(ce);
+                if (proc(ce, level)) {
+                    double damage = e.getDamage();
+                    e.setDamage(0);
+                    damager.damage(damage);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent e) {
+        Player p = e.getEntity();
+        if (p.getKiller() == null) return;
+
+        Player killer = p.getKiller();
+        ItemStack hand = killer.getItemInHand();
+
+        if (!ApplicableItem.isSupportedItem(hand)) return;
+        ApplicableItem item = new ApplicableItem(hand);
+        Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
+
+        if (enchants.containsKey(CustomEnchant.BEHEAD)) {
+            CustomEnchant ce = CustomEnchant.BEHEAD;
+            int level = enchants.get(ce);
+            if (proc(ce, level)) {
+                ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
+                SkullMeta meta = (SkullMeta) skull.getItemMeta();
+                meta.setOwner(p.getName());
+                skull.setItemMeta(meta);
+
+                p.getWorld().dropItem(p.getLocation(), skull);
+            }
+        }
+
+        if (enchants.containsKey(CustomEnchant.REBORN)) {
+            CustomEnchant ce = CustomEnchant.BEHEAD;
+            int level = enchants.get(ce);
+            int potionDuration = (int) getValue(ce, level, "potion-duration");
+            int potionLevel = (int) getValue(ce,  level, "potion-level");
+
+            PotionEffect pe1 = new PotionEffect(PotionEffectType.ABSORPTION, potionDuration, potionLevel-1);
+            PotionEffect pe2 = new PotionEffect(PotionEffectType.REGENERATION, potionDuration, potionLevel-1);
+
+            killer.addPotionEffect(pe1);
+            killer.addPotionEffect(pe2);
         }
     }
 }

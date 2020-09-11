@@ -1,0 +1,15 @@
+enabled: true
+
+display-name: 'Necromancer'
+
+lore-display: '&7Necromancer %level%'
+
+max-level: 3
+
+enchant-type: 'CHESTPLATE'
+
+chance:
+  expression: '%level%'
+
+amount:
+  expression: '%level%'

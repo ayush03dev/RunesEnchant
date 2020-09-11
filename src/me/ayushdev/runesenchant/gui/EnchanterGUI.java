@@ -1,5 +1,6 @@
 package me.ayushdev.runesenchant.gui;
 
+import me.ayushdev.runesenchant.inventoryholders.GUIHolder;
 import me.ayushdev.runesenchant.utils.RuneUtils;
 import me.ayushdev.runesenchant.*;
 import org.bukkit.Bukkit;

@@ -1,0 +1,9 @@
+enabled: true
+
+display-name: 'Featherfall'
+
+lore-display: '&7Featherfall %level%'
+
+max-level: 1
+
+enchant-type: 'ARMOR'

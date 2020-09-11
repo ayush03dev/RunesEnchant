@@ -1,4 +1,4 @@
-package me.ayushdev.runesenchant;
+package me.ayushdev.runesenchant.inventoryholders;
 
 import com.sun.istack.internal.NotNull;
 import org.bukkit.entity.Player;

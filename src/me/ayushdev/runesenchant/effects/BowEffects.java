@@ -90,6 +90,22 @@ public class BowEffects extends EnchantmentEffect implements Listener {
                         p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, potionDuration, potionLevel-1));
                     }
                 }
+
+                if (enchants.containsKey(CustomEnchant.ZEUS)) {
+                    CustomEnchant ce = CustomEnchant.ZEUS;
+                    int level = enchants.get(ce);
+                    if (proc(ce, level)) {
+                        p.getWorld().strikeLightning(p.getLocation());
+                    }
+                }
+
+                if (enchants.containsKey(CustomEnchant.WILD_MARK)) {
+                    CustomEnchant ce = CustomEnchant.WILD_MARK;
+                    int level = enchants.get(ce);
+                    if (proc(ce, level)) {
+                        e.setDamage(e.getDamage()*2);
+                    }
+                }
             }
         }
     }

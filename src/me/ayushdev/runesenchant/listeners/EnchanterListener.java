@@ -2,6 +2,7 @@ package me.ayushdev.runesenchant.listeners;
 
 import me.ayushdev.runesenchant.gui.EnchanterGUI;
 import me.ayushdev.runesenchant.*;
+import me.ayushdev.runesenchant.inventoryholders.GUIHolder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

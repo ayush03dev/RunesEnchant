@@ -1,0 +1,18 @@
+enabled: true
+
+display-name: 'Stealth'
+
+lore-display: '&7Stealth %level%'
+
+max-level: 4
+
+enchant-type: 'ARMOR'
+
+radius:
+  expression: '%level% * 2'
+
+potion-duration:
+  expression: '%level% * 2'
+
+potion-level:
+  expression: '%level%'

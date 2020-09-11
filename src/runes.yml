@@ -1,5 +1,6 @@
 default:
   display-name: '&a&lRune of %enchantment% %level%'
+  item-id: 'EMERALD:0'
   success-rate: 92
   destroy-rate: 8
   lore:

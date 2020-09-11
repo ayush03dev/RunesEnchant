@@ -1,8 +1,8 @@
 enabled: true
 
-display-name: 'Lifesteal'
+display-name: 'Demon Siphon'
 
-lore-display: '&7Lifesteal %level%'
+lore-display: '&7Demon Siphon %level%'
 
 max-level: 3
 

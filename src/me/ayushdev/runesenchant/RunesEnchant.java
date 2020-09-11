@@ -7,12 +7,15 @@ import me.ayushdev.runesenchant.gui.EnchanterGUI;
 import me.ayushdev.runesenchant.listeners.EnchanterListener;
 import me.ayushdev.runesenchant.listeners.RuneApplyListener;
 
+import me.ayushdev.runesenchant.listeners.ShopListener;
 import me.ayushdev.runesenchant.utils.HiddenStringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,6 +39,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new RuneApplyListener(), this);
         getServer().getPluginManager().registerEvents(new PVPWeaponEffects(), this);
         getServer().getPluginManager().registerEvents(new EnchanterListener(), this);
+        getServer().getPluginManager().registerEvents(new ShopListener(), this);
         getServer().getPluginManager().registerEvents(new ArmorListener(new ArrayList<>()), this);
         getServer().getPluginManager().registerEvents(new PotionArmorEffects(), this);
         getServer().getPluginManager().registerEvents(new PVPArmorEffects(), this);
@@ -52,24 +56,43 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         Settings.getInstance().setup(this);
         FileManager.getInstance().setup(this);
 
-        for (CustomEnchant ce : CustomEnchant.values()) {
-            try {
-                saveResource("enchantments/" + ce.toString().toLowerCase() + ".yml", false);
-            } catch (IllegalArgumentException ex) {}
-        }
+//        for (CustomEnchant ce : CustomEnchant.values()) {
+//            try {
+//                saveResource("enchantments/" + ce.toString().toLowerCase() + ".yml", false);
+//            } catch (IllegalArgumentException ex) {}
+//        }
 
         saveResource("runes.yml", false);
         saveResource("protection-charm.yml", false);
         saveResource("resurrection-stone.yml", false);
         saveResource("enchanter.yml", false);
         saveResource("luck-stone.yml", false);
-        saveResource(new File("groups" + File.separator + "boots.yml").getPath(), false);
+        saveDefaultEnchantments();
+        saveDefaultTiers();
+//        saveResource(new File("groups" + File.separator + "boots.yml").getPath(), false);
+        saveDefaultTiers();
         saveDefaultConfig();
     }
 
     @Override
     public void onDisable() {
 
+    }
+
+    @EventHandler
+    public void onRightClick(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        ItemStack item = e.getItem();
+        if (item != null) {
+            if (Rune.isRune(item)) {
+                Rune rune = new Rune(item);
+                p.sendMessage("Enchantment: " + rune.getEnchantment().getDisplayName());
+                p.sendMessage("Level: " + rune.getLevel());
+                p.sendMessage("Success Rate: " + rune.getSuccessRate() + '%');
+                p.sendMessage("Destroy Rate: " + rune.getSuccessRate() + '%');
+                p.sendMessage("Description: " + rune.getEnchantment().getDescription());
+            }
+        }
     }
 
     @EventHandler
@@ -120,5 +143,24 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 
     public static boolean is13() {
         return version >= 13;
+    }
+
+    private void saveDefaultEnchantments() {
+        for (CustomEnchant ce : CustomEnchant.values()) {
+            String name = ce.toString().toLowerCase();
+            File f = new File(getDataFolder() + File.separator + "enchantments" + File.separator +  name + ".yml");
+            if (!f.exists()) {
+                try {
+                    saveResource("enchantments/" + name + ".yml", false);
+                } catch (IllegalArgumentException e){}
+            }
+        }
+    }
+
+    private void saveDefaultTiers() {
+        File f = new File(getDataFolder() + File.separator + "boots.yml");
+        if (!f.exists()) {
+            saveResource("groups/boots.yml", false);
+        }
     }
 }

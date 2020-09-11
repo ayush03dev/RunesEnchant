@@ -1,0 +1,15 @@
+enabled: true
+
+display-name: 'Paralyze'
+
+lore-display: '&7Paralyze %level%'
+
+max-level: 3
+
+enchant-type: 'AXE'
+
+potion-duration:
+  expression: '%level% * 2'
+
+potion-level:
+  expression: '%level%'

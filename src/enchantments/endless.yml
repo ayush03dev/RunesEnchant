@@ -1,0 +1,9 @@
+enabled: true
+
+display-name: 'Endless'
+
+lore-display: '&7Endless %level%'
+
+max-level: 3
+
+enchant-type: 'ANY'

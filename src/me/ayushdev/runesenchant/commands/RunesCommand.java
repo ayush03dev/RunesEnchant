@@ -1,12 +1,9 @@
 package me.ayushdev.runesenchant.commands;
 
-import me.ayushdev.runesenchant.CustomEnchant;
-import me.ayushdev.runesenchant.EnchantmentGroup;
-import me.ayushdev.runesenchant.Rune;
-import me.ayushdev.runesenchant.RuneConfig;
+import me.ayushdev.runesenchant.*;
 import me.ayushdev.runesenchant.gui.EnchanterGUI;
+import me.ayushdev.runesenchant.gui.ShopGUI;
 import me.ayushdev.runesenchant.utils.RuneUtils;
-import net.minecraft.server.v1_16_R1.Enchantment;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -100,9 +97,16 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
 
                             EnchantmentGroup group = new EnchantmentGroup(args[3]);
                             Random random = new Random();
-                            List<CustomEnchant> list = group.getEnchantments();
-                            ce = list.get(random.nextInt(list.size()));
-                            level = random.nextInt(ce.getMaxLevel())+1;
+                            List<EnchantmentData> list = group.getEnchantments();
+
+                            EnchantmentData data = list.get(random.nextInt(list.size()));
+                            ce = data.getCustomEnchant();
+                            if (!data.allLevels()) {
+                                level = data.getLevel();
+                            } else {
+                                level = random.nextInt(ce.getMaxLevel())+1;
+                            }
+
                         } else {
 
                             if (args[3].equalsIgnoreCase("random")) {
@@ -205,6 +209,17 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(ChatColor.RED + "This command can only" +
                                 "be executed by players!");
                     }
+                } else if (args[0].equalsIgnoreCase("shop")) {
+                    if (sender instanceof Player) {
+                        Player p = (Player) sender;
+                        if (!p.hasPermission("runes.shop")) {
+                            p.sendMessage(ChatColor.RED + "You do not have permission" +
+                                    "to execute this command!");
+                            return true;
+                        }
+
+                        new ShopGUI().openInventory(p);
+                    }
                 } else {
                     // TODO Send all available commands...
                     return true;
@@ -223,6 +238,7 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 list.add("give");
                 list.add("enchanter");
+                list.add("shop");
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("give")) {
                     Bukkit.getServer().getOnlinePlayers().forEach(p -> {
@@ -237,7 +253,7 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
                 list.add("group");
             } else if (args.length == 4) {
                 if (args[2].equalsIgnoreCase("group")) {
-                    list.addAll(EnchantmentGroup.getAllGroups());
+                    list.addAll(EnchantmentGroup.getAllGroupNames());
                 } else {
                     CustomEnchant ce = CustomEnchant.fromString(args[2]);
                     if (ce != null) {

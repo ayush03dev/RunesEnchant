@@ -89,7 +89,6 @@ public class PotionArmorEffects extends EnchantmentEffect implements Listener {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE,
                         (int) getValue(CustomEnchant.PLATEMAIL, level, "potion-level.resistance") - 1));
             }
-
         }
     }
 }

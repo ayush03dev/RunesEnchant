@@ -1,0 +1,15 @@
+enabled: true
+
+display-name: 'Immolation'
+
+lore-display: '&7Immolation %level%'
+
+max-level: 5
+
+enchant-type: 'CHESTPLATE'
+
+radius:
+  expression: '%level% * 2'
+
+fire-duration:
+  expression: '%level% * 3'

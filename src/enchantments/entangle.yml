@@ -1,0 +1,15 @@
+enabled: true
+
+display-name: 'Entangle'
+
+lore-display: '&7Entangle %level%'
+
+max-level: 3
+
+enchant-type: 'SWORD'
+
+potion-level:
+  expression: '%level%'
+
+potion-duration:
+  expression: '%level% * 3'

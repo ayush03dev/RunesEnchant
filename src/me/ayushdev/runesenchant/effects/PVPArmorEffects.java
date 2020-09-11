@@ -1,19 +1,26 @@
 package me.ayushdev.runesenchant.effects;
 
-import me.ayushdev.runesenchant.ApplicableItem;
-import me.ayushdev.runesenchant.CustomEnchant;
-import me.ayushdev.runesenchant.EnchantmentEffect;
-import me.ayushdev.runesenchant.Placeholder;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import me.ayushdev.runesenchant.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class PVPArmorEffects extends EnchantmentEffect implements Listener {
 
@@ -52,6 +59,48 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
                     }
                 }
 
+                if (enchants.containsKey(CustomEnchant.NECROMANCER)) {
+                    CustomEnchant ce = CustomEnchant.NECROMANCER;
+                    int level = enchants.get(ce);
+                    if (proc(ce, level)) {
+                        int amount = (int) getValue(ce, level, "amount");
+
+                        for (int i = 0; i < amount; i++) {
+                            Zombie z = p.getWorld().spawn(p.getLocation(), Zombie.class);
+                            z.setMetadata("re.necromancer",
+                                    new FixedMetadataValue(RunesEnchant.getInstance(), p.getUniqueId()));
+                            z.setBaby(false);
+                            z.setTarget(damager);
+                        }
+                    }
+                }
+
+
+                if (enchants.containsKey(CustomEnchant.PARALYZE)) {
+                    CustomEnchant ce = CustomEnchant.PARALYZE;
+                    int level = enchants.get(ce);
+
+                    if (proc(ce, level)) {
+                        int duration = (int) getValue(ce, level, "potion-duration");
+                        int potionLevel = (int) getValue(ce, level, "potion-level");
+                        en.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, duration, potionLevel-1));
+                    }
+                }
+
+                if (enchants.containsKey(CustomEnchant.WOLVES)) {
+                    CustomEnchant ce = CustomEnchant.WOLVES;
+                    int level = enchants.get(ce);
+                    if (proc(ce, level)) {
+                        int amount = (int) getValue(ce, level, "amount");
+
+                        for (int i = 0; i < amount; i++) {
+                            Wolf w = p.getWorld().spawn(p.getLocation(), Wolf.class);
+                            w.setOwner(p);
+                            w.setTarget(damager);
+                        }
+                    }
+                }
+
                 if (enchants.containsKey(CustomEnchant.SPIKED)) {
                     CustomEnchant ce = CustomEnchant.SPIKED;
                     int level = enchants.get(ce);
@@ -61,7 +110,116 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
                         damager.damage(damage);
                     }
                 }
+
+                if (enchants.containsKey(CustomEnchant.SHADOWSTEP)) {
+                    CustomEnchant ce = CustomEnchant.SHADOWSTEP;
+                    int level = enchants.get(ce);
+                    if (proc(ce, level)) {
+
+                        boolean flag = false;
+                        boolean flag2 = false;
+
+                        Location location = null;
+
+                        for (int i = 1; i <= 2; i++) {
+                            Vector vector = damager.getLocation().getDirection();
+                            vector = vector.multiply(i * -1.0);
+                            location = damager.getLocation().add(vector);
+                            Block b = location.getBlock();
+                            Block up = b.getRelative(BlockFace.UP);
+
+                            if (!(b.getType() == Material.AIR && up.getType() == Material.AIR)) break;
+                            if (i == 1) {
+                                flag = true;
+                            } else {
+                                flag2 = true;
+                            }
+                        }
+
+                        if (flag && flag2) {
+                            p.teleport(location);
+                        }
+                    }
+                }
             }
         }
     }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onTarget(EntityTargetLivingEntityEvent e) {
+        if (e.getEntity() instanceof Zombie) {
+            Zombie z = (Zombie) e.getEntity();
+            if (z.hasMetadata("re.necromancer")) {
+                UUID id = UUID.fromString((String) z.getMetadata("re.necromancer").get(0).value());
+                if (e.getTarget().getUniqueId().equals(id)) {
+                    e.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onSneak(PlayerToggleSneakEvent e) {
+        Player p = e.getPlayer();
+        for (ItemStack armor : getArmor(p)) {
+            ApplicableItem item = new ApplicableItem(armor);
+            Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
+
+            if (enchants.containsKey(CustomEnchant.STEALTH)) {
+                CustomEnchant ce = CustomEnchant.STEALTH;
+                int level = enchants.get(ce);
+                float range = getValue(ce, level, "radius");
+
+                for (Entity en : p.getNearbyEntities(range, range, range)) {
+                    if (en instanceof Player) {
+                        Player player = (Player) en;
+                        int potionLevel = (int) getValue(ce, level, "potion-level");
+                        int duration = (int) getValue(ce, level, "potion-duration");
+
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, duration
+                        * 20, potionLevel-1));
+                    }
+                }
+            }
+
+            if (enchants.containsKey(CustomEnchant.IMMOLATION)) {
+                CustomEnchant ce = CustomEnchant.IMMOLATION;
+                int level = enchants.get(ce);
+                float range = getValue(ce, level, "radius");
+
+                for (Entity en : p.getNearbyEntities(range, range, range)) {
+                    if (en instanceof Player) {
+                        Player player = (Player) en;
+                        int duration = (int) getValue(ce, level, "fire-duration");
+                        player.setFireTicks(duration * 20);
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+        Player p = e.getEntity();
+        for (ItemStack armor : getArmor(p)) {
+            if (armor != null) {
+                ApplicableItem item = new ApplicableItem(armor);
+                Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
+
+                if (enchants.containsKey(CustomEnchant.SUICIDE)) {
+                    CustomEnchant ce = CustomEnchant.SUICIDE;
+                    int level = enchants.get(ce);
+
+                    if (proc(ce, level)) {
+                        float power = getValue(ce, level, "explosion-power");
+                        boolean setFire = (boolean) get(ce, level, "set-fire");
+                        boolean breakBlocks = (boolean) get(ce, level, "break-blocks");
+                        p.getWorld().createExplosion(p.getLocation(), power,
+                                setFire, breakBlocks);
+                    }
+                }
+            }
+        }
+    }
+
 }

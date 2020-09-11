@@ -1,0 +1,15 @@
+enabled: true
+
+display-name: 'Reborn'
+
+lore-display: '&7Reborn %level%'
+
+max-level: 3
+
+enchant-type: 'WEAPON'
+
+potion-duration:
+  expression: '%level% * 4'
+
+potion-level:
+  expression: '%level%'
