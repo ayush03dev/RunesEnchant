@@ -146,7 +146,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     }
 
     private void saveDefaultEnchantments() {
-        for (CustomEnchant ce : CustomEnchant.values()) {
+        for (CustomEnchantReference ce : CustomEnchantReference.values()) {
             String name = ce.toString().toLowerCase();
             File f = new File(getDataFolder() + File.separator + "enchantments" + File.separator +  name + ".yml");
             if (!f.exists()) {
