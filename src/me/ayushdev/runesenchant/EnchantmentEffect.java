@@ -150,6 +150,7 @@ public abstract class EnchantmentEffect {
 //        return false;
 //    }
 public boolean proc(CustomEnchant ce, int level) {
+    if (!ce.isEnabled()) return false;
     if (generateRandomFloat() <= getChance(ce, level)) return true;
     return false;
 }

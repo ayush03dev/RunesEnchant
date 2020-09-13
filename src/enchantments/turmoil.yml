@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Has a chance to give enemies a nausea potion debuff'
+
 lore-display: '&7Turmoil %level%'
 
 display-name: 'Turmoil'

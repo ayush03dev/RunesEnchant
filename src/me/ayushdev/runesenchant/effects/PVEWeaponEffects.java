@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -16,8 +17,9 @@ import java.util.Map;
 
 public class PVEWeaponEffects extends EnchantmentEffect implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPVE(EntityDamageByEntityEvent e) {
+        if (e.isCancelled()) return;
         if ((e.getDamager() instanceof Player) &&
                 (!(e.getEntity() instanceof  Player))) {
 

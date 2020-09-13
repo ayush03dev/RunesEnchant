@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A chance to get large amount of life steal from mobs'
+
 display-name: 'Demon Siphon'
 
 lore-display: '&7Demon Siphon %level%'

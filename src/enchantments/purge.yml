@@ -2,6 +2,8 @@
 
 enabled: true
 
+description: 'A chance to call down a strike of lightning upon your enemy, removing certain positive potion effects they have and damages them.'
+
 lore-display: '&7Holy Smite %level%'
 
 display-name: 'Holy Smite'

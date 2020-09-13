@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Has a chance to summon lightning on your victim'
+
 display-name: 'Zeus'
 
 lore-display: '&7Zeus %level%'

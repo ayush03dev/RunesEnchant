@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'When you sneak, nearby enemies aiming near you have a chance to get blindness'
+
 display-name: 'Stealth'
 
 lore-display: '&7Stealth %level%'

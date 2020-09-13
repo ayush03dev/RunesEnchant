@@ -1,0 +1,11 @@
+enabled: true
+
+description: 'Gives infinite Fire Resistant'
+
+lore-display: '&7Molten %level%'
+
+display-name: 'Molten'
+
+max-level: 1
+
+enchant-type: 'CHESTPLATE'

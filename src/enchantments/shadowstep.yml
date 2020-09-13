@@ -1,0 +1,14 @@
+enabled: true
+
+description: 'You have a chance to get teleported behind the player who damaged you'
+
+display-name: 'Shadowstep'
+
+lore-display: '&7Shadowstep %level%'
+
+max-level: 3
+
+enchant-type: 'ARMOR'
+
+chance:
+  expression: '%level% * 0.5'

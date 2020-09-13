@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Multiplies the damage given while sneaking'
+
 lore-display: '&7Execute %level%'
 
 display-name: 'Execute'

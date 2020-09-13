@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'While getting damage, you have chance to spawn friendly wolves to fight along side of you'
+
 display-name: 'Wolves'
 
 lore-display: '&7Wolves %level%'

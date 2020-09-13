@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Has a chance of inflicting a poison effect on your victim'
+
 lore-display: '&7Assassin %level%'
 
 display-name: 'Assassin'

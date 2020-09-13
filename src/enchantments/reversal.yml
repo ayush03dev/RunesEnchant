@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'You have chance to reverse the damage towards your opponent who damaged you'
+
 display-name: 'Reversal'
 
 lore-display: '&7Reversal %level%'

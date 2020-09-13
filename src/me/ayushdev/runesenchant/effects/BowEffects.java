@@ -4,10 +4,10 @@ import me.ayushdev.runesenchant.ApplicableItem;
 import me.ayushdev.runesenchant.CustomEnchant;
 import me.ayushdev.runesenchant.EnchantmentEffect;
 import me.ayushdev.runesenchant.RunesEnchant;
-import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -21,8 +21,9 @@ import java.util.Map;
 
 public class BowEffects extends EnchantmentEffect implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onShoot(EntityShootBowEvent e) {
+        if (e.isCancelled()) return;
         if (e.getEntity() instanceof Player) {
             ItemStack bow = e.getBow();
             if (bow == null) return;
@@ -55,8 +56,9 @@ public class BowEffects extends EnchantmentEffect implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onDamage(EntityDamageByEntityEvent e) {
+        if (e.isCancelled()) return;
         if (e.getDamager() instanceof Arrow) {
             Arrow a = (Arrow) e.getDamager();
             if (a.hasMetadata("re.enchants")) {

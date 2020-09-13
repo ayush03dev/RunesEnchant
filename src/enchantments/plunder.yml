@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Multiplies the XP from entities'
+
 display-name: 'Plunder'
 
 lore-display: '&7Plunder %level%'

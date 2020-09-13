@@ -36,6 +36,10 @@ public class PotionArmorEffects extends EnchantmentEffect implements Listener {
                 p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
             }
 
+            if (enchants.containsKey(CustomEnchant.MOLTEN)) {
+                p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+            }
+
             if (enchants.containsKey(CustomEnchant.SWIMMER)) {
                 p.removePotionEffect(PotionEffectType.WATER_BREATHING);
             }
@@ -80,6 +84,10 @@ public class PotionArmorEffects extends EnchantmentEffect implements Listener {
 
             if (enchants.containsKey(CustomEnchant.LUMOS) && CustomEnchant.LUMOS.getConfig().isEnabled()) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0));
+            }
+
+            if (enchants.containsKey(CustomEnchant.MOLTEN) && CustomEnchant.MOLTEN.getConfig().isEnabled()) {
+                p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0));
             }
 
             if (enchants.containsKey(CustomEnchant.PLATEMAIL) && CustomEnchant.PLATEMAIL.getConfig().isEnabled()) {

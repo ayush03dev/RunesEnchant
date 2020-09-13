@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
@@ -65,8 +66,9 @@ public class ToolEffects extends EnchantmentEffect implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBreak(BlockBreakEvent e) {
+        if (e.isCancelled()) return;
         Player p = e.getPlayer();
         if (p.getItemInHand() == null) return;
         ItemStack hand = p.getItemInHand();

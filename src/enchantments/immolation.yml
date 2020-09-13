@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A chance to set nearby players on fire when you sneak for certain amount of seconds'
+
 display-name: 'Immolation'
 
 lore-display: '&7Immolation %level%'

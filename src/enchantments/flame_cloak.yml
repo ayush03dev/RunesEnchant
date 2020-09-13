@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Has a chance to ignite people that attack you'
+
 lore-display: '&7Flame Cloak 7%level%'
 
 display-name: 'Flame Cloak'

@@ -1,12 +1,19 @@
 enabled: true
 
+description: 'When blocking, there is a chance for you to regain health for a percentage of the damage received'
+
 display-name: 'Aegis'
 
 lore-display: '&7Aegis %level%'
 
 max-level: 100
 
-enchant-type: 'AXE'
+enchant-type: 'ARMOR'
 
 chance:
-  expression: '(%level% + 1) * 2'
+  expression: '%level% * 0.5'
+
+# The amount of health regained is the following percent of the damage received.
+
+damage-percent:
+  expression: '%level% * 1.5'

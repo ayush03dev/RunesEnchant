@@ -1,5 +1,7 @@
 enabled: true
 
+description:  'Fire ticks have a chance to heal you instead of doing damage'
+
 lore-display: '&7Pyromaniac %level%'
 
 display-name: 'Pyromaniac'

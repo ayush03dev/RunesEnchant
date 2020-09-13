@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A very tiny chance to heal yourself while mining'
+
 display-name: 'Blessed'
 
 lore-display: '&aBlessed &b%level%'
@@ -9,4 +11,4 @@ max-level: 1
 enchant-type: 'ARMOR'
 
 chance:
-  expression: '(%level% + 1) * 2'
+  level_1: 0.69

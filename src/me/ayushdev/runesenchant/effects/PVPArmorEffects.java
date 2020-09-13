@@ -24,8 +24,10 @@ import java.util.UUID;
 
 public class PVPArmorEffects extends EnchantmentEffect implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void armorListener(EntityDamageByEntityEvent e) {
+
+        if (e.isCancelled()) return;
         // TODO: Later check if entity is instance of Player as well...
 
 //        if (e.getDamager() instanceof Player) {
@@ -84,6 +86,20 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
                         int duration = (int) getValue(ce, level, "potion-duration");
                         int potionLevel = (int) getValue(ce, level, "potion-level");
                         en.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, duration, potionLevel-1));
+                    }
+                }
+
+                if (enchants.containsKey(CustomEnchant.AEGIS)) {
+                    CustomEnchant ce = CustomEnchant.AEGIS;
+                    int level = enchants.get(ce);
+
+                    if (proc(ce, level)) {
+                        if (p.isBlocking()) {
+                            double damage = e.getDamage();
+                            float percent = getValue(ce, level, "damage-percent");
+                            double health = (percent / 100d) * damage;
+                            p.setHealth(p.getHealth() + health);
+                        }
                     }
                 }
 
@@ -147,6 +163,7 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTarget(EntityTargetLivingEntityEvent e) {
+        if (e.isCancelled()) return;
         if (e.getEntity() instanceof Zombie) {
             Zombie z = (Zombie) e.getEntity();
             if (z.hasMetadata("re.necromancer")) {

@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A chance to give slowness effect to your enemy'
+
 display-name: 'Paralyze'
 
 lore-display: '&7Paralyze %level%'

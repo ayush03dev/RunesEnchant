@@ -2,6 +2,8 @@
 
 enabled: true
 
+description: 'A chance to call down a bolt of lightning, removing certain positive buffs the enemy has'
+
 lore-display: '&7Holy Smite %level%'
 
 display-name: 'Holy Smite'

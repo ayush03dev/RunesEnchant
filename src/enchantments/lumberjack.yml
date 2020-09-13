@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Chops the entire tree when you break a block of wood'
+
 display-name: 'Lumberjack'
 
 lore-display: '&7Lumberjack %level%'

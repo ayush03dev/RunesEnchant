@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A chance of your victim dropping their head on death'
+
 display-name: 'Behead'
 
 lore-display: '&7Behead %level%'

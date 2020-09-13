@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A chance of inflicting blindness on your victim'
+
 lore-display: '&7Hex %level%'
 
 display-name: 'Hex'

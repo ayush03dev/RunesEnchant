@@ -2,6 +2,8 @@
 
 enabled: true
 
+description: 'Gives a thorns like effect but a bit more than default'
+
 lore-display: '&7Spiked %level%'
 
 display-name: 'Spiked'
@@ -12,6 +14,8 @@ enchant-type: 'ARMOR'
 
 chance:
   expression: '(%level% + 1) * 2'
+
+# For expression, you can use %damage% placeholder for the damage the player received.
 
 damage:
   level_1: 1.5

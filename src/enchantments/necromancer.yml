@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A chance to spawn some friendly zombies to fight along side with you'
+
 display-name: 'Necromancer'
 
 lore-display: '&7Necromancer %level%'

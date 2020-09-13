@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'You gain damage resistance, along with a higher durability on the armor piece at the cost of slowness'
+
 lore-display: '&7Platemail %level%'
 
 display-name: 'Platemail'

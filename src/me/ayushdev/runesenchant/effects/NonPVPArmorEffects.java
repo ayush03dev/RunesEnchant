@@ -5,6 +5,7 @@ import me.ayushdev.runesenchant.CustomEnchant;
 import me.ayushdev.runesenchant.EnchantmentEffect;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -16,8 +17,9 @@ import java.util.Map;
 
 public class NonPVPArmorEffects extends EnchantmentEffect implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onDamage(EntityDamageEvent e) {
+        if (e.isCancelled()) return;
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
 

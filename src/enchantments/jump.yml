@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Gives you infinite jump boost'
+
 lore-display: '&7Jump %level%'
 
 display-name: 'Jump'

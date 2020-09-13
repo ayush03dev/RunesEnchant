@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Upon hitting a target they will receive the wither damage debuff'
+
 lore-display: '&7Curse %level%'
 
 display-name: 'Curse'

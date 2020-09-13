@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'When attacking another player you have a chance of gaining some of your health back'
+
 display-name: 'Lifesteal'
 
 lore-display: '&7Lifesteal %level%'

@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Multiplies the damage given to mobs'
+
 lore-display: '&7Riftslayer %level%'
 
 display-name: 'Riftslayer'

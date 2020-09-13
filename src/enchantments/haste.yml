@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Gives you Haste Potion Effect until you hold this pickaxe'
+
 lore-display: '&7Haste %level%'
 
 display-name: 'Haste'

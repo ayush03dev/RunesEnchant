@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Item with this enchantment will never be broken!'
+
 display-name: 'Endless'
 
 lore-display: '&7Endless %level%'

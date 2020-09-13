@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Has a chance to give weakness effect to enemy'
+
 lore-display: '&7Corruption %level%'
 
 display-name: 'Corruption'

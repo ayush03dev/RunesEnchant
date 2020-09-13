@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'No fall damage while wearing this armor piece'
+
 display-name: 'Featherfall'
 
 lore-display: '&7Featherfall %level%'

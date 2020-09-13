@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A chance to create an explosion when the player who wears this enchanted chestplate dies'
+
 display-name: 'Suicide'
 
 lore-display: '&7Suicide %level%'

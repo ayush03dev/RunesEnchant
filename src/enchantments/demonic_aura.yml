@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Has a chance of giving the wither effect to your attacker'
+
 lore-display: '&7Demonic Aura %level%'
 
 display-name: 'Demonic Aura'

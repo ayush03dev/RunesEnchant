@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A chance to add slowness de-buff your target.'
+
 display-name: 'Entangle'
 
 lore-display: '&7Entangle %level%'

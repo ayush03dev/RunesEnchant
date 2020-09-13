@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'A chance to give your opponent Mining Fatigue effect for few seconds'
+
 display-name: 'Paralyze'
 
 lore-display: '&7Paralyze %level%'

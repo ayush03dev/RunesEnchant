@@ -1,5 +1,7 @@
 enabled: true
 
+description: 'Gives you infinite speed boost'
+
 lore-display: '&7Speed %level%'
 
 display-name: 'Speed'
