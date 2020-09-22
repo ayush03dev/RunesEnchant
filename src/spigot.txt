@@ -1,0 +1,137 @@
+[IMG]https://i.imgur.com/RaBVoSB.png[/IMG]
+
+[CENTER][B]The remake version of the popular plugin from 2016, RunesEnchant!
+[/B][/CENTER]
+
+[SIZE=7][B][U]Features[/U][/B]
+[/SIZE]
+[LIST]
+[*][SIZE=4][B]Unique Enchanter GUI[/B][/SIZE]
+[*][SIZE=4][B]Drag and Drop Enchantment[/B][/SIZE]
+[*][SIZE=4][B]Success Rates and Destroy Rates[/B][/SIZE]
+[*][SIZE=4][B]Create Enchantment Groups/Tiers[/B][/SIZE]
+[*][SIZE=4][B]Enchantment Limiters (Slots)[/B][/SIZE]
+[*][SIZE=4][B]Special stones which enhance enchanting[/B][/SIZE]
+[*][SIZE=4][B]Editable max level of enchantments[/B][/SIZE]
+[*][SIZE=4][B]Editable enchantment type[/B][/SIZE]
+[*][SIZE=4][B]Easy configuration[/B][/SIZE]
+[*][SIZE=4][B]Rune Shop[/B][/SIZE]
+[*][SIZE=4][B]60 custom enchantments (A LOT MORE TO COME!)[/B][/SIZE]
+[*][SIZE=4][B]No dependency required[/B][/SIZE]
+[*][SIZE=4][B]1.8+ support[/B][/SIZE]
+[/LIST]
+[SIZE=4]
+
+[SIZE=6][B][U]How to get Rune:[/U][/B][/SIZE][/SIZE]
+[SIZE=4][/SIZE]
+[LIST]
+[*][SIZE=5]From admin/console via command[/SIZE]
+[*][SIZE=5]From Rune Shop (costs XP)[/SIZE]
+[*][SIZE=5]Using Rune Signs (costs XP)[/SIZE]
+[/LIST]
+
+[SIZE=4]
+[/SIZE]
+[SIZE=6][B][U]How to apply enchantment:[/U][/B]
+[B][U][/U][/B]
+[/SIZE]
+[SIZE=5][B]1) Rune Drag n' Drop:[/B][/SIZE]
+[SIZE=6][/SIZE]
+[SIZE=4]<image here>[/SIZE]
+[SIZE=6][/SIZE]
+[SIZE=5][B]2) Enchanter[/B]
+[B][/B][/SIZE]
+[SIZE=4]<video here>
+
+
+[/SIZE]
+[B][U][SIZE=6]Configuring enchantments[/SIZE][/U][/B]
+[B][U][SIZE=6]
+[/SIZE][/U][/B]
+[SIZE=5]Enchantments can be configured from their respective files in the folder '[U][B]plugins/RunesEnchant/enchantments[/B][/U]'.
+
+This is the example configuration of the enchantment Aegis:
+[/SIZE]
+[SIZE=6][code=yaml]
+enabled: true
+
+description: 'When blocking, there is a chance for you to regain health for a percentage of the damage received'
+
+display-name: 'Aegis'
+
+lore-display: '&7Aegis %level%'
+
+max-level: 3
+
+enchant-type: 'ARMOR'
+
+chance:
+  expression: '%level% * 0.5'
+
+# The amount of health regained is the following percent of the damage received.
+
+damage-percent:
+  expression: '%level% * 1.5'[/code]
+
+
+Most of the fields are self-explanatory. However I will explain two fields here.
+
+[/SIZE]
+[B][SIZE=6]1) 'enchant-type'
+[/SIZE][/B]
+[SIZE=6][/SIZE]
+[SIZE=5]You can choose any [U][I]applicable[/I][/U] type from these:
+
+[code]ARMOR, WEAPON, SWORD, AXE, BOOTS, HELMET, CHESTPLATE, BOW, HOE, PICKAXE, STICK, ANY[/code][/SIZE]
+[SIZE=6][/SIZE]
+[B][SIZE=6]2) 'expression' field[/SIZE][/B]
+[SIZE=6][/SIZE]
+[SIZE=5][B]i)[/B] You have the ability to configure enchantment for EACH level particularly. But for some enchantments, you might not want to do so. For that, you can create a general expression which gets evaluated and gets applied for every level of enchantment. You can use any basic mathematical operator and the round brackets for BODMAS.
+
+
+[B]ii) [/B]If you want to override the expression for some particular level(s), you can do so! Just add a field in the format 'level_<level-here>' right after the expression field. For example:
+
+[code=yaml]chance:
+  expression: '%level% * 0.5'
+  level_1: 20.44
+  level_2: 25.99[/code]
+
+So, the chance for level 1 would be 20.44%, for level 2 would be 25.99% and for other levels, it would depend on the how the mathematical expression gets evaluated.
+
+[/SIZE]
+
+[SIZE=5][B]iii) [/B]If you want to set chances for each level manually, just remove the expression field and add the 'level_' fields like above for each level.
+
+[code=yaml]chance:
+  level_1: 20.44
+  level_2: 25.99
+  level_3: 30[/code][/SIZE]
+[SIZE=4]
+
+[/SIZE]
+[U][B][SIZE=6]Commands and Permissions:[/SIZE][/B][/U]
+[U][B][SIZE=6][/SIZE]
+[SIZE=5]Admin commands[/SIZE]
+[SIZE=6][/SIZE][/B][/U]
+[B][SIZE=4]/runes <give> <player> <enchantment> <level> (success-rate) (destroy-rate)
+
+/runes <give> <player> group <group-name> (success-rate) (destroy-rate)
+
+/ritem <item-type> <player> (level)
+[/SIZE][/B]
+
+[SIZE=4][B]Permission: [U]runes.admin[/U][/B][/SIZE]
+[B][SIZE=4]
+
+Note: Arguments in round brackets "( )" are optional in some cases.[/SIZE]
+[SIZE=5]
+
+[U]Player Commands:[/U]
+[/SIZE]
+[SIZE=4]/runes enchanter
+
+Permission: [U]runes.enchanter[/U]
+
+/runes shop
+
+Permission: [U]runes.shop[/U][/SIZE][/B]
