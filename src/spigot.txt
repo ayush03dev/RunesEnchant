@@ -3,8 +3,8 @@
 [CENTER][B]The remake version of the popular plugin from 2016, RunesEnchant!
 [/B][/CENTER]
 
-[SIZE=7][B][U]Features[/U][/B]
-[/SIZE]
+[SIZE=6][COLOR=#ff0000][B][U]Features[/U][/B][/COLOR][/SIZE]
+
 [LIST]
 [*][SIZE=4][B]Unique Enchanter GUI[/B][/SIZE]
 [*][SIZE=4][B]Drag and Drop Enchantment[/B][/SIZE]
@@ -19,40 +19,94 @@
 [*][SIZE=4][B]60 custom enchantments (A LOT MORE TO COME!)[/B][/SIZE]
 [*][SIZE=4][B]No dependency required[/B][/SIZE]
 [*][SIZE=4][B]1.8+ support[/B][/SIZE]
+[*][SIZE=4][B]Lightweight[/B][/SIZE]
 [/LIST]
 [SIZE=4]
+[/SIZE]
+[SIZE=6][COLOR=#ff0000][B][U]How to get Rune:[/U][/B][/COLOR][/SIZE]
 
-[SIZE=6][B][U]How to get Rune:[/U][/B][/SIZE][/SIZE]
-[SIZE=4][/SIZE]
 [LIST]
-[*][SIZE=5]From admin/console via command[/SIZE]
-[*][SIZE=5]From Rune Shop (costs XP)[/SIZE]
-[*][SIZE=5]Using Rune Signs (costs XP)[/SIZE]
+[*][B][SIZE=4]From admin/console via command[/SIZE][/B]
+[*][B][SIZE=4]From Rune Shop (costs XP)[/SIZE][/B]
+[*][B][SIZE=4]Using Rune Signs (costs XP)[/SIZE][/B]
 [/LIST]
+[SIZE=4]
+[/SIZE]
+[SIZE=6][COLOR=#ff0000][B][U]How to apply enchantment:[/U][/B][/COLOR]
+
+[/SIZE]
+[SIZE=5][B][COLOR=#000000]1)[/COLOR][COLOR=#0080ff] Rune Drag n' Drop:[/COLOR][/B][/SIZE]
+
+
+[IMG]https://i.imgur.com/SCwNsKR.gif[/IMG]
+
+[SIZE=5]
+[B][COLOR=#000000]2)[/COLOR][COLOR=#0080ff] Enchanter[/COLOR][/B]
+[/SIZE]
+
+[MEDIA=youtube]2PoghlP7Jog[/MEDIA]
+
+
+
+[B]Both ways support level stacking, i.e 1 + 1 = 2, 2 + 2 = 3, etc.
+
+Both ways support level upgrade. i.e if item has lower level of the enchantment than the level you are applying, the higher level would considered.
+
+[/B]
+[U][B]
+[COLOR=#ff0000][SIZE=6]Special Items/Stones[/SIZE][/COLOR]
+[SIZE=6]
+[/SIZE][/B][/U]
+[B][SIZE=4][COLOR=#000000]i)[/COLOR][COLOR=#0080ff] Protection Charm[/COLOR][/SIZE]
+[/B]
+Prevents the item being destroyed while enchanting. It has limited number of uses and the number of uses increase with the levels.
+
+[B]How to get: [/B][I]/ritem [I]protection[/I] <player> <level>[/I]
+
+
+[B][SIZE=4][COLOR=#000000]ii)[/COLOR][COLOR=#0080ff] Luck Stone[/COLOR][/SIZE]
+[/B]
+Increases the success rate of enchanting while using the Enchanter GUI. Increase in rate depends on the level of the stone.
+
+[B]How to get: [/B][I]/ritem [I]luck [/I]<player> <level>[/I]
+
+
+[B][SIZE=4][COLOR=#000000]iii) [/COLOR][COLOR=#0080ff]Enchantment Orb[/COLOR][/SIZE]
+[/B]
+Adds extra enchantment slots on an item.
+
+[B]How to get: [/B][I]/ritem orb <player> <slots>[/I]
+
+
+[B][SIZE=4][COLOR=#000000]iv)[/COLOR][COLOR=#0080ff] Resurrection Stone[/COLOR][/SIZE]
+[/B]
+Specifically made for the Enchanter GUI where it prevents the item from getting destroyed. It has no levels and will get destroyed as soon as the enchanting process is completed. If the item already has Protection Charm, Resurrection Stone is redundant. But if you still use it, you will save the number of uses left of the Protection Charm on the item.
+
+[B]How to get: [/B][I]/ritem resurrection <player>[/I]
+
+
+[B][I][U]Each stone has its own configuration file where you can configure everything!
+
+[/U][/I][/B]
+[SIZE=4][/SIZE]
+[SIZE=6][COLOR=#ff0000][U][B]Creating Enchantment Groups/Tiers[/B][/U]
+[U][B][/B][/U]
+[U][B][/B][/U][/COLOR][/SIZE]
+[SIZE=4][COLOR=#000000]By default, the plugin comes up with a demo group called "boots", which basically has a few boot enchantments in it.
+
+If you want to create your own group, head over to the "[B]groups[/B]" folder and create a file named "[B]<your_group_name>.yml[/B]". Copy the content from [B]boots.yml[/B] file and paste it into your file. Then modify the newly created file according to your needs.
+
+Please note that the name of the file you create must NOT contain space. The name of the file (without .yml extension) would be the id of the group you would use in the commands or Shop config. [/COLOR][/SIZE]
 
 [SIZE=4]
 [/SIZE]
-[SIZE=6][B][U]How to apply enchantment:[/U][/B]
-[B][U][/U][/B]
-[/SIZE]
-[SIZE=5][B]1) Rune Drag n' Drop:[/B][/SIZE]
-[SIZE=6][/SIZE]
-[SIZE=4]<image here>[/SIZE]
-[SIZE=6][/SIZE]
-[SIZE=5][B]2) Enchanter[/B]
-[B][/B][/SIZE]
-[SIZE=4]<video here>
-
-
-[/SIZE]
-[B][U][SIZE=6]Configuring enchantments[/SIZE][/U][/B]
-[B][U][SIZE=6]
+[B][U][SIZE=6][COLOR=#ff0000]Configuring Enchantments[/COLOR]
 [/SIZE][/U][/B]
-[SIZE=5]Enchantments can be configured from their respective files in the folder '[U][B]plugins/RunesEnchant/enchantments[/B][/U]'.
+[SPOILER="How to configure"][SIZE=4]Enchantments can be configured from their respective files in the folder '[U][B]plugins/RunesEnchant/enchantments[/B][/U]'.
 
 This is the example configuration of the enchantment Aegis:
-[/SIZE]
-[SIZE=6][code=yaml]
+
+[code=yaml]
 enabled: true
 
 description: 'When blocking, there is a chance for you to regain health for a percentage of the damage received'
@@ -74,19 +128,19 @@ damage-percent:
   expression: '%level% * 1.5'[/code]
 
 
-Most of the fields are self-explanatory. However I will explain two fields here.
+Most of the fields are self-explanatory. However I will explain two fields here.[/SIZE]
 
-[/SIZE]
-[B][SIZE=6]1) 'enchant-type'
-[/SIZE][/B]
-[SIZE=6][/SIZE]
-[SIZE=5]You can choose any [U][I]applicable[/I][/U] type from these:
+
+[B][SIZE=4]1) '[U]enchant-type'[/U][/SIZE]
+[/B]
+
+[SIZE=4]You can choose any [U][I]applicable[/I][/U] type from these:
 
 [code]ARMOR, WEAPON, SWORD, AXE, BOOTS, HELMET, CHESTPLATE, BOW, HOE, PICKAXE, STICK, ANY[/code][/SIZE]
-[SIZE=6][/SIZE]
-[B][SIZE=6]2) 'expression' field[/SIZE][/B]
-[SIZE=6][/SIZE]
-[SIZE=5][B]i)[/B] You have the ability to configure enchantment for EACH level particularly. But for some enchantments, you might not want to do so. For that, you can create a general expression which gets evaluated and gets applied for every level of enchantment. You can use any basic mathematical operator and the round brackets for BODMAS.
+
+[B][SIZE=4]2) [U]'expression' field[/U][/SIZE][/B]
+
+[SIZE=4][B]i)[/B] You have the ability to configure enchantment for EACH level particularly. But for some enchantments, you might not want to do so. For that, you can create a general expression which gets evaluated and gets applied for every level of enchantment. You can use any basic mathematical operator and the round brackets for BODMAS.
 
 
 [B]ii) [/B]If you want to override the expression for some particular level(s), you can do so! Just add a field in the format 'level_<level-here>' right after the expression field. For example:
@@ -98,21 +152,23 @@ Most of the fields are self-explanatory. However I will explain two fields here.
 
 So, the chance for level 1 would be 20.44%, for level 2 would be 25.99% and for other levels, it would depend on the how the mathematical expression gets evaluated.
 
-[/SIZE]
 
-[SIZE=5][B]iii) [/B]If you want to set chances for each level manually, just remove the expression field and add the 'level_' fields like above for each level.
+
+[B]iii) [/B]If you want to set chances for each level manually, just remove the expression field and add the 'level_' fields like above for each level.
 
 [code=yaml]chance:
   level_1: 20.44
   level_2: 25.99
-  level_3: 30[/code][/SIZE]
+  level_3: 30[/code][/SIZE][/SPOILER]
 [SIZE=4]
 
 [/SIZE]
-[U][B][SIZE=6]Commands and Permissions:[/SIZE][/B][/U]
-[U][B][SIZE=6][/SIZE]
-[SIZE=5]Admin commands[/SIZE]
-[SIZE=6][/SIZE][/B][/U]
+[U][B][SIZE=6][COLOR=#ff0000]Commands and Permissions:
+[/COLOR][/SIZE]
+
+[COLOR=#0080ff][SIZE=5]Admin commands[/SIZE][/COLOR]
+[SIZE=5][COLOR=#0080ff][/COLOR][/SIZE]
+[/B][/U]
 [B][SIZE=4]/runes <give> <player> <enchantment> <level> (success-rate) (destroy-rate)
 
 /runes <give> <player> group <group-name> (success-rate) (destroy-rate)
@@ -120,18 +176,21 @@ So, the chance for level 1 would be 20.44%, for level 2 would be 25.99% and for 
 /ritem <item-type> <player> (level)
 [/SIZE][/B]
 
-[SIZE=4][B]Permission: [U]runes.admin[/U][/B][/SIZE]
+[SIZE=4][COLOR=#00b300][B]Permission:[/B][/COLOR] [I][B]runes.admin[/B][/I][/SIZE]
 [B][SIZE=4]
-
-Note: Arguments in round brackets "( )" are optional in some cases.[/SIZE]
+[/SIZE][/B]
+[SIZE=4][COLOR=#59b300][B]Note:[/B][/COLOR] [I][B]Arguments in round brackets "( )" are optional in some cases.[/B][/I][/SIZE]
+[B]
 [SIZE=5]
 
-[U]Player Commands:[/U]
+[COLOR=#0080ff][U]Player Commands[/U]
+[/COLOR]
 [/SIZE]
 [SIZE=4]/runes enchanter
 
-Permission: [U]runes.enchanter[/U]
+[COLOR=#00b300]Permission:[/COLOR] [I]runes.enchanter[/I]
+
 
 /runes shop
 
-Permission: [U]runes.shop[/U][/SIZE][/B]
+[COLOR=#00b300]Permission:[/COLOR][I] runes.shop[/I][/SIZE][/B]
