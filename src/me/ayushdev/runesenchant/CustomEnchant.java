@@ -18,7 +18,10 @@ public enum CustomEnchant {
     WILD_MARK(EnchantType.BOW), DETONATE(EnchantType.BOW), TRIPLET(EnchantType.BOW), LIFESTEAL(EnchantType.SWORD),
     REINFORCED(EnchantType.CHESTPLATE), REBORN(EnchantType.WEAPON), IMMOLATION(EnchantType.CHESTPLATE),
     PARALYZE(EnchantType.WEAPON), ENDLESS(EnchantType.ANY), SUICIDE(EnchantType.CHESTPLATE),
-    NECROMANCER(EnchantType.ARMOR), WOLVES(EnchantType.ARMOR), SOFT_TOUCH(EnchantType.PICKAXE), THOR_HAMMER(EnchantType.SWORD);
+    NECROMANCER(EnchantType.ARMOR), WOLVES(EnchantType.ARMOR), SOFT_TOUCH(EnchantType.PICKAXE),
+    DEATH_HAMMER(EnchantType.BOW), THOR_HAMMER(EnchantType.SWORD), TNT_SHOOTER(EnchantType.BOW),
+    MONSTER(EnchantType.ARMOR), ALOHOMORA(EnchantType.STICK), PUNCH(EnchantType.WEAPON),
+    REPEL(EnchantType.ARMOR);
 
     private EnchantType type;
     private EnchantmentConfig config;

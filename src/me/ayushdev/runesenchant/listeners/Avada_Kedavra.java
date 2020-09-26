@@ -9,7 +9,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class KillingCurse implements Listener {
+public class Avada_Kedavra implements Listener {
 
     int task;
 

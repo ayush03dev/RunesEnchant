@@ -31,12 +31,11 @@ public class EnchanterListener implements Listener {
                 GUIHolder holder = new GUIHolder(p);
                 if (holder.getPlayer().getUniqueId().equals(p.getUniqueId())) {
 
-                   if (e.getAction() == InventoryAction.COLLECT_TO_CURSOR || e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-                       e.setCancelled(true);
-                       return;
-                   }
+                    if (e.getAction() == InventoryAction.COLLECT_TO_CURSOR || e.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+                        e.setCancelled(true);
+                        return;
+                    }
 
-                    // To be reset later...
                     int resultSlot = 40;
                     int slot = e.getRawSlot();
                     Inventory inv = e.getInventory();
@@ -78,8 +77,11 @@ public class EnchanterListener implements Listener {
                             int level = item.getLevel(ce);
 
                             if (chance(netSuccess)) {
-
                                 if (level == 0) {
+                                    if (Settings.getInstance().slotsEnabled()) {
+                                        item.setSlots(item.getSlots() - 1);
+                                    }
+
                                     item.addEnchantment(ce, rune.getLevel());
 
                                 } else {
@@ -119,7 +121,12 @@ public class EnchanterListener implements Listener {
                                         return;
                                     }
 
-                                    inv.setItem(resultSlot, new ItemStack(Material.BARRIER));
+                                    ItemStack barrier = new ItemStack(Material.BARRIER);
+                                    ItemMeta meta = barrier.getItemMeta();
+                                    meta.setDisplayName(ChatColor.DARK_RED + "Item Destroyed");
+                                    barrier.setItemMeta(meta);
+
+                                    inv.setItem(resultSlot, barrier);
                                 } else {
                                     inv.setItem(resultSlot, item.getItemStack());
                                 }
@@ -244,15 +251,28 @@ public class EnchanterListener implements Listener {
                 ItemStack ls = inv.getItem(25);
                 ItemStack result = inv.getItem(40);
 
-                ItemStack[] arr = new ItemStack[] {item, rune, rs, ls, result};
-                    for (ItemStack itemStack : arr) {
-                        if (!isGlass(itemStack) && !isDemoItem(itemStack)
-                                && itemStack.getType() != Material.EMERALD_BLOCK &&
-                                itemStack.getType() != Material.REDSTONE_BLOCK &&
-                                itemStack.getType() != Material.BARRIER) {
+                ItemStack[] arr = new ItemStack[]{item, rune, rs, ls, result};
+
+                boolean dropped = false;
+
+                for (ItemStack itemStack : arr) {
+                    if (!isGlass(itemStack) && !isDemoItem(itemStack)
+                            && itemStack.getType() != Material.EMERALD_BLOCK &&
+                            itemStack.getType() != Material.REDSTONE_BLOCK &&
+                            itemStack.getType() != Material.BARRIER) {
+
+                        if (dropped || p.getInventory().firstEmpty() == -1) {
+                            dropped = true;
                             p.getWorld().dropItem(p.getLocation(), itemStack);
+                        } else {
+                            p.getInventory().addItem(itemStack);
                         }
                     }
+                }
+
+                if (dropped) {
+                    p.sendMessage(ChatColor.RED + "Since your inventory is full, some of your items are dropped on the ground near you.");
+                }
             }
         }
     }
@@ -303,7 +323,12 @@ public class EnchanterListener implements Listener {
             }
         }
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(ChatColor.BLACK + "");
+        if (color == GlassColor.RED) {
+            meta.setDisplayName(ChatColor.RED + "Enchantment Unsuccessful");
+        } else {
+            meta.setDisplayName(ChatColor.GREEN + "Enchantment Successful");
+
+        }
         item.setItemMeta(meta);
         return item;
     }
@@ -327,11 +352,19 @@ public class EnchanterListener implements Listener {
             if (!new Rune(rune).getEnchantment().getType().isApplicableItem(item)) {
                 messageList.add(EnchanterItemMessage.NOT_APPLICABLE);
             } else {
-
-                Rune r = new Rune(rune);
                 ApplicableItem ai = new ApplicableItem(item);
 
+                Rune r = new Rune(rune);
+
                 int level = ai.getLevel(r.getEnchantment());
+
+                if (level == 0) {
+                    if (Settings.getInstance().slotsEnabled() && ai.getSlots() == 0) {
+                        messageList.add(EnchanterItemMessage.NO_SLOTS);
+                        return toArray(messageList);
+                    }
+                }
+
                 if (level != 0) {
                     if (level > r.getLevel()) {
                         messageList.add(EnchanterItemMessage.LOW_LEVEL);
@@ -368,7 +401,8 @@ public class EnchanterListener implements Listener {
         for (EnchanterItemMessage msg : getMessages(item, rune, rs, ls)) {
             if (msg == EnchanterItemMessage.NO_ITEM || msg == EnchanterItemMessage.NO_RUNE
                     || msg == EnchanterItemMessage.DEFAULT || msg == EnchanterItemMessage.NOT_APPLICABLE
-                    || msg == EnchanterItemMessage.LOW_LEVEL || msg == EnchanterItemMessage.MAX_LEVEL) return true;
+                    || msg == EnchanterItemMessage.LOW_LEVEL || msg == EnchanterItemMessage.MAX_LEVEL
+                    || msg == EnchanterItemMessage.NO_SLOTS) return true;
         }
         return false;
     }

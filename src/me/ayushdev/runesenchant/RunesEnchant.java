@@ -1,6 +1,7 @@
 package me.ayushdev.runesenchant;
 
 import com.codingforcookies.armorequip.ArmorListener;
+import me.ayushdev.runesenchant.commands.RItemCommand;
 import me.ayushdev.runesenchant.commands.RunesCommand;
 import me.ayushdev.runesenchant.effects.*;
 import me.ayushdev.runesenchant.gui.EnchanterGUI;
@@ -8,9 +9,9 @@ import me.ayushdev.runesenchant.listeners.EnchanterListener;
 import me.ayushdev.runesenchant.listeners.RuneApplyListener;
 
 import me.ayushdev.runesenchant.listeners.ShopListener;
+import me.ayushdev.runesenchant.listeners.SignEvents;
 import me.ayushdev.runesenchant.utils.HiddenStringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,9 +48,14 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new ToolEffects(), this);
         getServer().getPluginManager().registerEvents(new PVEWeaponEffects(), this);
         getServer().getPluginManager().registerEvents(new BowEffects(), this);
+        getServer().getPluginManager().registerEvents(new PickaxeEffects(), this);
+        getServer().getPluginManager().registerEvents(new WandEffects(), this);
+        getServer().getPluginManager().registerEvents(new SignEvents(), this);
 
 
         getCommand("runes").setExecutor(new RunesCommand());
+        getCommand("ritem").setExecutor(new RItemCommand());
+
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         RunesEnchant.version = Integer.parseInt(version.replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));
 
@@ -62,16 +68,19 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 //            } catch (IllegalArgumentException ex) {}
 //        }
 
-        saveResource("runes.yml", false);
-        saveResource("protection-charm.yml", false);
-        saveResource("resurrection-stone.yml", false);
-        saveResource("enchanter.yml", false);
-        saveResource("luck-stone.yml", false);
         saveDefaultEnchantments();
         saveDefaultTiers();
-//        saveResource(new File("groups" + File.separator + "boots.yml").getPath(), false);
         saveDefaultTiers();
         saveDefaultConfig();
+        saveDefaultFile("runes.yml");
+        saveDefaultFile("protection-charm.yml");
+        saveDefaultFile("resurrection-stone.yml");
+        saveDefaultFile("enchanter.yml");
+        saveDefaultFile("luck-stone.yml");
+        saveDefaultFile("rune-sign.yml");
+        saveDefaultFile("messages.yml");
+        saveDefaultFile("enchantment-orb.yml");
+        saveDefaultFile("shop.yml");
     }
 
     @Override
@@ -126,6 +135,11 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 
         }
 
+        if (e.getMessage().equalsIgnoreCase("eo")) {
+            p.getInventory().addItem(new EnchantmentOrb(2).getItem());
+
+        }
+
         if (e.getMessage().equalsIgnoreCase("test")) {
             ItemStack item = p.getInventory().getItemInMainHand();
             ItemMeta meta = item.getItemMeta();
@@ -158,9 +172,16 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     }
 
     private void saveDefaultTiers() {
-        File f = new File(getDataFolder() + File.separator + "boots.yml");
+        File f = new File(getDataFolder() + File.separator + "groups" + File.separator + "boots.yml");
         if (!f.exists()) {
             saveResource("groups/boots.yml", false);
+        }
+    }
+
+    public void saveDefaultFile(String name) {
+        File f = new File(getDataFolder() + File.separator + name);
+        if (!f.exists()) {
+            saveResource(name, false);
         }
     }
 }

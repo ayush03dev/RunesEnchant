@@ -1,16 +1,16 @@
 default:
-  display-name: '&a&lRune of %enchantment% %level%'
+  display-name: '&7%enchantment% %level%'
   item-id: 'EMERALD:0'
   success-rate: 92
   destroy-rate: 8
   lore:
-    - 'Line %success% %destroy%'
-    - '%level%'
-    - '%type%'
+    - '&e&lRune of %enchant%'
+    - '&a%success% % success rate &7and &c%destroy% % destroy rate'
+    - '&7%type% Enchantment'
+    - '&d&lRight click with the Rune for more info'
+
+# You can override the default configuration fields. Like for Aegis display-name and success-rate have been overriden.
 
 aegis:
-    display-name: '&a&lRune of Aegis %level%'
-    lore:
-      - 'Line 1'
-      - 'Line 2'
-      - 'Line 3'
+  display-name: '&c&lRune of Aegis %level%'
+  success-rate: 94

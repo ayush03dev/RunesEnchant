@@ -6,12 +6,14 @@ display-name: 'Aegis'
 
 lore-display: '&7Aegis %level%'
 
-max-level: 100
+max-level: 3
 
 enchant-type: 'ARMOR'
 
 chance:
   expression: '%level% * 0.5'
+  level_1: 20.44
+  level_2: 25.99
 
 # The amount of health regained is the following percent of the damage received.
 

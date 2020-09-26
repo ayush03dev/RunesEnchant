@@ -1,0 +1,17 @@
+enabled: true
+
+description: 'A chance to give a big knockback to the enemy'
+
+display-name: 'Repel'
+
+lore-display: '&7Repel %level%'
+
+max-level: 3
+
+enchant-type: 'ARMOR'
+
+chance:
+  expression: '%level% * 1.4'
+
+velocity:
+  expression: '%level% * 4'

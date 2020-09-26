@@ -15,9 +15,8 @@ public enum EnchanterItemMessage {
     LUCK_APPLIED("§d§lLuck Stone %level% §7§l(§a§l+%increase%% Success Rate§7§l)"),
     RESULT_ENCHANTMENT("§a§l%enchantment% §d§l%level%"),
     SUCCESS_RATE("§a§l%success%% Success Rate"),
-    DESTROY_RATE("§c§l%destroy%% Destroy Rate");
-
-    // TODO: Add support for Slots...
+    DESTROY_RATE("§c§l%destroy%% Destroy Rate"),
+    NO_SLOTS("§cNo Slots!");
 
     private final String message;
     private final FileConfiguration config;

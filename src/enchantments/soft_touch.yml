@@ -1,0 +1,11 @@
+enabled: true
+
+description: 'Ability to get the mob spawner on breaking it with this pickaxe'
+
+lore-display: '&7Soft Touch %level%'
+
+display-name: 'Soft Touch'
+
+max-level: 1
+
+enchant-type: 'PICKAXE'

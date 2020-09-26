@@ -60,9 +60,11 @@ public class LuckStone {
             PersistentDataContainer data = meta.getPersistentDataContainer();
             NamespacedKey key = new NamespacedKey(RunesEnchant.getInstance(), "re.ls");
             data.set(key, PersistentDataType.INTEGER, level);
-            meta.setDisplayName(config.getDisplayName());
+            meta.setDisplayName(config.getDisplayName().replace("%level%", getLevel() + "")
+            .replace("%increase%", getIncrease() + ""));
         } else {
-            meta.setDisplayName(config.getDisplayName() + HiddenStringUtils.encodeString("ls-LUCKY:" + level));
+            meta.setDisplayName(config.getDisplayName().replace("%level%", getLevel() + "")
+                    .replace("%increase%", getIncrease() + "") + HiddenStringUtils.encodeString("ls-LUCKY:" + level));
         }
         meta.setLore(config.getItemLore());
         item.setItemMeta(meta);

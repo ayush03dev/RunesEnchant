@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.omg.PortableInterceptor.SUCCESSFUL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class RuneApplyListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
+        if (!Settings.getInstance().dragDropEnabled()) return;
         if (e.getWhoClicked() instanceof Player) {
             Player p = (Player) e.getWhoClicked();
             if (e.getInventory().getHolder() != null && e.getInventory().getHolder() instanceof GUIHolder) return;
@@ -37,7 +39,7 @@ public class RuneApplyListener implements Listener {
                 if (cursor.getType() == Material.AIR || current.getType() == Material.AIR) return;
 
                 if (current.getAmount() != 1 || cursor.getAmount() != 1) {
-                    p.sendMessage(ChatColor.RED + "The amount of Item and Rune cannot be more than 1!");
+                    MessageManager.getInstance().sendMessage(p, Message.INVALID_AMOUNT);
                     e.setCancelled(true);
                     return;
                 }
@@ -47,8 +49,6 @@ public class RuneApplyListener implements Listener {
                     Rune rune = new Rune(cursor);
                     CustomEnchant ce = rune.getEnchantment();
                     int level = rune.getLevel();
-
-                    // TODO: ADD Messaging system...
 
                     if (ce.getType().isApplicableItem(current)) {
                         ApplicableItem item = new ApplicableItem(current);
@@ -61,7 +61,7 @@ public class RuneApplyListener implements Listener {
                             if (Settings.getInstance().slotsEnabled()) {
                                 if (response == Response.ERROR_NO_SLOT) {
                                     e.setCancelled(true);
-                                    p.sendMessage(ChatColor.RED + "You do not have any slot left!");
+                                    MessageManager.getInstance().sendMessage(p, Message.NO_SLOT);
                                     return;
                                 }
                             }
@@ -75,7 +75,7 @@ public class RuneApplyListener implements Listener {
                                         item.setSlots(item.getSlots() - 1);
                                     }
                                     item.addEnchantment(ce, level);
-                                    p.sendMessage(ChatColor.GREEN + "SUCCESSFUL! :D");
+                                    MessageManager.getInstance().sendMessage(p, Message.ENCHANTMENT_SUCCESSFUL);
                                 } else {
                                     if (chance(rune.getDestroyRate())) {
 
@@ -84,28 +84,28 @@ public class RuneApplyListener implements Listener {
                                             ProtectionCharm pc = new ProtectionCharm(current);
                                             pc.setLeft(pc.getLeft() - 1);
                                             p.setItemOnCursor(new ItemStack(Material.AIR));
-                                            p.sendMessage(ChatColor.GRAY + "SAVED YA :)");
+                                            MessageManager.getInstance().sendMessage(p, Message.ITEM_SAVED);
 
                                         } else {
-                                            p.sendMessage(ChatColor.RED + "DESTROYED :(");
+                                            MessageManager.getInstance().sendMessage(p, Message.ITEM_DESTROYED);
                                             e.setCurrentItem(new ItemStack(Material.AIR));
                                             p.setItemOnCursor(new ItemStack(Material.AIR));
                                         }
 
                                     } else {
                                         p.setItemOnCursor(new ItemStack(Material.AIR));
-                                        p.sendMessage(ChatColor.RED + "UNSUCCESSFUL MATE :(");
+                                        MessageManager.getInstance().sendMessage(p, Message.ENCHANTMENT_UNSUCCESSFUL);
                                     }
                                 }
                             } else {
-                                p.sendMessage(ChatColor.RED + "You do not have any slot left :(");
+                                MessageManager.getInstance().sendMessage(p, Message.NO_SLOT);
                                 return;
                             }
 
                         } else {
                             if (item.getLevel(ce) == level) {
                                 if (level == ce.getMaxLevel()) {
-                                    p.sendMessage(ChatColor.RED + "You are already on a max level!");
+                                    MessageManager.getInstance().sendMessage(p, Message.MAX_LEVEL);
                                     return;
                                 }
 
@@ -155,6 +155,22 @@ public class RuneApplyListener implements Listener {
                         meta.setLore(lore);
                         current.setItemMeta(meta);
                     }
+                    return;
+                }
+
+                if (EnchantmentOrb.isEnchantmentOrb(cursor)) {
+                    EnchantmentOrb orb = new EnchantmentOrb(cursor);
+                    int add = orb.getSlots();
+
+                    if (!ApplicableItem.isSupportedItem(current)) return;
+
+                    ApplicableItem item = new ApplicableItem(current);
+
+                    if (Settings.getInstance().slotsEnabled()) {
+                        e.setCancelled(true);
+                        p.setItemOnCursor(new ItemStack(Material.AIR));
+                        item.setSlots(item.getSlots() + add);
+                    }
                 }
             }
         }
@@ -162,7 +178,6 @@ public class RuneApplyListener implements Listener {
 
     private boolean chance(int successRate) {
         int chance = new Random().nextInt(100)+1;
-        System.out.println(successRate + " : " + chance);
         if (chance <= successRate) return true;
         return false;
     }

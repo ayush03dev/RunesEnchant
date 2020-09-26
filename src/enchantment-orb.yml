@@ -1,0 +1,6 @@
+item:
+  item-id: 'DIAMOND:0'
+  display-name: '&d&lEnchantment Orb &7(&a%slots%&7)'
+  lore:
+    - '&7Increases the slots on the item by &e%slots%'
+    - '&ePlace the orb on any item to apply its effect'

@@ -43,6 +43,13 @@ public class FileManager {
         return YamlConfiguration.loadConfiguration(f);
     }
 
+    public FileConfiguration getMessageConfig() {
+        File f = new File(dataFolder + File.separator + "messages.yml");
+
+        if (!f.exists()) return null;
+        return YamlConfiguration.loadConfiguration(f);
+    }
+
     public FileConfiguration getProtectionCharmConfig() {
         File f = new File(dataFolder + File.separator + "protection-charm.yml");
 
@@ -59,6 +66,19 @@ public class FileManager {
     public FileConfiguration getLuckStoneConfig() {
         File f = new File(dataFolder + File.separator + "luck-stone.yml");
 
+        if (!f.exists()) return null;
+        return YamlConfiguration.loadConfiguration(f);
+    }
+
+    public FileConfiguration getEnchantmentOrbConfig() {
+        File f = new File(dataFolder + File.separator + "enchantment-orb.yml");
+
+        if (!f.exists()) return null;
+        return YamlConfiguration.loadConfiguration(f);
+    }
+
+    public FileConfiguration getSignConfig() {
+        File f = new File(dataFolder + File.separator + "rune-sign.yml");
         if (!f.exists()) return null;
         return YamlConfiguration.loadConfiguration(f);
     }

@@ -1,0 +1,14 @@
+enabled: true
+
+description: 'Spawns a rain of arrow over enemy.'
+
+lore-display: '&7Arrow Rain %level%'
+
+display-name: 'Arrow Rain'
+
+max-level: 3
+
+enchant-type: 'BOW'
+
+chance:
+  expression: '(%level% + 1) * 2'

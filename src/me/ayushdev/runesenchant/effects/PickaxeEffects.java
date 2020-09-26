@@ -1,6 +1,7 @@
 package me.ayushdev.runesenchant.effects;
 
 import me.ayushdev.runesenchant.ApplicableItem;
+import me.ayushdev.runesenchant.CustomEnchant;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.Player;
@@ -9,6 +10,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Map;
 
 public class PickaxeEffects implements Listener {
 
@@ -20,18 +23,20 @@ public class PickaxeEffects implements Listener {
             ItemStack hand = p.getItemInHand();
             if (ApplicableItem.isSupportedItem(hand)) {
                 ApplicableItem item = new ApplicableItem(hand);
-                if (e.getBlock().getType().toString().contains("SPAWNER")) {
-                    if (!e.isCancelled()) {
-                        Block b = e.getBlock();
-                        CreatureSpawner spawner = (CreatureSpawner) b.getState();
-                        ItemStack drop  = new ItemStack(spawner.getType());
-                        drop.setData(spawner.getData());
+                Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
+                if (enchants.containsKey(CustomEnchant.SOFT_TOUCH)) {
+                    if (e.getBlock().getType().toString().contains("SPAWNER")) {
+                        if (!e.isCancelled()) {
+                            Block b = e.getBlock();
+                            CreatureSpawner spawner = (CreatureSpawner) b.getState();
+                            ItemStack drop = new ItemStack(spawner.getType());
+                            drop.setData(spawner.getData());
 
-                        b.getLocation().getWorld().dropItem(b.getLocation(), drop);
+                            b.getLocation().getWorld().dropItem(b.getLocation(), drop);
+                        }
                     }
                 }
             }
         }
     }
-
 }

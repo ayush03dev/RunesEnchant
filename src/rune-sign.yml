@@ -1,0 +1,9 @@
+# Config for what the lines of the sign change to after creating a valid sign.
+
+line-1: '&7[&aRunesEnchant&7]'
+
+line-2: '%enchantment%'
+
+line-3: '&6Level: &b%level%'
+
+line-4: '&6Cost: &a%cost% XP'

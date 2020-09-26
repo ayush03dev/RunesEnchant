@@ -1,0 +1,14 @@
+enabled: true
+
+description: 'A chance to spawn the rain of TNTs over your enemy'
+
+lore-display: '&7Death Hammer %level%'
+
+display-name: 'Death Hammer'
+
+max-level: 3
+
+enchant-type: 'BOW'
+
+chance:
+  expression: '%level% * 0.3'

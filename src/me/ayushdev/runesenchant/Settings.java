@@ -29,6 +29,14 @@ public class Settings {
         return getConfig().getBoolean("slots-enabled");
     }
 
+    public boolean dragDropEnabled() {
+        return getConfig().getBoolean("rune-drag-drop-enabled");
+    }
+
+    public boolean enchanterEnabled() {
+        return getConfig().getBoolean("enchanter-enabled");
+    }
+
     public int getSlots() {
         return getConfig().getInt("slots");
     }

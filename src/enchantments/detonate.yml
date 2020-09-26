@@ -1,0 +1,19 @@
+enabled: true
+
+description: 'A chance to create the explosion at the enemy location'
+
+lore-display: '&7Detonate %level%'
+
+display-name: 'Detonate'
+
+max-level: 3
+
+enchant-type: 'BOW'
+
+chance:
+  expression: '%level% * 0.4'
+
+power:
+  expression: '%level%'
+
+break-blocks: false

@@ -8,3 +8,7 @@ commands:
   runes:
     usage: /<command> <args>
     description: Main command.
+
+  ritem:
+    usage: /<command> <args>
+    description: Gives the special items.

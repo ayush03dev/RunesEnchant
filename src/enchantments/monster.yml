@@ -1,0 +1,11 @@
+enabled: true
+
+description: 'Monsters will no longer be hostile to you'
+
+lore-display: '&7Monster %level%'
+
+display-name: 'Monster'
+
+max-level: 1
+
+enchant-type: 'ARMOR'

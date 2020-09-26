@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -100,6 +101,16 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                             pl.getWorld().playSound(pl.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
                         }
                     }
+                }
+            }
+
+            if (enchants.containsKey(CustomEnchant.PUNCH)) {
+                CustomEnchant ce = CustomEnchant.PUNCH;
+                int level = enchants.get(ce);
+
+                if (proc(ce, level)) {
+                    float velocity = getValue(ce, level, "velocity");
+                    en.setVelocity(damager.getLocation().getDirection().multiply(velocity));
                 }
             }
 

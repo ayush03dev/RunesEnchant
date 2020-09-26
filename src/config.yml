@@ -4,10 +4,5 @@ slots-enabled: true
 slots: 5
 slot-display: '&6Slots: %slots%'
 
-protection-enabled: true
-protection-display: '&a&lPROTECTED'
-
-rune-stacking: true
-
-rune-drag-drop: true
-enchanter: true
+rune-drag-drop-enabled: true
+enchanter-enabled: true

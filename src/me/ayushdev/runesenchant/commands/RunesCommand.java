@@ -22,19 +22,18 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("runes")) {
+
             if (args.length == 0) {
-                // TODO: Send all available commands...
+                sendAllAvailalbeCommands(sender);
                 return true;
             }
 
             if (args.length >= 3) {
                 if (args[0].equalsIgnoreCase("give")) {
-
-                    if (!sender.hasPermission("runes.give")) {
-                        sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+                    if (!sender.hasPermission("runes.admin")) {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command!");
                         return true;
                     }
-
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target == null) {
                         sender.sendMessage(ChatColor.RED + "Could not find player " +
@@ -60,7 +59,7 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
                         }
                     } else {
                         if (args.length < 4) {
-                            sender.sendMessage(ChatColor.RED + "Usage: /runes give <player> group <group_name> (success_rate) (destroy_rate");
+                            sender.sendMessage(ChatColor.RED + "Usage: " + ChatColor.YELLOW + "/runes give <player> group <group_name> (success_rate) (destroy_rate)");
                             return true;
                         }
                     }
@@ -70,21 +69,20 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
                         Rune rune = new Rune(ce, level);
                         ItemStack item = rune.getItem();
 
+                        MessageManager.getInstance().sendMessage(target,
+                                Message.RUNE_RECEIVED, new Placeholder("%enchantment%",
+                                        ce.getDisplayName()), new Placeholder("%level%", level));
+
+                        sender.sendMessage(ChatColor.GREEN + "Rune successfully given!");
+
                         if (target.getInventory().firstEmpty() == -1) {
                             target.getWorld().dropItem(target.getLocation(), item);
-
-                            // TODO: Send message
-
+                            MessageManager.getInstance().sendMessage(target, Message.ITEM_DROPPED);
                         } else {
-                            target.getInventory().addItem(rune.getItem());
+                            target.getInventory().addItem(item);
                         }
-
-                        // TODO: Send message...
                         return true;
                     }
-
-                    // TODO: /runes give Ayush_03 <type> <level> (success-rate) (destroy-rate)
-                    // TODO: /runes give Ayush_03 group <group_name> (success-rate) (destroy-rate)
 
                     if (args.length >= 4) {
                         int level;
@@ -184,19 +182,30 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
 
                         ItemStack item = rune.getItem();
 
+                        MessageManager.getInstance().sendMessage(target,
+                                Message.RUNE_RECEIVED, new Placeholder("%enchantment%",
+                                        ce.getDisplayName()), new Placeholder("%level%", level));
+
+                        sender.sendMessage(ChatColor.GREEN + "Rune successfully given!");
+
                         if (target.getInventory().firstEmpty() == -1) {
                             target.getWorld().dropItem(target.getLocation(), item);
-                            // TODO: Send message.
+                            MessageManager.getInstance().sendMessage(target, Message.ITEM_DROPPED);
                         } else {
                             target.getInventory().addItem(item);
-                            // TODO: Send message.
                         }
                     }
                 }
+                return true;
             }
 
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("enchanter")) {
+                    if (!Settings.getInstance().enchanterEnabled()) {
+                        sender.sendMessage(ChatColor.RED + "Enchanter is disabled on this server!");
+                        return true;
+                    }
+
                     if (sender instanceof Player) {
                         Player p = (Player) sender;
                         if (!p.hasPermission("runes.enchanter")) {
@@ -220,10 +229,24 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
 
                         new ShopGUI().openInventory(p);
                     }
+                } else if (args[0].equalsIgnoreCase("give")) {
+                        sender.sendMessage(ChatColor.RED + "Usage: ");
+                        sender.sendMessage(ChatColor.AQUA  + "/runes give <player> <enchantment> <level> (success-rate) (destroy-rate)");
+                        sender.sendMessage("");
+                        sender.sendMessage(ChatColor.AQUA  + "/runes give <player> group <group-name> (success-rate) (destroy-rate)");
+                        return true;
                 } else {
-                    // TODO Send all available commands...
-                    return true;
+                    sendAllAvailalbeCommands(sender);
                 }
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("give")) {
+                sender.sendMessage(ChatColor.RED + "Usage: ");
+                sender.sendMessage(ChatColor.AQUA  + "/runes give <player> <enchantment> <level> (success-rate) (destroy-rate)");
+                sender.sendMessage("");
+                sender.sendMessage(ChatColor.AQUA  + "/runes give <player> group <group-name> (success-rate) (destroy-rate)");
+                return true;
             }
 
         }
@@ -248,7 +271,9 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
             } else if (args.length == 3) {
                 // TODO: Get all the enabled enchantments...
                 for (CustomEnchant ce : CustomEnchant.values()) {
-                    list.add(ce.toString());
+                    if (ce.isEnabled()) {
+                        list.add(ce.toString());
+                    }
                 }
                 list.add("group");
             } else if (args.length == 4) {
@@ -269,4 +294,19 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
         }
         return list;
     }
+
+    private void sendAllAvailalbeCommands(CommandSender sender) {
+
+        sender.sendMessage(ChatColor.GRAY + "Available commands:");
+        sender.sendMessage(ChatColor.YELLOW + "/runes give <player> <enchant> <level> (success-rate) (destroy-rate)");
+        sender.sendMessage("");
+        sender.sendMessage(ChatColor.YELLOW + "/runes give <player> group <group-name> (success-rate) (destroy-rate)");
+        sender.sendMessage("");
+        sender.sendMessage(ChatColor.YELLOW + "/runes enchanter");
+        sender.sendMessage("");
+        sender.sendMessage(ChatColor.YELLOW +  "/runes shop");
+        sender.sendMessage("");
+        sender.sendMessage(ChatColor.YELLOW + "/ritem <type> <player> <level>");
+    }
+
 }

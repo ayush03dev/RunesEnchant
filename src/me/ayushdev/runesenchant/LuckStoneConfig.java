@@ -30,6 +30,7 @@ public class LuckStoneConfig {
     public List<String> getItemLore() {
         List<String> lore = new ArrayList<>();
         for (String str : fc.getStringList("item.lore")) {
+            str = str.replace("%increase%", getIncrease() + "");
             lore.add(ChatColor.translateAlternateColorCodes('&', str));
         }
         return lore;

@@ -1,0 +1,11 @@
+enabled: true
+
+description: 'Shoots TNT instead of the arrow'
+
+lore-display: '&7TNT Shooter %level%'
+
+display-name: 'TNT Shooter'
+
+max-level: 1
+
+enchant-type: 'BOW'

@@ -11,7 +11,7 @@ enchant-button:
     - '&7%enchantment% %level%'
     - '&7&m---------------'
     - ''
-    - '%luck-applied-message%\n'
+    - '%luck-applied-message%<br>'
     - '%success-rate-message%'
     - '%destroy-rate-message%'
     - '%check-protection-message%'
@@ -31,3 +31,4 @@ lore-messages:
   luck-applied: '&d&lLuck Stone %level% &7&l(&a&l+%increase%% Success Rate&7&l)'
   success-rate: '&a&lSuccess Rate: %success-rate% %'
   destroy-rate: '&c&lDestroy Rate: %destroy-rate% %'
+  no-slots: '&cNo Slot!'

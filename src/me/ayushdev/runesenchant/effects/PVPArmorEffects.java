@@ -1,6 +1,7 @@
 package me.ayushdev.runesenchant.effects;
 
 import me.ayushdev.runesenchant.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -10,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -19,6 +21,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -103,6 +106,16 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
                     }
                 }
 
+                if (enchants.containsKey(CustomEnchant.REPEL)) {
+                    CustomEnchant ce = CustomEnchant.REPEL;
+                    int level = enchants.get(ce);
+
+                    if (proc(ce, level)) {
+                        float velocity = getValue(ce, level, "velocity");
+                        damager.setVelocity(p.getLocation().getDirection().multiply(velocity));
+                    }
+                }
+
                 if (enchants.containsKey(CustomEnchant.WOLVES)) {
                     CustomEnchant ce = CustomEnchant.WOLVES;
                     int level = enchants.get(ce);
@@ -164,10 +177,24 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTarget(EntityTargetLivingEntityEvent e) {
         if (e.isCancelled()) return;
+
+        if (e.getEntity() instanceof Monster) {
+            if (e.getTarget() instanceof Player) {
+                Player p = (Player) e.getTarget();
+                for (ItemStack armor : getArmor(p)) {
+                    ApplicableItem item = new ApplicableItem(armor);
+                    if (item.getAllCustomEnchantments().containsKey(CustomEnchant.MONSTER)) {
+                        if (CustomEnchant.MONSTER.isEnabled()) e.setCancelled(true);
+                    }
+                }
+            }
+        }
+
         if (e.getEntity() instanceof Zombie) {
             Zombie z = (Zombie) e.getEntity();
             if (z.hasMetadata("re.necromancer")) {
-                UUID id = UUID.fromString((String) z.getMetadata("re.necromancer").get(0).value());
+                UUID id = (UUID) z.getMetadata("re.necromancer").get(0).value();
+                if (e.getTarget() == null) return;
                 if (e.getTarget().getUniqueId().equals(id)) {
                     e.setCancelled(true);
                 }
@@ -184,12 +211,19 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
 
             if (enchants.containsKey(CustomEnchant.STEALTH)) {
                 CustomEnchant ce = CustomEnchant.STEALTH;
+
                 int level = enchants.get(ce);
                 float range = getValue(ce, level, "radius");
 
                 for (Entity en : p.getNearbyEntities(range, range, range)) {
                     if (en instanceof Player) {
                         Player player = (Player) en;
+
+                        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(player, en, EntityDamageEvent.DamageCause.CUSTOM,
+                                new HashMap<>(), new HashMap<>());
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.isCancelled()) continue;
+
                         int potionLevel = (int) getValue(ce, level, "potion-level");
                         int duration = (int) getValue(ce, level, "potion-duration");
 
@@ -207,6 +241,12 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
                 for (Entity en : p.getNearbyEntities(range, range, range)) {
                     if (en instanceof Player) {
                         Player player = (Player) en;
+
+                        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(player, en, EntityDamageEvent.DamageCause.CUSTOM,
+                                new HashMap<>(), new HashMap<>());
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.isCancelled()) continue;
+
                         int duration = (int) getValue(ce, level, "fire-duration");
                         player.setFireTicks(duration * 20);
                     }

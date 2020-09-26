@@ -1,0 +1,14 @@
+enabled: true
+
+description: 'A chance of evading the damage'
+
+lore-display: '&7Dodge %level%'
+
+display-name: 'Dodge'
+
+max-level: 5
+
+enchant-type: 'ARMOR'
+
+chance:
+  expression: '%level% * 0.4'

@@ -1,0 +1,11 @@
+enabled: true
+
+description: 'Shoots 3 arrows at a time'
+
+lore-display: '&7Triplet %level%'
+
+display-name: 'Triplet'
+
+max-level: 1
+
+enchant-type: 'BOW'

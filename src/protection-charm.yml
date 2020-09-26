@@ -1,14 +1,15 @@
 enabled: true
+
 max-level: 3
 
 item:
   item-id: 'PAPER:0'
-  display-name: '&d&lPROTECTION CHARM &7&l%level%'
+  display-name: '&d&lProtection Charm &7(&eLevel %level%&7)'
   lore:
-    - 'Adds a protection'
-    - '%left%'
+    - '&7Protects the item from getting destroyed while enchanting'
+    - '&eAvailable Uses: &a%left%'
 
-in-lore-display: '&d&lPROTECTION CHARM &7&l%level%'
+in-lore-display: '&d&lPROTECTION CHARM &7(&b%left% &euses left&7)'
 
 durability:
   expression: '%level% * 3'

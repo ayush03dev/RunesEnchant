@@ -1,12 +1,9 @@
 package me.ayushdev.runesenchant.listeners;
 
-import me.ayushdev.runesenchant.EnchantmentGroup;
-import me.ayushdev.runesenchant.Rune;
-import me.ayushdev.runesenchant.RunesEnchant;
+import me.ayushdev.runesenchant.*;
 import me.ayushdev.runesenchant.inventoryholders.ShopGUIHolder;
 import me.ayushdev.runesenchant.utils.HiddenStringUtils;
 import me.ayushdev.runesenchant.utils.RuneUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -56,7 +53,7 @@ public class ShopListener implements Listener {
                             RuneUtils utils = RuneUtils.getInstance();
 
                             if (utils.getTotalExperience(p) < price) {
-                                p.sendMessage(ChatColor.RED + "You do not have enough xp!");
+                                MessageManager.getInstance().sendMessage(p, Message.NO_XP);
                                 return;
                             }
 

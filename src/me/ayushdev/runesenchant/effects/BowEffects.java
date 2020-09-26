@@ -4,8 +4,10 @@ import me.ayushdev.runesenchant.ApplicableItem;
 import me.ayushdev.runesenchant.CustomEnchant;
 import me.ayushdev.runesenchant.EnchantmentEffect;
 import me.ayushdev.runesenchant.RunesEnchant;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
+import me.ayushdev.runesenchant.utils.RuneUtils;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -25,6 +27,7 @@ public class BowEffects extends EnchantmentEffect implements Listener {
     public void onShoot(EntityShootBowEvent e) {
         if (e.isCancelled()) return;
         if (e.getEntity() instanceof Player) {
+            Player p = (Player) e.getEntity();
             ItemStack bow = e.getBow();
             if (bow == null) return;
             ApplicableItem item = new ApplicableItem(bow);
@@ -33,18 +36,40 @@ public class BowEffects extends EnchantmentEffect implements Listener {
                 Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
 
                 if (enchants.containsKey(CustomEnchant.TRIPLET)) {
-                   Arrow a1 = e.getEntity().getWorld().spawnArrow(e.getEntity().getLocation().clone().add(0,2.5,0), rotateVector(e.getProjectile().getVelocity(),  0.1), e.getForce() * 2, 0f);
-                   Arrow a2 =e.getEntity().getWorld().spawnArrow(e.getEntity().getLocation().clone().add(0,2.5,0), rotateVector(e.getProjectile().getVelocity(), -0.1), e.getForce() * 2,0f);
+                    CustomEnchant ce = CustomEnchant.TRIPLET;
 
-                    a1.setMetadata("re.enchants",
-                            new FixedMetadataValue(RunesEnchant.getInstance(), item.getAllCustomEnchantments()));
-                    a1.setMetadata("re.shooter", new FixedMetadataValue(RunesEnchant.getInstance(),
-                            e.getEntity().getName()));
+                    if (ce.isEnabled()) {
+                        boolean flag = false;
+                        if (enchants.containsKey(CustomEnchant.TNT_SHOOTER) && CustomEnchant.TNT_SHOOTER.isEnabled()) {
+                            if (p.getInventory().contains(Material.TNT)) flag = true;
+                        }
 
-                    a2.setMetadata("re.enchants",
-                            new FixedMetadataValue(RunesEnchant.getInstance(), item.getAllCustomEnchantments()));
-                    a2.setMetadata("re.shooter", new FixedMetadataValue(RunesEnchant.getInstance(),
-                            e.getEntity().getName()));
+                        if (!flag) {
+                            Arrow a1 = e.getEntity().getWorld().spawnArrow(e.getEntity().getLocation().clone().add(0, 2.5, 0), rotateVector(e.getProjectile().getVelocity(), 0.1), e.getForce() * 2, 0f);
+                            Arrow a2 = e.getEntity().getWorld().spawnArrow(e.getEntity().getLocation().clone().add(0, 2.5, 0), rotateVector(e.getProjectile().getVelocity(), -0.1), e.getForce() * 2, 0f);
+
+                            a1.setMetadata("re.enchants",
+                                    new FixedMetadataValue(RunesEnchant.getInstance(), item.getAllCustomEnchantments()));
+                            a1.setMetadata("re.shooter", new FixedMetadataValue(RunesEnchant.getInstance(),
+                                    e.getEntity().getName()));
+
+                            a2.setMetadata("re.enchants",
+                                    new FixedMetadataValue(RunesEnchant.getInstance(), item.getAllCustomEnchantments()));
+                            a2.setMetadata("re.shooter", new FixedMetadataValue(RunesEnchant.getInstance(),
+                                    e.getEntity().getName()));
+                        }
+                    }
+                }
+
+                if (enchants.containsKey(CustomEnchant.TNT_SHOOTER)) {
+                    CustomEnchant ce = CustomEnchant.TNT_SHOOTER;
+                    if (ce.isEnabled()) {
+                        if (p.getInventory().contains(Material.TNT)) {
+                            TNTPrimed tnt = e.getProjectile().getWorld().spawn(e.getProjectile().getLocation(), TNTPrimed.class);
+                            tnt.setVelocity(p.getEyeLocation().getDirection().multiply(e.getForce() * 2));
+                            RuneUtils.getInstance().consumeItem(p, 1, Material.TNT);
+                        }
+                    }
                 }
 
                 e.getProjectile().setMetadata("re.enchants",
@@ -69,6 +94,7 @@ public class BowEffects extends EnchantmentEffect implements Listener {
                 if (enchants.containsKey(CustomEnchant.WILD_MARK)) {
                     CustomEnchant ce = CustomEnchant.WILD_MARK;
                     int level = enchants.get(ce);
+
                     float multiplier = getValue(ce, level, "damage-multiplier");
                     e.setDamage(multiplier * e.getDamage());
                 }
@@ -106,6 +132,32 @@ public class BowEffects extends EnchantmentEffect implements Listener {
                     int level = enchants.get(ce);
                     if (proc(ce, level)) {
                         e.setDamage(e.getDamage()*2);
+                    }
+                }
+
+                if (enchants.containsKey(CustomEnchant.ARROW_RAIN)) {
+                    CustomEnchant ce = CustomEnchant.ARROW_RAIN;
+                    int level = enchants.get(ce);
+                    if (proc(ce, level)) {
+                        Location loc = p.getLocation().add(0, 10, 0);
+                        for (int x = -2; x <= 2; x++) {
+                            for (int z = -2; z <= 2; z++) {
+                                p.getWorld().spawnEntity(loc.clone().add(x, 0, z), EntityType.ARROW);
+                            }
+                        }
+                    }
+                }
+
+                if (enchants.containsKey(CustomEnchant.DEATH_HAMMER)) {
+                    CustomEnchant ce = CustomEnchant.DEATH_HAMMER;
+                    int level = enchants.get(ce);
+                    if (proc(ce, level)) {
+                        Location loc = p.getLocation().add(0, 10, 0);
+                        for (int x = -2; x <= 2; x++) {
+                            for (int z = -2; z <= 2; z++) {
+                                p.getWorld().spawnEntity(loc.clone().add(x, 0, z), EntityType.PRIMED_TNT);
+                            }
+                        }
                     }
                 }
             }

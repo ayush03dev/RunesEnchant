@@ -2,6 +2,7 @@ package me.ayushdev.runesenchant;
 
 import me.ayushdev.runesenchant.utils.HiddenStringUtils;
 import me.ayushdev.runesenchant.utils.RuneUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -82,6 +83,7 @@ public class ProtectionCharm {
 
         } else {
             this.left = left;
+            this.config = new ProtectionCharmConfig(level, left);
             if (RunesEnchant.is13()) {
                 lore.set(index, config.getLoreDisplay());
                 data.set(key, PersistentDataType.STRING, level + ":" + left + ":" + index);
