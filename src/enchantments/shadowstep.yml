@@ -11,4 +11,4 @@ max-level: 3
 enchant-type: 'ARMOR'
 
 chance:
-  expression: '%level% * 0.5'
+  expression: '%level% * 0.4'

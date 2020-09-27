@@ -8,10 +8,10 @@ display-name: 'Flame Cloak'
 
 max-level: 3
 
-enchant-type: 'ARMOR'
+enchant-type: 'CHESTPLATE'
 
 chance:
-  expression: '(%level% + 1) * 2'
+  expression: '(%level% + 1) * 0.4'
 
 fire-duration:
   expression: '%level% + 2'

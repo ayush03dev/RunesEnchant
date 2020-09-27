@@ -90,340 +90,316 @@ Specifically made for the Enchanter GUI where it prevents the item from getting 
 [/U][/I]
 [SIZE=6][COLOR=#ff0000][U]Custom Enchantments[/U][/COLOR][/SIZE][/B]
 
-[SIZE=4][COLOR=#000000][SPOILER="Click Here"]Lifesteal
+[SPOILER="Click Here"][SIZE=4][COLOR=#000000]Lifesteal
 Sword Enchant
 When attacking another player you have a chance of gaining some of your health back
-Maximum level: III
+Maximum level: 3
 
-Assassin
-Sword Enchant
+Aegis
+Armor Enchant[/COLOR][/SIZE]
+When blocking, there is a chance for you to regain health for a percentage of the damage received
+[SIZE=4][COLOR=#000000]Maximum level: 3
+[/COLOR]
+[SIZE=4][COLOR=rgb(0, 0, 0)]Alohomora
+Stick Enchant[/COLOR][/SIZE]
+Ability to open containers/chests from distance
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+[SIZE=4][COLOR=rgb(0, 0, 0)]Assassin
+Sword Enchant[/COLOR][/SIZE]
 Has a chance of inflicting a poison effect on your victim
-Maximum level: III
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
 
-Behead
+Arrow Rain
+Bow Enchant[/COLOR][/SIZE]
+Spawns a rain of arrow over enemy
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+[SIZE=4][COLOR=rgb(0, 0, 0)]Battlecry
+Axe Enchant[/COLOR][/SIZE]
+Chance to remove certain negative debuffs from yourself while you fight
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/SIZE][/SIZE]
+[COLOR=#000000]Behead
 Sword Enchant
 A chance of your victim dropping their head on death
-Maximum level: III
+Maximum level: 3
+[/COLOR]
+[SIZE=4][COLOR=rgb(0, 0, 0)]Blessed
+Armor Enchant[/COLOR][/SIZE]
+A very tiny chance to heal yourself while mining
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1
 
+[SIZE=4]Canon
+Bow Enchant
+Shoots TNT instead of the arrow
+[COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/COLOR]
+[SIZE=4][COLOR=rgb(0, 0, 0)]Corruption
+Axe Enchant[/COLOR][/SIZE]
+Has a chance to give weakness effect to enemy
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 5
+[/COLOR]
+[SIZE=4][COLOR=rgb(0, 0, 0)]Crushing
+Weapon Enchant[/COLOR][/SIZE]
+Multiplies the damage given to the enemy player
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 5[/COLOR][/SIZE]
+
+[SIZE=4][COLOR=rgb(0, 0, 0)]Curse
+Weapon Enchant[/COLOR][/SIZE]
+Upon hitting a target they will receive the wither damage debuff
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+[SIZE=4][COLOR=rgb(0, 0, 0)]Death Hammer
+Bow Enchant[/COLOR][/SIZE]
+A chance to spawn the rain of TNTs over your enemy
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+
+[SIZE=4][COLOR=rgb(0, 0, 0)]Demon Siphon
+Sword Enchant[/COLOR][/SIZE]
+A chance to get large amount of life steal from mobs
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+
+[SIZE=4][COLOR=rgb(0, 0, 0)]Demonic Aura
+Armor Enchant[/COLOR][/SIZE]
+Has a chance of giving the wither effect to your attacker
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/SIZE]
+Detonate
+[SIZE=4][COLOR=rgb(0, 0, 0)]Bow Enchant[/COLOR][/SIZE]
+A chance to create the explosion at the enemy location
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+Divine
+[SIZE=4][COLOR=rgb(0, 0, 0)]Weapon Enchant[/COLOR][/SIZE]
+A chance to heal you relative to the damage you inflict upon your enemy without taking their health
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/SIZE]
+Dodge
+[SIZE=4][COLOR=rgb(0, 0, 0)]Armor Enchant[/COLOR][/SIZE]
+A chance of evading the damage
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 5[/COLOR][/SIZE]
+
+Endless
+[SIZE=4][COLOR=rgb(0, 0, 0)]Any Item Enchant[/COLOR][/SIZE]
+Item with this enchantment will never be broken!
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1
+[/COLOR]
+Entangle
+[SIZE=4][COLOR=rgb(0, 0, 0)]Sword Enchant[/COLOR][/SIZE]
+A chance to add slowness de-buff your target
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1[/COLOR][/SIZE]
+[/SIZE]
+Execute
+[SIZE=4][COLOR=rgb(0, 0, 0)]Weapon Enchant[/COLOR][/SIZE]
+Multiplies the damage given while sneaking
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 5[/COLOR][/SIZE]
+[/SIZE]
+Eyepatch
+[SIZE=4][COLOR=rgb(0, 0, 0)]Helmet Enchant[/COLOR][/SIZE]
+Immune to blindness
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1
+[/COLOR]
+Featherfall
+Boots Enchant
+No fall damage while wearing this armor piece
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1
+[/COLOR]
+Flame Cloak
+Chestplate Enchant
+Has a chance to ignite people that attack you
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/SIZE]
+Haste
+Pickaxe Enchant
+Gives you Haste Potion Effect until you hold this pickaxe
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
 Hex
 Sword Enchant
 A chance of inflicting blindness on your victim
-Maximum level: III
-
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/SIZE]
+Holy Smite
+Axe Enchant
+A chance to call down a bolt of lightning, removing certain positive buffs the enemy has
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/SIZE]
+Immolation
+Chestplate Enchant
+A chance to set nearby players on fire when you sneak
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 5[/COLOR][/SIZE]
+[/SIZE][/SIZE]
 Jump
-Boot Enchant
+Boots Enchant
 Gives you infinite jump boost
-Maximum level: III
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
 
-Speed
-Boot Enchant
-Gives you infinite speed boost
-Maximum level: III
-
-Zeus
-Bow Enchant
-Has a chance to summon lightning on your victim
-Maximum level: III
+Lifesteal
+Sword Enchant
+When attacking another player you have a chance of gaining some of your health back
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+Lumberjack
+Axe Enchant
+Chops the entire tree when you break a block of wood
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
 
 Lumos
 Helmet Enchant
 Gives you infinite night vision
-Maximum level: I
-
-Demonic Aura
-Armour Enchant
-Has a chance of giving the wither effect to your attacker
-Maximum level: V
-
-Dodge
-Armour Enchant
-Chance of evading damage (regardless of cause)
-Maximum level: V
-
-Blessed
-Armour Enchant
-Restores the wearers health and hunger while mining
-Maximum level: III
-
-Arrow Rain
-Bow Enchant
-Spawns a barrage of arrows in the air after you hit a player with an arrow.
-Maximum level: V
-
-Snare
-Bow Enchant
-When hitting a player with an arrow they will receive a slowness debuff.
-Maximum level: IV
-
-Curse
-Weapon Enchant
-Upon hitting a target they will receive the wither damage debuff.
-Maximum level: IV
-
-Crushing
-Weapon Enchant
-Multiplies the damage given to the enemy player
-Maximum level: V
-
-Execute
-Weapon Enchant
-Multiplies the damage given while sneaking.
-Maximum level: V
-
-Stealth
-Armour Enchant
-When you sneak, nearby enemies aiming near you have a chance to get blindness.
-Maximum level: IV
-
-Aegis
-Armour Enchant
-When blocking, there is a chance for you to regain health for a percentage of the damage received.
-Maximum level: V
-
-Platemail
-Armor Enchant
-You gain damage resistance, along with a higher durability on the armour piece at the cost of slowness.
-Maximum level: I
-
-Purge
-Weapon Enchant
-A chance to call down a strike of lightning upon your enemy, removing certain positive potion effects they have and damages them
-Maximum level: IV
-
-Divine
-Weapon Enchant
-A chance to heal you relative to the damage you inflict upon your enemy without taking their health.
-Maximum level: III
-
-Entangle
-Bow Enchant
-A chance to add slowness de-buff your target.
-Maximum level: IV
-
-Pyromaniac
-Armour Enchant
-Fire ticks have a chance to heal you instead of doing damage.
-Maximum level: V
-
-Flame Cloak
-Armour Enchant
-Has a chance to ignite people that attack you.
-Maximum level: III
-
-Battlecry
-Axe Enchant
-Chance to remove negative debuffs from yourself while you fight.
-Maximum level: III
-
-Corruption
-Axe Enchant
-Has a chance to give weakness effect to enemy.
-Maximum level: V
-
-Turmoil
-Axe Enchant
-Has a chance to give enemies a nausea potion debuff.
-Maximum level: III
-
-Spiked
-Armour Enchant
-Gives a thorns like effect but a bit more than default.
-Maximum level: II
-
-Holy Smite
-Axe Enchant
-A chance to call down a bolt of lightning, removing any positive buffs the enemy has.
-Maximum level: V
-
-Riftslayer
-Sword Enchant
-You deal up to 3x more damage to mobs.
-Maximum level: I
-
-Petrify
-Axes
-Has a chance to give slowness effect to your enemy.
-Maximum level: III
-
-Eyepatch
-Helmet Enchant
-Immune to blindness
-Maximum level: I
-
-Plunder
-Weapons
-More XP from entities.
-Maximum level: I
-
-Mischief
-Weapons
-Inflicts nausea to your opponent.
-Maximum level: III
-
-Shadowstep
-Armour Enchant
-You have a chance to get teleported behind the player who damaged you.
-Maximum level: III
-
-Demon Siphon
-Sword Enchant
-You have chance to get large amount of life steal from PvE (Mobs).
-Maximum level: III
-
-Animal Tamer
-Armour Enchant
-By hitting the wolves, they will be tamed.
-Maximum level: I
-
-Wolves
-Armour Enchant
-While getting damage, you have chance to spawn friendly wolves to fight along side of you.
-Maximum level: V
-
-Superman Punch
-Armour Enchant
-While getting damage, you have chance to give a high knockback to your enemy.
-Maximum Level: III
-
-Disarm
-Weapon Enchant
-Whilst PvPing, your enemy has chance to drop the item in his hand.
-Maximum Level: III
-
-Thief
-Weapon Enchant
-While PvPing, you have a chance to steal some % of the money from your opponent.
-Maximum Level: III
-
-Swimmer
-Helmet Enchant
-Gives you infinite water breathing.
-Maximum Level: III
-
-Medic
-Bow Enchant
-When you shoot arrow on anyone with this bow, it will heal them. (This won't work if you shoot on yourself)
-Maximum Level: I
-
-Endless
-Any Item Enchant
-Item with this enchantment will never be broken!
-Maximum Level: I
-
-Health Boost
-Chestplate Enchant
-Gives infinite health boost.
-Maximum Level: III
-
-Reborn
-Weapon Enchant
-When you kill a player, you will get Absorption and Regeneration potion effect for limited time.
-Maximum Level: III
-
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/SIZE]
 Molten
 Chestplate Enchant
-Gives infinite Fire Resistant.
-Maximum Level: I
+Gives infinite Fire Resistant
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
 
-Immolation
+Monster
+Armor Enchant
+Monsters will no longer be hostile to you
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1[/COLOR][/SIZE]
+
+Necromancer
 Chestplate Enchant
-When you sneak, you have chance to set nearby players on fire for configurable amount of seconds.
-Maximum Level: V
-
-Strength
-Chestplate Enchant
-Gives infinite Strength.
-Maximum Level: III
-
-Horse Rider
-Armour Enchant
-Tames a horse with saddle when hit while wearing armour with this enchant.
-Maximum Level: I
-
-Web Trap
-Weapon Enchant
-You have a chance of spawning cob web at your opponent's location for few seconds.
-Maximum Level: III
+A chance to spawn some friendly zombies to fight along side with you
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
 
 Paralyze
-Armour Enchant
-You have a chance to give your opponent Mining Fatigue effect for few seconds.
-Maximum Level: II
-
-Soft Touch
-Pickaxe Enchant
-You have ability to get the mob spawner on breaking it with this pickaxe.
-Maximum Level: I
-
-Tnt Shooter
-Bow Enchant
-You shoot Tnt instead of arrow. (It won't damage to protected area by any world protection plugins.)
-Maximum Level: I
-
-Rekt
-Axe Enchant
-You give 2x damage to mobs.
-Maximum Level: I
-
-Reversal
-Weapon Enchant
-You have chance to reverse the damage towards your opponent who damaged you.
-Maximum Level: III
-
-Reinforced
 Chestplate Enchant
-When you wear this chestplate on low HP, you get damage resistance. (Fully configurable)
-Maximum Level: V
+A chance to give your opponent Mining Fatigue effect for few seconds
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+
+Petrify
+Axe Enchant
+A chance to give slowness effect to your enemy
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+Platemail
+Chestplate Enchant
+You gain damage resistance, along with a higher durability on the armor piece at the cost of slowness
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+Plunder
+Axe Enchant
+Multiplies the XP from entities
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/SIZE]
+Punch
+Weapon Enchant
+A chance to give a big knockback to the opponent
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+Purge
+Axe Enchant
+A chance to call down a strike of lightning upon your enemy, removing certain positive potion effects they have and damages them
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+[/SIZE]
+Pyromaniac
+Armor Enchant
+Fire ticks have a chance to heal you instead of doing damage
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 5[/COLOR][/SIZE]
+[/SIZE]
+Reborn
+Weapon Enchant
+When you kill a player, you will get Absorption and Regeneration potion effect for limited time
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+Repel
+Armor Enchant
+A chance to give a big knockback to the opponent (Repel from you)
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+
+[SIZE=4]Reversal
+Armor Enchant[/SIZE]
+You have chance to reverse the damage towards your opponent who damaged you
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+
+[SIZE=4]Riftslayer
+Sword Enchant[/SIZE]
+Multiplies the damage given to mobs
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+
+[SIZE=4]Shadowstep
+Armor Enchant[/SIZE]
+You have a chance to get teleported behind the player who damaged you
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+[SIZE=4]Soft Touch
+Armor Enchant[/SIZE]
+Ability to get the mob spawner on breaking it with this pickaxe
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1[/COLOR][/SIZE]
+
+Speed
+Boots Enchant[/SIZE]
+Gives you infinite speed boost
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+
+[SIZE=4]Spiked
+Armor Enchant[/SIZE]
+Gives a thorns like effect but a bit more than default
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+
+Stealth
+Armor Enchant[/SIZE]
+When you sneak, nearby enemies aiming near you have a chance to get blindness
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 4[/COLOR][/SIZE]
+
+[SIZE=4]Strength
+Chestplate Enchant[/SIZE]
+Gives infinite Strength
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE]
+
+[SIZE=4]Suicide
+Chestplate Enchant[/SIZE]
+A chance to create an explosion when the player who wears this enchanted chestplate dies
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1[/COLOR][/SIZE]
+
+[SIZE=4]Swimmer
+Helmet Enchant[/SIZE]
+Gives infinite Water Breathing
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3
+[/COLOR]
+[SIZE=4]Thor Hammer
+Axe Enchant[/SIZE]
+A chance to immediately break the item opponent is holding
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 3[/COLOR][/SIZE][/SIZE]
+
+Triplet
+[SIZE=4]Bow Enchant[/SIZE]
+Shoots 3 arrows at a time
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1[/COLOR][/SIZE]
+
+Turmoil
+[SIZE=4]Axe Enchant[/SIZE]
+Has a chance to give enemies a nausea potion debuff
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1[/COLOR][/SIZE]
 
 Wild Mark
-Bow Enchant
-Doubles the damage of arrows.
-Maximum Level: I
+[SIZE=4]Bow Enchant[/SIZE]
+Multiplies the damage given to the enemy player
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 1
+[/COLOR]
+Wolves
+[SIZE=4]Armor Enchant[/SIZE]
+While getting damage, you have chance to spawn friendly wolves to fight along side of you
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 5[/COLOR][/SIZE]
 
-Haste
-Pickaxe Enchant
-Gives you Haste Potion Effect until you hold this pickaxe.
-Maximum Level: III
-
-Lumberjack
-Axe Enchant
-Chops the whole tree in one click.
-Maximum Level: I
-
-Feather Fall
-Armour Enchant
-No fall damage when you wear any armour part having this enchantment.
-Maximum Level: I
-
-Suicide
-Chestplate Enchant
-A chance to create an explosion when the player who wears this enchanted chestplate dies.
-Maximum Level: I
-
-Detonate
-Bow Enchant
-A chance to create explosion on the location of your enemy.
-Maximum Level: III
-
-Death Hammer
-Bow Enchant
-A chance to spawn the rain of TNTs over your enemy.
-Maximum Level: V
-
-Sacrifice (Factions Enchant*)
-Chestplate Enchant
-If you die having this chestplate on, nearby factions member will get healed.
-Maximum Level: III[/SPOILER][/COLOR][/SIZE]
+Zeus
+[SIZE=4]Bow Enchant[/SIZE]
+Has a chance to summon lightning on your victim
+[SIZE=4][COLOR=rgb(0, 0, 0)]Maximum level: 5[/COLOR][/SIZE][/SIZE]
+[/SPOILER]
 [B][I][U]
 [/U][/I][/B]
 
 [SIZE=6][COLOR=#ff0000][B][SIZE=6][COLOR=rgb(255, 0, 0)][U][B]Creating Enchantment Groups/Tiers[/B][/U][/COLOR][/SIZE][/B][/COLOR]
-[COLOR=#ff0000][B][SIZE=6][COLOR=rgb(255, 0, 0)][/COLOR][/SIZE][/B][/COLOR]
-[COLOR=#ff0000][B][SIZE=6][COLOR=rgb(255, 0, 0)][/COLOR][/SIZE][/B][/COLOR]
+
+
 [COLOR=#ff0000][SIZE=4][COLOR=rgb(0, 0, 0)]By default, the plugin comes up with a demo group called "boots", which basically has a few boot enchantments in it.[/COLOR][/SIZE][/COLOR][/SIZE]
-[SIZE=6][COLOR=#ff0000][SIZE=4][COLOR=rgb(0, 0, 0)][/COLOR][/SIZE][/COLOR][/SIZE]
+
 [SIZE=6][COLOR=#ff0000][SIZE=4][COLOR=rgb(0, 0, 0)]If you want to create your own group, head over to the "groups" folder and create a file named "<your_group_name>.yml". Copy the content from boots.yml file and paste it into your file. Then modify the newly created file according to your needs.[/COLOR][/SIZE][/COLOR][/SIZE]
-[SIZE=6][COLOR=#ff0000][SIZE=4][COLOR=rgb(0, 0, 0)][/COLOR][/SIZE][/COLOR][/SIZE]
+
 [SIZE=6][COLOR=#ff0000][SIZE=4][COLOR=rgb(0, 0, 0)]Please note that the name of the file you create must NOT contain space. The name of the file (without .yml extension) would be the id of the group you would use in the commands or Shop config.[/COLOR][/SIZE][/COLOR][/SIZE]
 [SIZE=6][COLOR=#ff0000]
 

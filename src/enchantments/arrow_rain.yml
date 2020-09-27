@@ -1,6 +1,6 @@
 enabled: true
 
-description: 'Spawns a rain of arrow over enemy.'
+description: 'Spawns a rain of arrow over enemy'
 
 lore-display: '&7Arrow Rain %level%'
 

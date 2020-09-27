@@ -2,19 +2,18 @@
 
 enabled: true
 
-description: 'A chance to call down a strike of lightning upon your enemy, removing certain positive potion effects they have and damages them.'
+description: 'A chance to call down a strike of lightning upon your enemy, removing certain positive potion effects they have and damages them'
 
-lore-display: '&7Holy Smite %level%'
+lore-display: '&7Purge %level%'
 
-display-name: 'Holy Smite'
+display-name: 'Purge'
 
 max-level: 3
 
 enchant-type: 'AXE'
 
 chance:
-  expression: '(%level% + 1) * 2'
-  level_1: 15
+  expression: '%level% * 0.4'
 
 remove-potions:
   - 'ABSORPTION'

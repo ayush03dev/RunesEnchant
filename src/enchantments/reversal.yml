@@ -9,3 +9,6 @@ lore-display: '&7Reversal %level%'
 max-level: 3
 
 enchant-type: 'WEAPON'
+
+chance:
+  expression: '%level% * 0.4'

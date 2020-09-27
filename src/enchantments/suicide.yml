@@ -6,7 +6,7 @@ display-name: 'Suicide'
 
 lore-display: '&7Suicide %level%'
 
-max-level: 3
+max-level: 1
 
 enchant-type: 'CHESTPLATE'
 
@@ -15,3 +15,6 @@ explosion-power: '%level%'
 set-fire: true
 
 break-blocks: true
+
+chance:
+  expression: '50'

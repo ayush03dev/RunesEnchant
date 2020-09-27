@@ -3,6 +3,7 @@ package me.ayushdev.runesenchant.effects;
 import me.ayushdev.runesenchant.ApplicableItem;
 import me.ayushdev.runesenchant.CustomEnchant;
 import me.ayushdev.runesenchant.EnchantmentEffect;
+import me.ayushdev.runesenchant.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -34,6 +35,7 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
 
         // TODO: Later check if entity is instance of Player as well...
         if (e.getDamager() instanceof Player || e.getDamager() instanceof Arrow) {
+            if (!(e.getEntity() instanceof Player)) return;
             LivingEntity en = (LivingEntity) e.getEntity();
 
             Player damager = null;
@@ -43,7 +45,7 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                 Arrow a = (Arrow) e.getDamager();
                 if (a.hasMetadata("re.enchants")) {
                     damager = Bukkit.getPlayer((String) Objects.requireNonNull(a.getMetadata("re.shooter").get(0).value()));
-                    enchants = (Map<CustomEnchant, Integer>) a.getMetadata("re.enchants").get(0).value();
+                    enchants = (Map <CustomEnchant, Integer>) a.getMetadata("re.enchants").get(0).value();
                 }
             } else {
                 damager = (Player) e.getDamager();
@@ -220,6 +222,15 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                     double transfer = (percent / 100f) * health;
                     en.setHealth(en.getHealth() - transfer);
                     damager.setHealth(damager.getHealth() + transfer);
+                }
+            }
+
+            if (enchants.containsKey(CustomEnchant.DIVINE)) {
+                CustomEnchant ce = CustomEnchant.DIVINE;
+                int level = enchants.get(ce);
+                if (proc(ce, level)) {
+                    float heal = getValue(ce, level, "health", new Placeholder("%damage%", e.getDamage()));
+                    damager.setHealth(damager.getHealth() + heal);
                 }
             }
 

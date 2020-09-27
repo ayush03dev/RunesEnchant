@@ -10,5 +10,8 @@ max-level: 3
 
 enchant-type: 'SWORD'
 
+chance:
+  expression: '%level% * 0.4'
+
 health-percent:
   expression: '%level% * 2'

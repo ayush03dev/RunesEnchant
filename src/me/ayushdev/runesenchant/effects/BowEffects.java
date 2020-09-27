@@ -40,7 +40,7 @@ public class BowEffects extends EnchantmentEffect implements Listener {
 
                     if (ce.isEnabled()) {
                         boolean flag = false;
-                        if (enchants.containsKey(CustomEnchant.TNT_SHOOTER) && CustomEnchant.TNT_SHOOTER.isEnabled()) {
+                        if (enchants.containsKey(CustomEnchant.CANON) && CustomEnchant.CANON.isEnabled()) {
                             if (p.getInventory().contains(Material.TNT)) flag = true;
                         }
 
@@ -61,8 +61,8 @@ public class BowEffects extends EnchantmentEffect implements Listener {
                     }
                 }
 
-                if (enchants.containsKey(CustomEnchant.TNT_SHOOTER)) {
-                    CustomEnchant ce = CustomEnchant.TNT_SHOOTER;
+                if (enchants.containsKey(CustomEnchant.CANON)) {
+                    CustomEnchant ce = CustomEnchant.CANON;
                     if (ce.isEnabled()) {
                         if (p.getInventory().contains(Material.TNT)) {
                             TNTPrimed tnt = e.getProjectile().getWorld().spawn(e.getProjectile().getLocation(), TNTPrimed.class);

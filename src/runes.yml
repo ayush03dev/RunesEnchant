@@ -4,7 +4,7 @@ default:
   success-rate: 92
   destroy-rate: 8
   lore:
-    - '&e&lRune of %enchant%'
+    - '&e&lRune of %enchantment% %level%'
     - '&a%success% % success rate &7and &c%destroy% % destroy rate'
     - '&7%type% Enchantment'
     - '&d&lRight click with the Rune for more info'

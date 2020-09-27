@@ -2,9 +2,9 @@ enabled: true
 
 description: 'Shoots TNT instead of the arrow'
 
-lore-display: '&7TNT Shooter %level%'
+lore-display: '&7Canon %level%'
 
-display-name: 'TNT Shooter'
+display-name: 'Canon'
 
 max-level: 1
 

@@ -16,7 +16,9 @@ public class ShopGUI {
 
         int index = 0;
         EnchantmentGroup.getAllGroups().forEach(group -> {
-            inv.setItem(index, group.getDisplayItem());
+            if (group.listInShop()) {
+                inv.setItem(index, group.getDisplayItem());
+            }
         });
 
         p.openInventory(inv);

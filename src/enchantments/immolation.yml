@@ -1,6 +1,6 @@
 enabled: true
 
-description: 'A chance to set nearby players on fire when you sneak for certain amount of seconds'
+description: 'A chance to set nearby players on fire when you sneak'
 
 display-name: 'Immolation'
 
@@ -9,6 +9,9 @@ lore-display: '&7Immolation %level%'
 max-level: 5
 
 enchant-type: 'CHESTPLATE'
+
+chance:
+  expression: '%level% * 0.5'
 
 radius:
   expression: '%level% * 2'

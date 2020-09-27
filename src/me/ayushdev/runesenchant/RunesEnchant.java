@@ -1,6 +1,8 @@
 package me.ayushdev.runesenchant;
 
 import com.codingforcookies.armorequip.ArmorListener;
+import com.mojang.authlib.GameProfile;
+import me.ayushdev.runesenchant.commands.IDCommand;
 import me.ayushdev.runesenchant.commands.RItemCommand;
 import me.ayushdev.runesenchant.commands.RunesCommand;
 import me.ayushdev.runesenchant.effects.*;
@@ -11,7 +13,13 @@ import me.ayushdev.runesenchant.listeners.RuneApplyListener;
 import me.ayushdev.runesenchant.listeners.ShopListener;
 import me.ayushdev.runesenchant.listeners.SignEvents;
 import me.ayushdev.runesenchant.utils.HiddenStringUtils;
+import net.minecraft.server.v1_16_R1.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.craftbukkit.v1_16_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,6 +40,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         return instance;
     }
     private static int version;
+    protected static String userID = "%%__USER__%%";
 
     @Override
     public void onEnable() {
@@ -55,6 +64,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 
         getCommand("runes").setExecutor(new RunesCommand());
         getCommand("ritem").setExecutor(new RItemCommand());
+        getCommand("id").setExecutor(new IDCommand());
 
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         RunesEnchant.version = Integer.parseInt(version.replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));

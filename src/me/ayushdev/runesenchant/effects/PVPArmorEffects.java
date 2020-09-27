@@ -31,142 +31,142 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
     public void armorListener(EntityDamageByEntityEvent e) {
 
         if (e.isCancelled()) return;
-        // TODO: Later check if entity is instance of Player as well...
+        // TODO: Later check if damager is instance of Player as well...
 
-//        if (e.getDamager() instanceof Player) {
-        if (e.getEntity() instanceof Player) {
-            LivingEntity en = (LivingEntity) e.getEntity();
-            LivingEntity damager = (LivingEntity) e.getDamager();
-//            Player damager = (Player) e.getDamager();
+        if (e.getDamager() instanceof Player) {
+            if (e.getEntity() instanceof Player) {
+                LivingEntity en = (LivingEntity) e.getEntity();
+//            LivingEntity damager = (LivingEntity) e.getDamager();
+                Player damager = (Player) e.getDamager();
+                Player p = (Player) en;
 
-            Player p = (Player) en;
+                for (ItemStack armor : getArmor(p)) {
+                    ApplicableItem item = new ApplicableItem(armor);
+                    Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
 
-            for (ItemStack armor : getArmor(p)) {
-                ApplicableItem item = new ApplicableItem(armor);
-                Map<CustomEnchant, Integer> enchants = item.getAllCustomEnchantments();
-
-                if (enchants.containsKey(CustomEnchant.DEMONIC_AURA)) {
-                    CustomEnchant ce = CustomEnchant.DEMONIC_AURA;
-                    int level = enchants.get(ce);
-                    if (proc(ce, level)) {
-                        int potionLevel = (int) getValue(ce, level, "potion-level");
-                        int potionDuration = (int) getValue(ce, level, "potion-duration");
-                        en.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, potionDuration * 20, potionLevel -1));
-                    }
-                }
-
-                if (enchants.containsKey(CustomEnchant.FLAME_CLOAK)) {
-                    CustomEnchant ce = CustomEnchant.FLAME_CLOAK;
-                    int level = enchants.get(ce);
-                    if (proc(ce, level)) {
-                        int time = (int) getValue(ce, level, "fire-duration");
-                        damager.setFireTicks(time);
-                    }
-                }
-
-                if (enchants.containsKey(CustomEnchant.NECROMANCER)) {
-                    CustomEnchant ce = CustomEnchant.NECROMANCER;
-                    int level = enchants.get(ce);
-                    if (proc(ce, level)) {
-                        int amount = (int) getValue(ce, level, "amount");
-
-                        for (int i = 0; i < amount; i++) {
-                            Zombie z = p.getWorld().spawn(p.getLocation(), Zombie.class);
-                            z.setMetadata("re.necromancer",
-                                    new FixedMetadataValue(RunesEnchant.getInstance(), p.getUniqueId()));
-                            z.setBaby(false);
-                            z.setTarget(damager);
+                    if (enchants.containsKey(CustomEnchant.DEMONIC_AURA)) {
+                        CustomEnchant ce = CustomEnchant.DEMONIC_AURA;
+                        int level = enchants.get(ce);
+                        if (proc(ce, level)) {
+                            int potionLevel = (int) getValue(ce, level, "potion-level");
+                            int potionDuration = (int) getValue(ce, level, "potion-duration");
+                            en.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, potionDuration * 20, potionLevel - 1));
                         }
                     }
-                }
 
-
-                if (enchants.containsKey(CustomEnchant.PARALYZE)) {
-                    CustomEnchant ce = CustomEnchant.PARALYZE;
-                    int level = enchants.get(ce);
-
-                    if (proc(ce, level)) {
-                        int duration = (int) getValue(ce, level, "potion-duration");
-                        int potionLevel = (int) getValue(ce, level, "potion-level");
-                        en.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, duration, potionLevel-1));
-                    }
-                }
-
-                if (enchants.containsKey(CustomEnchant.AEGIS)) {
-                    CustomEnchant ce = CustomEnchant.AEGIS;
-                    int level = enchants.get(ce);
-
-                    if (proc(ce, level)) {
-                        if (p.isBlocking()) {
-                            double damage = e.getDamage();
-                            float percent = getValue(ce, level, "damage-percent");
-                            double health = (percent / 100d) * damage;
-                            p.setHealth(p.getHealth() + health);
+                    if (enchants.containsKey(CustomEnchant.FLAME_CLOAK)) {
+                        CustomEnchant ce = CustomEnchant.FLAME_CLOAK;
+                        int level = enchants.get(ce);
+                        if (proc(ce, level)) {
+                            int time = (int) getValue(ce, level, "fire-duration");
+                            damager.setFireTicks(time);
                         }
                     }
-                }
 
-                if (enchants.containsKey(CustomEnchant.REPEL)) {
-                    CustomEnchant ce = CustomEnchant.REPEL;
-                    int level = enchants.get(ce);
+                    if (enchants.containsKey(CustomEnchant.NECROMANCER)) {
+                        CustomEnchant ce = CustomEnchant.NECROMANCER;
+                        int level = enchants.get(ce);
+                        if (proc(ce, level)) {
+                            int amount = (int) getValue(ce, level, "amount");
 
-                    if (proc(ce, level)) {
-                        float velocity = getValue(ce, level, "velocity");
-                        damager.setVelocity(p.getLocation().getDirection().multiply(velocity));
-                    }
-                }
-
-                if (enchants.containsKey(CustomEnchant.WOLVES)) {
-                    CustomEnchant ce = CustomEnchant.WOLVES;
-                    int level = enchants.get(ce);
-                    if (proc(ce, level)) {
-                        int amount = (int) getValue(ce, level, "amount");
-
-                        for (int i = 0; i < amount; i++) {
-                            Wolf w = p.getWorld().spawn(p.getLocation(), Wolf.class);
-                            w.setOwner(p);
-                            w.setTarget(damager);
-                        }
-                    }
-                }
-
-                if (enchants.containsKey(CustomEnchant.SPIKED)) {
-                    CustomEnchant ce = CustomEnchant.SPIKED;
-                    int level = enchants.get(ce);
-                    if (proc(ce, level)) {
-                        float damage = getValue(ce, level, "damage", new Placeholder("%damage%",
-                                e.getDamage()));
-                        damager.damage(damage);
-                    }
-                }
-
-                if (enchants.containsKey(CustomEnchant.SHADOWSTEP)) {
-                    CustomEnchant ce = CustomEnchant.SHADOWSTEP;
-                    int level = enchants.get(ce);
-                    if (proc(ce, level)) {
-
-                        boolean flag = false;
-                        boolean flag2 = false;
-
-                        Location location = null;
-
-                        for (int i = 1; i <= 2; i++) {
-                            Vector vector = damager.getLocation().getDirection();
-                            vector = vector.multiply(i * -1.0);
-                            location = damager.getLocation().add(vector);
-                            Block b = location.getBlock();
-                            Block up = b.getRelative(BlockFace.UP);
-
-                            if (!(b.getType() == Material.AIR && up.getType() == Material.AIR)) break;
-                            if (i == 1) {
-                                flag = true;
-                            } else {
-                                flag2 = true;
+                            for (int i = 0; i < amount; i++) {
+                                Zombie z = p.getWorld().spawn(p.getLocation(), Zombie.class);
+                                z.setMetadata("re.necromancer",
+                                        new FixedMetadataValue(RunesEnchant.getInstance(), p.getUniqueId()));
+                                z.setBaby(false);
+                                z.setTarget(damager);
                             }
                         }
+                    }
 
-                        if (flag && flag2) {
-                            p.teleport(location);
+
+                    if (enchants.containsKey(CustomEnchant.PARALYZE)) {
+                        CustomEnchant ce = CustomEnchant.PARALYZE;
+                        int level = enchants.get(ce);
+
+                        if (proc(ce, level)) {
+                            int duration = (int) getValue(ce, level, "potion-duration");
+                            int potionLevel = (int) getValue(ce, level, "potion-level");
+                            en.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, duration, potionLevel - 1));
+                        }
+                    }
+
+                    if (enchants.containsKey(CustomEnchant.AEGIS)) {
+                        CustomEnchant ce = CustomEnchant.AEGIS;
+                        int level = enchants.get(ce);
+
+                        if (proc(ce, level)) {
+                            if (p.isBlocking()) {
+                                double damage = e.getDamage();
+                                float percent = getValue(ce, level, "damage-percent");
+                                double health = (percent / 100d) * damage;
+                                p.setHealth(p.getHealth() + health);
+                            }
+                        }
+                    }
+
+                    if (enchants.containsKey(CustomEnchant.REPEL)) {
+                        CustomEnchant ce = CustomEnchant.REPEL;
+                        int level = enchants.get(ce);
+
+                        if (proc(ce, level)) {
+                            float velocity = getValue(ce, level, "velocity");
+                            damager.setVelocity(p.getLocation().getDirection().multiply(velocity));
+                        }
+                    }
+
+                    if (enchants.containsKey(CustomEnchant.WOLVES)) {
+                        CustomEnchant ce = CustomEnchant.WOLVES;
+                        int level = enchants.get(ce);
+                        if (proc(ce, level)) {
+                            int amount = (int) getValue(ce, level, "amount");
+
+                            for (int i = 0; i < amount; i++) {
+                                Wolf w = p.getWorld().spawn(p.getLocation(), Wolf.class);
+                                w.setOwner(p);
+                                w.setTarget(damager);
+                            }
+                        }
+                    }
+
+                    if (enchants.containsKey(CustomEnchant.SPIKED)) {
+                        CustomEnchant ce = CustomEnchant.SPIKED;
+                        int level = enchants.get(ce);
+                        if (proc(ce, level)) {
+                            float damage = getValue(ce, level, "damage", new Placeholder("%damage%",
+                                    e.getDamage()));
+                            damager.damage(damage);
+                        }
+                    }
+
+                    if (enchants.containsKey(CustomEnchant.SHADOWSTEP)) {
+                        CustomEnchant ce = CustomEnchant.SHADOWSTEP;
+                        int level = enchants.get(ce);
+                        if (proc(ce, level)) {
+
+                            boolean flag = false;
+                            boolean flag2 = false;
+
+                            Location location = null;
+
+                            for (int i = 1; i <= 2; i++) {
+                                Vector vector = damager.getLocation().getDirection();
+                                vector = vector.multiply(i * -1.0);
+                                location = damager.getLocation().add(vector);
+                                Block b = location.getBlock();
+                                Block up = b.getRelative(BlockFace.UP);
+
+                                if (!(b.getType() == Material.AIR && up.getType() == Material.AIR)) break;
+                                if (i == 1) {
+                                    flag = true;
+                                } else {
+                                    flag2 = true;
+                                }
+                            }
+
+                            if (flag && flag2) {
+                                p.teleport(location);
+                            }
                         }
                     }
                 }

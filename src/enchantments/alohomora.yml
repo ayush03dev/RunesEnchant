@@ -1,6 +1,6 @@
 enabled: true
 
-description: 'Opens containers from distance'
+description: 'Ability to open containers/chests from distance'
 
 display-name: 'Alohomora'
 

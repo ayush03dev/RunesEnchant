@@ -2,7 +2,7 @@
 
 enabled: true
 
-description: 'Chance to remove negative debuffs from yourself while you fight.'
+description: 'Chance to remove certain negative debuffs from yourself while you fight'
 
 lore-display: '&7Battlecry %level%'
 

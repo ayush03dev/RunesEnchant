@@ -6,6 +6,6 @@ display-name: 'Endless'
 
 lore-display: '&7Endless %level%'
 
-max-level: 3
+max-level: 1
 
 enchant-type: 'ANY'

@@ -1,6 +1,6 @@
 enabled: true
 
-description: 'A chance to add slowness de-buff your target.'
+description: 'A chance to add slowness de-buff your target'
 
 display-name: 'Entangle'
 
@@ -9,6 +9,9 @@ lore-display: '&7Entangle %level%'
 max-level: 3
 
 enchant-type: 'SWORD'
+
+chance:
+  expression: '%level% * 0.4'
 
 potion-level:
   expression: '%level%'

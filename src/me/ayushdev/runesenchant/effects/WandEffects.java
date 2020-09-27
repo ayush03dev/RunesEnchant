@@ -9,6 +9,7 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -19,13 +20,15 @@ import java.util.Map;
 
 public class WandEffects extends EnchantmentEffect implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent e) {
+        if (e.isCancelled()) return;
         Player p = e.getPlayer();
         ItemStack item = e.getItem();
         if (item != null) {
             ApplicableItem ai = new ApplicableItem(item);
-            if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_AIR) {
+            if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_AIR
+            || e.getAction() == Action.LEFT_CLICK_BLOCK|| e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 Map<CustomEnchant, Integer> enchants = ai.getAllCustomEnchantments();
                 if (enchants.containsKey(CustomEnchant.ALOHOMORA)) {
                     CustomEnchant ce = CustomEnchant.ALOHOMORA;
@@ -54,27 +57,4 @@ public class WandEffects extends EnchantmentEffect implements Listener {
             }
         }
     }
-
-    @EventHandler
-    public void onDamage(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player) {
-            Player p = (Player) e.getDamager();
-            if (!p.isSneaking()) return;
-            if (e.getEntity() instanceof Creature) {
-                Creature m = (Creature) e.getEntity();
-                p.sendMessage(m.getTarget().getName());
-                if (m.getTarget().getUniqueId() != null) {
-                    if (m.getTarget().getUniqueId().equals(p.getUniqueId())) {
-                        m.setAI(false);
-                        m.setTarget(null);
-                        m.setAI(true);
-                        e.setCancelled(true);
-                        p.sendMessage(m.getTarget().getName() + "l");
-
-                    }
-                }
-            }
-        }
-    }
-
 }

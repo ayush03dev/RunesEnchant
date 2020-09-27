@@ -136,7 +136,8 @@ public class Rune {
 
        cfg.getLore().forEach(line -> {
             line = replace(line, "%enchant%", ChatColor.stripColor(ce.getLoreDisplay(level)));
-            line = replace(line, "%level%", level + "");
+           line = replace(line, "%enchantment%", ce.getDisplayName());
+           line = replace(line, "%level%", level + "");
             line = line.replace("%success%", successRate + "");
             line = line.replace("%destroy%", destroyRate + "");
             line = line.replace("%type%", WordUtils.capitalize(ce.getType().toString().toLowerCase().replace("_", " ")));

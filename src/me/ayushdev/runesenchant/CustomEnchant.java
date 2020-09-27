@@ -12,14 +12,14 @@ public enum CustomEnchant {
     ENTANGLE(EnchantType.BOW), PYROMANIAC(EnchantType.ARMOR), FLAME_CLOAK(EnchantType.ARMOR),BATTLECRY(EnchantType.AXE),
     CORRUPTION(EnchantType.AXE), TURMOIL(EnchantType.AXE), SPIKED(EnchantType.ARMOR), HOLY_SMITE(EnchantType.AXE),
     RIFTSLAYER(EnchantType.SWORD), PETRIFY(EnchantType.AXE), EYEPATCH(EnchantType.HELMET), PLUNDER(EnchantType.WEAPON),
-    MISCHIEF(EnchantType.WEAPON), SHADOWSTEP(EnchantType.ARMOR), DEMON_SIPHON(EnchantType.SWORD),
+    SHADOWSTEP(EnchantType.ARMOR), DEMON_SIPHON(EnchantType.SWORD),
     LUMBERJACK(EnchantType.AXE), MOLTEN(EnchantType.CHESTPLATE), STRENGTH(EnchantType.CHESTPLATE), HASTE(EnchantType.PICKAXE),
     SWIMMER(EnchantType.HELMET), FEATHERFALL(EnchantType.BOOTS), REVERSAL(EnchantType.WEAPON),
     WILD_MARK(EnchantType.BOW), DETONATE(EnchantType.BOW), TRIPLET(EnchantType.BOW), LIFESTEAL(EnchantType.SWORD),
-    REINFORCED(EnchantType.CHESTPLATE), REBORN(EnchantType.WEAPON), IMMOLATION(EnchantType.CHESTPLATE),
+    REBORN(EnchantType.WEAPON), IMMOLATION(EnchantType.CHESTPLATE),
     PARALYZE(EnchantType.WEAPON), ENDLESS(EnchantType.ANY), SUICIDE(EnchantType.CHESTPLATE),
     NECROMANCER(EnchantType.ARMOR), WOLVES(EnchantType.ARMOR), SOFT_TOUCH(EnchantType.PICKAXE),
-    DEATH_HAMMER(EnchantType.BOW), THOR_HAMMER(EnchantType.SWORD), TNT_SHOOTER(EnchantType.BOW),
+    DEATH_HAMMER(EnchantType.BOW), THOR_HAMMER(EnchantType.SWORD), CANON(EnchantType.BOW),
     MONSTER(EnchantType.ARMOR), ALOHOMORA(EnchantType.STICK), PUNCH(EnchantType.WEAPON),
     REPEL(EnchantType.ARMOR);
 

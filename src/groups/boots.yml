@@ -1,5 +1,7 @@
 description: 'All the boots enchantments here'
 
+list-in-shop: true
+
 price: 250
 
 shop-display:

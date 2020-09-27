@@ -1,0 +1,14 @@
+enabled: true
+
+description: 'A chance to heal you relative to the damage you inflict upon your enemy without taking their health'
+
+display-name: 'Divine'
+
+lore-display: '&7Divine %level%'
+
+max-level: 3
+
+enchant-type: 'WEAPON'
+
+health:
+  expression: '%damage%'

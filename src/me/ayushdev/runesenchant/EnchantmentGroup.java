@@ -52,6 +52,10 @@ public class EnchantmentGroup {
         }
     }
 
+    public boolean listInShop() {
+        return fc.getBoolean("list-in-shop");
+    }
+
     public String getDisplayName() {
         try {
             return ChatColor.translateAlternateColorCodes('&', fc.getString("shop-display.display-name"));

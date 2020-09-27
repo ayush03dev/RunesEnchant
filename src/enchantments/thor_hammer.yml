@@ -1,0 +1,14 @@
+enabled: true
+
+description: 'A chance to immediately break the item opponent is holding'
+
+lore-display: '&7Thor Hammer %level%'
+
+display-name: 'Thor Hammer'
+
+max-level: 3
+
+enchant-type: 'AXE'
+
+chance:
+  expression: '0.1 * %level%'

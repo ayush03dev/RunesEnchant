@@ -356,7 +356,7 @@ public class ApplicableItem {
         if (item == null) return false;
         Material type = item.getType();
         String[] toCheck = new String[] {"_AXE", "_PICKAXE", "_SWORD", "BOW", "_BOOTS",
-        "_HELMET", "_CHESTPLATE", "_LEGGINGS", "_HOE"};
+        "_HELMET", "_CHESTPLATE", "_LEGGINGS", "_HOE", "STICK"};
 
         return Arrays.stream(toCheck).anyMatch(str -> type.toString().endsWith(str));
     }

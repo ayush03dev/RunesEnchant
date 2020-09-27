@@ -2,13 +2,13 @@ enabled: true
 
 description: 'Multiplies the damage given to the enemy player'
 
-lore-display: '&7Crushing %level%'
+lore-display: '&7Wild Mark %level%'
 
-display-name: 'Crushing'
+display-name: 'Wild Mark'
 
 max-level: 5
 
-enchant-type: 'WEAPON'
+enchant-type: 'BOW'
 
 chance:
   expression: '(%level% + 1) * 2'
