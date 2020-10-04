@@ -9,3 +9,7 @@ display-name: 'Canon'
 max-level: 1
 
 enchant-type: 'BOW'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

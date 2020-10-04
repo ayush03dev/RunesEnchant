@@ -9,3 +9,7 @@ display-name: 'Lumos'
 max-level: 1
 
 enchant-type: 'HELMET'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

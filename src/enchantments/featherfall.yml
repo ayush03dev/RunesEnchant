@@ -9,3 +9,7 @@ lore-display: '&7Featherfall %level%'
 max-level: 1
 
 enchant-type: 'BOOTS'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

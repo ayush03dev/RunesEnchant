@@ -9,3 +9,7 @@ display-name: 'Monster'
 max-level: 1
 
 enchant-type: 'ARMOR'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

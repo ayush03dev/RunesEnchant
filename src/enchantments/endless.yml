@@ -9,3 +9,7 @@ lore-display: '&7Endless %level%'
 max-level: 1
 
 enchant-type: 'ANY'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

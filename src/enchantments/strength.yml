@@ -10,5 +10,9 @@ max-level: 3
 
 enchant-type: 'CHESTPLATE'
 
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
+
 potion-level:
   expression: '%level%'

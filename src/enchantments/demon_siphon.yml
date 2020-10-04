@@ -10,5 +10,9 @@ max-level: 3
 
 enchant-type: 'SWORD'
 
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
+
 health-percent:
   expression: '%level% * 2'

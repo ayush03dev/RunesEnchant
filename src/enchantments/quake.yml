@@ -10,8 +10,11 @@ max-level: 3
 
 enchant-type: 'BOOTS'
 
-# 100% chance means the effect will take place everytime for each level.
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
 
+# 100% chance means the effect will take place everytime for each level.
 chance:
   expression: '100'
 
@@ -20,6 +23,5 @@ radius:
 
 
 # %damage% placeholder is for the damage the player which fell on the ground received.
-
 damage:
   expression: '%damage% * %level%'

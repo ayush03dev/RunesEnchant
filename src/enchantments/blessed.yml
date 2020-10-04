@@ -10,5 +10,9 @@ max-level: 1
 
 enchant-type: 'ARMOR'
 
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
+
 chance:
   level_1: 0.69

@@ -10,6 +10,10 @@ max-level: 5
 
 enchant-type: 'ARMOR'
 
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
+
 chance:
   expression: '%level%'
 

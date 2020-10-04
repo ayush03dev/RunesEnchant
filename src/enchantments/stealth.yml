@@ -10,6 +10,10 @@ max-level: 4
 
 enchant-type: 'ARMOR'
 
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
+
 radius:
   expression: '%level% * 2'
 

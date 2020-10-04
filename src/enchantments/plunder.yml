@@ -10,5 +10,9 @@ max-level: 3
 
 enchant-type: 'AXE'
 
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
+
 xp-multiplier:
   expression: '%level% + 0.5'

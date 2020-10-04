@@ -9,3 +9,7 @@ lore-display: '&7Lumberjack %level%'
 max-level: 1
 
 enchant-type: 'AXE'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

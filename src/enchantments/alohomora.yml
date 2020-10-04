@@ -10,7 +10,10 @@ max-level: 1
 
 enchant-type: 'STICK'
 
-# Range is how many blocks away a player can stand from the container and still be able to open it.
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
 
+# Range is how many blocks away a player can stand from the container and still be able to open it.
 range:
   expression: '%level% * 5'

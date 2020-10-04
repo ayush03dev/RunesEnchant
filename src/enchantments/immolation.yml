@@ -10,6 +10,10 @@ max-level: 5
 
 enchant-type: 'CHESTPLATE'
 
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
+
 chance:
   expression: '%level% * 0.5'
 

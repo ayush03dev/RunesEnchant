@@ -9,3 +9,7 @@ display-name: 'Molten'
 max-level: 1
 
 enchant-type: 'CHESTPLATE'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

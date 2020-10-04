@@ -10,5 +10,9 @@ max-level: 3
 
 enchant-type: 'BOW'
 
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
+
 chance:
   expression: '(%level% + 1) * 2'

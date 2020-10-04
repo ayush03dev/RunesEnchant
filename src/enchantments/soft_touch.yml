@@ -9,3 +9,7 @@ display-name: 'Soft Touch'
 max-level: 1
 
 enchant-type: 'PICKAXE'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'
