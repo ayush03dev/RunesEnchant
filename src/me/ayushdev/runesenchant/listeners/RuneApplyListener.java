@@ -38,13 +38,12 @@ public class RuneApplyListener implements Listener {
 
                 if (cursor.getType() == Material.AIR || current.getType() == Material.AIR) return;
 
-                if (current.getAmount() != 1 || cursor.getAmount() != 1) {
-                    MessageManager.getInstance().sendMessage(p, Message.INVALID_AMOUNT);
-                    e.setCancelled(true);
-                    return;
-                }
-
                 if (Rune.isRune(cursor)) {
+                    if (current.getAmount() != 1 || cursor.getAmount() != 1) {
+                        MessageManager.getInstance().sendMessage(p, Message.INVALID_AMOUNT);
+                        e.setCancelled(true);
+                        return;
+                    }
                     e.setCancelled(true);
                     Rune rune = new Rune(cursor);
                     CustomEnchant ce = rune.getEnchantment();

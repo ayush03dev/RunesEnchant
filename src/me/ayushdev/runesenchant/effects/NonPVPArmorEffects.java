@@ -3,10 +3,14 @@ package me.ayushdev.runesenchant.effects;
 import me.ayushdev.runesenchant.ApplicableItem;
 import me.ayushdev.runesenchant.CustomEnchant;
 import me.ayushdev.runesenchant.EnchantmentEffect;
+import me.ayushdev.runesenchant.Placeholder;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -29,8 +33,10 @@ public class NonPVPArmorEffects extends EnchantmentEffect implements Listener {
 
                 if (enchants.containsKey(CustomEnchant.DODGE)) {
                     CustomEnchant ce = CustomEnchant.DODGE;
-                    if (proc(ce, enchants.get(ce)))
-                        e.setDamage(0);
+                    if (ce.isEnabled()) {
+                        if (proc(ce, enchants.get(ce)))
+                            e.setDamage(0);
+                    }
                 }
 
                 if ((e.getCause() == DamageCause.FIRE)
@@ -48,9 +54,31 @@ public class NonPVPArmorEffects extends EnchantmentEffect implements Listener {
                 if (e.getCause() == DamageCause.FALL) {
                     if (enchants.containsKey(CustomEnchant.FEATHERFALL)) {
                         CustomEnchant ce = CustomEnchant.FEATHERFALL;
-                        int level = enchants.get(ce);
-                        if (proc(ce, level))
-                            e.setDamage(0);
+                        if (ce.isEnabled()) {
+                            int level = enchants.get(ce);
+                            if (proc(ce, level))
+                                e.setDamage(0);
+                        }
+                    }
+
+                    if (enchants.containsKey(CustomEnchant.QUAKE)) {
+                        CustomEnchant ce = CustomEnchant.QUAKE;
+                        if (ce.isEnabled()) {
+                            int level = enchants.get(ce);
+                            if (proc(ce, level)) {
+                                int radius = (int) getValue(ce, level, "radius");
+                                int damage = (int) getValue(ce, level, "damage", new Placeholder("%damage%", e.getDamage()));
+
+                                for (Entity en : p.getNearbyEntities(radius, radius, radius)) {
+                                    if (en instanceof LivingEntity) {
+                                        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(p, en, DamageCause.CUSTOM, damage);
+                                        if (!event.isCancelled()) {
+                                            ((LivingEntity) en).damage(damage);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

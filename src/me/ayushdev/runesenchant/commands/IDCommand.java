@@ -15,7 +15,7 @@ public class IDCommand implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("id")) {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
-                if (!p.hasPermission("runesenchant.admin")) {
+                if (!p.hasPermission("runes.admin")) {
                     p.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
                     return true;
                 }

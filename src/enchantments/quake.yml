@@ -1,0 +1,25 @@
+enabled: true
+
+description: 'Damages the nearby living entities when you jump high on the ground'
+
+display-name: 'Quake'
+
+lore-display: '&7Quake %level%'
+
+max-level: 3
+
+enchant-type: 'BOOTS'
+
+# 100% chance means the effect will take place everytime for each level.
+
+chance:
+  expression: '100'
+
+radius:
+  expression: '%level% * 4'
+
+
+# %damage% placeholder is for the damage the player which fell on the ground received.
+
+damage:
+  expression: '%damage% * %level%'

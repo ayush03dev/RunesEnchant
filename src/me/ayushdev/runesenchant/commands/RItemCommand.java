@@ -96,13 +96,23 @@ public class RItemCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         List<String> list = new ArrayList<>();
+        String[] available = {"protection", "resurrection", "luck", "orb"};
 
         if (cmd.getName().equalsIgnoreCase("ritem")) {
             if (args.length == 1) {
-                list.add("protection");
-                list.add("resurrection");
-                list.add("luck");
-                list.add("orb");
+
+                if (args[0] != null && !args[0].equalsIgnoreCase("")) {
+                    for (String str : available) {
+                        if (str.startsWith(args[0])) {
+                            list.add(str);
+                        }
+                    }
+                } else {
+                    list.add("protection");
+                    list.add("resurrection");
+                    list.add("luck");
+                    list.add("orb");
+                }
             } else if (args.length == 2) {
                 Bukkit.getOnlinePlayers().forEach(p -> list.add(p.getName()));
             }

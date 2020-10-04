@@ -1,6 +1,9 @@
 package me.ayushdev.runesenchant;
 
+import me.ayushdev.runesenchant.utils.ExpressionResolver;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import javax.script.ScriptException;
 
 public class EnchantmentConfig {
 
@@ -28,5 +31,23 @@ public class EnchantmentConfig {
 
     public String getDisplayName() {
         return getConfigFile().getString("display-name");
+    }
+
+    public int getCost(int level) {
+        if (getConfigFile().getConfigurationSection("cost") == null) return 0;
+
+        if (getConfigFile().getInt("cost.level_" + level) != 0) {
+            return getConfigFile().getInt("cost.level_" + level);
+        } else {
+            if (getConfigFile().getString("cost.expression") != null) {
+                String expression = getConfigFile().getString("cost.expression");
+                try {
+                    return ExpressionResolver.getInstance().solve(expression.replace("%level%", level + ""));
+                } catch (ScriptException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return 0;
     }
 }

@@ -1,34 +1,22 @@
 package me.ayushdev.runesenchant;
 
 import com.codingforcookies.armorequip.ArmorListener;
-import com.mojang.authlib.GameProfile;
 import me.ayushdev.runesenchant.commands.IDCommand;
 import me.ayushdev.runesenchant.commands.RItemCommand;
 import me.ayushdev.runesenchant.commands.RunesCommand;
 import me.ayushdev.runesenchant.effects.*;
-import me.ayushdev.runesenchant.gui.EnchanterGUI;
 import me.ayushdev.runesenchant.listeners.EnchanterListener;
 import me.ayushdev.runesenchant.listeners.RuneApplyListener;
 
 import me.ayushdev.runesenchant.listeners.ShopListener;
 import me.ayushdev.runesenchant.listeners.SignEvents;
-import me.ayushdev.runesenchant.utils.HiddenStringUtils;
-import net.minecraft.server.v1_16_R1.*;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_16_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -112,57 +100,6 @@ public class RunesEnchant extends JavaPlugin implements Listener {
                 p.sendMessage("Description: " + rune.getEnchantment().getDescription());
             }
         }
-    }
-
-    @EventHandler
-    public void onChat(AsyncPlayerChatEvent e) {
-        Player p = e.getPlayer();
-
-        ItemStack i = p.getInventory().getItemInMainHand();
-
-        if (e.getMessage().equalsIgnoreCase("pc")) {
-            ProtectionCharm pc = new ProtectionCharm(1);
-            p.getInventory().addItem(pc.createItem());
-            return;
-        }
-
-        if (e.getMessage().equalsIgnoreCase("enchanter")) {
-            new BukkitRunnable() {
-
-                @Override
-                public void run() {
-                    p.openInventory(new EnchanterGUI().createEnchanterGUI(p));
-                }
-            }.runTaskLater(this, 1);
-        }
-
-        if (e.getMessage().equalsIgnoreCase("rs")) {
-            p.getInventory().addItem(new ResurrectionStone().getItem());
-        }
-
-        if (e.getMessage().equalsIgnoreCase("ls")) {
-            p.getInventory().addItem(new LuckStone(1).getItem());
-
-        }
-
-        if (e.getMessage().equalsIgnoreCase("eo")) {
-            p.getInventory().addItem(new EnchantmentOrb(2).getItem());
-
-        }
-
-        if (e.getMessage().equalsIgnoreCase("test")) {
-            ItemStack item = p.getInventory().getItemInMainHand();
-            ItemMeta meta = item.getItemMeta();
-            p.sendMessage(meta.getDisplayName());
-            p.sendMessage(HiddenStringUtils.extractHiddenString(meta.getDisplayName()));
-            System.out.println(meta.getDisplayName());
-        }
-
-//        ItemStack i = p.getInventory().getItemInMainHand();
-//        ApplicableItem ai = new ApplicableItem(i);
-//        ai.addEnchantment(CustomEnchant.AEGIS, 1);
-//        ai.setLevel(CustomEnchant.AEGIS, 3);
-//        p.sendMessage("a");
     }
 
     public static boolean is13() {

@@ -236,19 +236,20 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
             if (enchants.containsKey(CustomEnchant.IMMOLATION)) {
                 CustomEnchant ce = CustomEnchant.IMMOLATION;
                 int level = enchants.get(ce);
-                float range = getValue(ce, level, "radius");
+                if (proc(ce, level)) {
+                    float range = getValue(ce, level, "radius");
+                    for (Entity en : p.getNearbyEntities(range, range, range)) {
+                        if (en instanceof Player) {
+                            Player player = (Player) en;
 
-                for (Entity en : p.getNearbyEntities(range, range, range)) {
-                    if (en instanceof Player) {
-                        Player player = (Player) en;
-
-                        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(player, en, EntityDamageEvent.DamageCause.CUSTOM,
-                                new HashMap<>(), new HashMap<>());
-                        Bukkit.getPluginManager().callEvent(event);
-                        if (event.isCancelled()) continue;
-
-                        int duration = (int) getValue(ce, level, "fire-duration");
-                        player.setFireTicks(duration * 20);
+//                            EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(player, en, EntityDamageEvent.DamageCause.CUSTOM,
+//                                    new HashMap<>(), new HashMap<>());
+                            EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(p, player, EntityDamageEvent.DamageCause.CUSTOM, 0);
+                            Bukkit.getPluginManager().callEvent(event);
+                            if (event.isCancelled()) continue;
+                            int duration = (int) getValue(ce, level, "fire-duration");
+                            player.setFireTicks(duration * 20);
+                        }
                     }
                 }
             }

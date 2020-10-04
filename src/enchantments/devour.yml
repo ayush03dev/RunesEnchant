@@ -1,0 +1,14 @@
+enabled: true
+
+description: 'A chance to heal you completely after killing an enemy'
+
+display-name: 'Devour'
+
+lore-display: '&7Devour %level%'
+
+max-level: 3
+
+enchant-type: 'WEAPON'
+
+chance:
+  expression: '25 * %level%'

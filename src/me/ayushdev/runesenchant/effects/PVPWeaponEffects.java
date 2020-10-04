@@ -285,5 +285,16 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                 killer.addPotionEffect(pe2);
             }
         }
+
+        if (enchants.containsKey(CustomEnchant.DEVOUR)) {
+            CustomEnchant ce = CustomEnchant.DEVOUR;
+            if (ce.isEnabled()) {
+                int level = enchants.get(ce);
+                if (proc(ce, level)) {
+                    killer.setHealth(killer.getMaxHealth());
+                    killer.setFoodLevel(20);
+                }
+            }
+        }
     }
 }

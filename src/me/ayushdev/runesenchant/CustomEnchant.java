@@ -21,7 +21,8 @@ public enum CustomEnchant {
     NECROMANCER(EnchantType.ARMOR), WOLVES(EnchantType.ARMOR), SOFT_TOUCH(EnchantType.PICKAXE),
     DEATH_HAMMER(EnchantType.BOW), THOR_HAMMER(EnchantType.SWORD), CANON(EnchantType.BOW),
     MONSTER(EnchantType.ARMOR), ALOHOMORA(EnchantType.STICK), PUNCH(EnchantType.WEAPON),
-    REPEL(EnchantType.ARMOR);
+    REPEL(EnchantType.ARMOR), QUAKE(EnchantType.BOOTS), FINISHER(EnchantType.WEAPON), REDIRECTION(EnchantType.WEAPON),
+    DEVOUR(EnchantType.WEAPON), DECEPTION(EnchantType.ARMOR), FREEZE(EnchantType.STICK);
 
     private EnchantType type;
     private EnchantmentConfig config;
@@ -72,5 +73,9 @@ public enum CustomEnchant {
 
     public String getDescription() {
         return config.getConfigFile().getString("description");
+    }
+
+    public int getCost(int level) {
+        return getConfig().getCost(level);
     }
 }

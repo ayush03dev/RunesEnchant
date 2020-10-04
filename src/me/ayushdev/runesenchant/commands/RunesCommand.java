@@ -270,14 +270,24 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
                 }
             } else if (args.length == 3) {
                 // TODO: Get all the enabled enchantments...
-                for (CustomEnchant ce : CustomEnchant.values()) {
-                    try {
-                        if (ce.isEnabled()) {
-                            list.add(ce.toString());
+                String arg = args[2];
+                if (arg != null && !arg.equalsIgnoreCase("")) {
+                    for (CustomEnchant ce : CustomEnchant.values()) {
+                        if (ce.toString().toLowerCase().startsWith(arg.toLowerCase())) {
+                            list.add(ce.toString().toLowerCase());
                         }
-                    } catch (NullPointerException ex) {
-                        System.out.println(ce.toString());
-                        continue;
+                    }
+                } else {
+
+                    for (CustomEnchant ce : CustomEnchant.values()) {
+                        try {
+                            if (ce.isEnabled()) {
+                                list.add(ce.toString().toLowerCase());
+                            }
+                        } catch (NullPointerException ex) {
+                            System.out.println(ce.toString());
+                            continue;
+                        }
                     }
                 }
                 list.add("group");
