@@ -5,11 +5,8 @@ import me.ayushdev.runesenchant.commands.IDCommand;
 import me.ayushdev.runesenchant.commands.RItemCommand;
 import me.ayushdev.runesenchant.commands.RunesCommand;
 import me.ayushdev.runesenchant.effects.*;
-import me.ayushdev.runesenchant.listeners.EnchanterListener;
-import me.ayushdev.runesenchant.listeners.RuneApplyListener;
+import me.ayushdev.runesenchant.listeners.*;
 
-import me.ayushdev.runesenchant.listeners.ShopListener;
-import me.ayushdev.runesenchant.listeners.SignEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,6 +45,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new PickaxeEffects(), this);
         getServer().getPluginManager().registerEvents(new WandEffects(), this);
         getServer().getPluginManager().registerEvents(new SignEvents(), this);
+        getServer().getPluginManager().registerEvents(new TinkererListener(), this);
 
 
         getCommand("runes").setExecutor(new RunesCommand());
@@ -96,7 +94,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
                 p.sendMessage("Enchantment: " + rune.getEnchantment().getDisplayName());
                 p.sendMessage("Level: " + rune.getLevel());
                 p.sendMessage("Success Rate: " + rune.getSuccessRate() + '%');
-                p.sendMessage("Destroy Rate: " + rune.getSuccessRate() + '%');
+                p.sendMessage("Destroy Rate: " + rune.getDestroyRate() + '%');
                 p.sendMessage("Description: " + rune.getEnchantment().getDescription());
             }
         }

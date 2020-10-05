@@ -19,7 +19,7 @@ public enum CustomEnchantReference {
     NECROMANCER(EnchantType.ARMOR), WOLVES(EnchantType.ARMOR), SOFT_TOUCH(EnchantType.PICKAXE),
     DEATH_HAMMER(EnchantType.BOW), THOR_HAMMER(EnchantType.SWORD), CANON(EnchantType.BOW),
     MONSTER(EnchantType.ARMOR), ALOHOMORA(EnchantType.STICK), PUNCH(EnchantType.WEAPON),
-    REPEL(EnchantType.ARMOR);
+    REPEL(EnchantType.ARMOR), QUAKE(EnchantType.BOOTS), DEVOUR(EnchantType.WEAPON);
 
     CustomEnchantReference(EnchantType type) {
     }

@@ -3,6 +3,7 @@ package me.ayushdev.runesenchant.commands;
 import me.ayushdev.runesenchant.*;
 import me.ayushdev.runesenchant.gui.EnchanterGUI;
 import me.ayushdev.runesenchant.gui.ShopGUI;
+import me.ayushdev.runesenchant.gui.Tinkerer;
 import me.ayushdev.runesenchant.utils.RuneUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -54,7 +55,7 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
                         ce = CustomEnchant.fromString(args[2]);
                         if (ce == null) {
                             sender.sendMessage(ChatColor.RED + "Invalid custom enchantment id!");
-                            sender.sendMessage("§eUse §b/runes enchants §ecommand to get the list of all enchants.");
+//                            sender.sendMessage("§eUse §b/runes enchants §ecommand to get the list of all enchants.");
                             return true;
                         }
                     } else {
@@ -229,7 +230,20 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
 
                         new ShopGUI().openInventory(p);
                     }
-                } else if (args[0].equalsIgnoreCase("give")) {
+                } else if (args[0].equalsIgnoreCase("tinkerer")) {
+                    if (sender instanceof Player) {
+                        Player p = (Player) sender;
+                        if (!p.hasPermission("runes.tinkerer")) {
+                            p.sendMessage(ChatColor.RED + "You do not have permission" +
+                                    "to execute this command!");
+                            return true;
+                        }
+
+                        new Tinkerer().openInventory(p);
+                    }
+                }
+
+                else if (args[0].equalsIgnoreCase("give")) {
                         sender.sendMessage(ChatColor.RED + "Usage: ");
                         sender.sendMessage(ChatColor.AQUA  + "/runes give <player> <enchantment> <level> (success-rate) (destroy-rate)");
                         sender.sendMessage("");
@@ -262,6 +276,7 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
                 list.add("give");
                 list.add("enchanter");
                 list.add("shop");
+                list.add("tinkerer");
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("give")) {
                     Bukkit.getServer().getOnlinePlayers().forEach(p -> {
@@ -318,10 +333,14 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(ChatColor.YELLOW + "/runes give <player> group <group-name> (success-rate) (destroy-rate)");
         sender.sendMessage("");
         sender.sendMessage(ChatColor.YELLOW + "/runes enchanter");
-        sender.sendMessage("");
+
+        sender.sendMessage(ChatColor.YELLOW + "/runes tinkerer");
+
         sender.sendMessage(ChatColor.YELLOW +  "/runes shop");
-        sender.sendMessage("");
+
         sender.sendMessage(ChatColor.YELLOW + "/ritem <type> <player> <level>");
+
+        sender.sendMessage(ChatColor.YELLOW + "/id");
     }
 
 }

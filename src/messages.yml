@@ -25,3 +25,5 @@ luck-stone-received: '&aYou have received the Luck Stone (Level %level%)'
 resurrection-stone-received: '&aYou have received the Resurrection Stone'
 
 enchantment-orb-received: '&aYou have received the Enchantment Orb (Slots: %slots%)'
+
+tinkerer-success: '&aTrade successful! You have received %xp% XP points!'
