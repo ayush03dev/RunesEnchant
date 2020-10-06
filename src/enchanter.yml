@@ -2,6 +2,14 @@
 
 gui-title: '&d&lEnchanter'
 
+display-names:
+  item: '&ePlace Item here'
+  rune: '&ePlace Rune here'
+  resurrection: '&ePlace Resurrection Stone here'
+  luck-stone: '&ePlace Luck Stone here'
+  not-ready-button: '&c&lNOT READY'
+  enchant-button: '&a&lENCHANT'
+
 error-button:
   lore:
     - '&cError:'

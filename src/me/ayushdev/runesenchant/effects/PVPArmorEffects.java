@@ -1,6 +1,7 @@
 package me.ayushdev.runesenchant.effects;
 
 import me.ayushdev.runesenchant.*;
+import me.ayushdev.runesenchant.utils.RuneUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -16,8 +16,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class EnchanterGUI {
 
+    FileConfiguration fc;
+
+    public EnchanterGUI() {
+        this.fc = FileManager.getInstance().getEnchanterConfig();
+    }
+
     public Inventory createEnchanterGUI(Player p) {
-        FileConfiguration fc = FileManager.getInstance().getEnchanterConfig();
+//        FileConfiguration fc = FileManager.getInstance().getEnchanterConfig();
         String title = ChatColor.translateAlternateColorCodes('&', fc.getString("gui-title"));
 
         Inventory inv = Bukkit.createInventory(new GUIHolder(p), 54, title);
@@ -56,7 +62,12 @@ public class EnchanterGUI {
     public ItemStack getDemoItem() {
         ItemStack demoItem = new ItemStack(Material.DIAMOND_PICKAXE);
         ItemMeta itemMeta = demoItem.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.YELLOW + "Place item here");
+        String name = ChatColor.translateAlternateColorCodes('&', fc.getString(
+                "display-names.item"
+        ));
+//        itemMeta.setDisplayName(ChatColor.YELLOW + "Place item here");
+        itemMeta.setDisplayName(name);
+
         itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         itemMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
         demoItem.setItemMeta(itemMeta);
@@ -66,7 +77,11 @@ public class EnchanterGUI {
     public ItemStack getDemoRune() {
         ItemStack demoRune = RuneUtils.getInstance().buildItemStack(Settings.getInstance().getItemId());
         ItemMeta runeMeta = demoRune.getItemMeta();
-        runeMeta.setDisplayName(ChatColor.YELLOW + "Place Rune here");
+        String name = ChatColor.translateAlternateColorCodes('&', fc.getString(
+                "display-names.rune"
+        ));
+//        runeMeta.setDisplayName(ChatColor.YELLOW + "Place Rune here");
+        runeMeta.setDisplayName(name);
         runeMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         runeMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
         demoRune.setItemMeta(runeMeta);
@@ -76,7 +91,11 @@ public class EnchanterGUI {
     public ItemStack getDemoResurrectionStone() {
         ItemStack demoResurrection = new ResurrectionStone().getItem();
         ItemMeta resurrectionItemMeta = demoResurrection.getItemMeta();
-        resurrectionItemMeta.setDisplayName(ChatColor.YELLOW + "Place Resurrection Stone here");
+        String name = ChatColor.translateAlternateColorCodes('&', fc.getString(
+                "display-names.resurrection"
+        ));
+//        resurrectionItemMeta.setDisplayName(ChatColor.YELLOW + "Place Resurrection Stone here");
+        resurrectionItemMeta.setDisplayName(name);
         resurrectionItemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         resurrectionItemMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
         resurrectionItemMeta.setLore(null);
@@ -87,7 +106,11 @@ public class EnchanterGUI {
     public ItemStack getDemoLuckStone() {
         ItemStack demoLuck = new ItemStack(new LuckStone(1).getItem().getType());
         ItemMeta luckMeta = demoLuck.getItemMeta();
-        luckMeta.setDisplayName(ChatColor.YELLOW + "Place Luck Stone here");
+//        luckMeta.setDisplayName(ChatColor.YELLOW + "Place Luck Stone here");
+        String name = ChatColor.translateAlternateColorCodes('&', fc.getString(
+                "display-names.luck-stone"
+        ));
+        luckMeta.setDisplayName(name);
         luckMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         luckMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
         luckMeta.setLore(null);

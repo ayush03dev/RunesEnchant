@@ -1,8 +1,10 @@
 package me.ayushdev.runesenchant.listeners;
 
+import me.ayushdev.runesenchant.events.EnchanterItemSetEvent;
 import me.ayushdev.runesenchant.gui.EnchanterGUI;
 import me.ayushdev.runesenchant.*;
 import me.ayushdev.runesenchant.inventoryholders.GUIHolder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -17,6 +19,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -168,6 +171,13 @@ public class EnchanterListener implements Listener {
 
                             if (slot == 19) {
                                 if (!ApplicableItem.isSupportedItem(cursor)) {
+                                    e.setCancelled(true);
+                                    return;
+                                }
+
+                                EnchanterItemSetEvent event = new EnchanterItemSetEvent(p, cursor);
+                                Bukkit.getPluginManager().callEvent(event);
+                                if (event.isCancelled()) {
                                     e.setCancelled(true);
                                     return;
                                 }
@@ -483,7 +493,11 @@ public class EnchanterListener implements Listener {
         if (hasErrors(i, r, protection, luck)) {
             ItemStack redstoneBlock = new ItemStack(Material.REDSTONE_BLOCK);
             ItemMeta itemMeta = redstoneBlock.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "NOT READY");
+//            itemMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "NOT READY");
+            String name = ChatColor.translateAlternateColorCodes('&', FileManager.getInstance().getEnchanterConfig().getString(
+                    "display-names.not-ready-button"
+            ));
+            itemMeta.setDisplayName(name);
             redstoneBlock.setItemMeta(itemMeta);
             inv.setItem(resultSlot, redstoneBlock);
             new EnchanterResultant(inv.getItem(resultSlot)).setErrorMessage(getMessages(i, r, protection, luck)[0]);
@@ -492,7 +506,11 @@ public class EnchanterListener implements Listener {
 
         ItemStack emeraldBlock = new ItemStack(Material.EMERALD_BLOCK);
         ItemMeta itemMeta = emeraldBlock.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "ENCHANT");
+//        itemMeta.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "ENCHANT");
+        String name = ChatColor.translateAlternateColorCodes('&', FileManager.getInstance().getEnchanterConfig().getString(
+                "display-names.enchant-button"
+        ));
+        itemMeta.setDisplayName(name);
         emeraldBlock.setItemMeta(itemMeta);
         emeraldBlock.setItemMeta(itemMeta);
 

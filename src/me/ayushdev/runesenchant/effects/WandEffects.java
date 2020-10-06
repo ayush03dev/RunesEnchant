@@ -3,6 +3,7 @@ package me.ayushdev.runesenchant.effects;
 import me.ayushdev.runesenchant.ApplicableItem;
 import me.ayushdev.runesenchant.CustomEnchant;
 import me.ayushdev.runesenchant.EnchantmentEffect;
+import me.ayushdev.runesenchant.ResurrectionStone;
 import org.bukkit.Material;
 import org.bukkit.block.*;
 import org.bukkit.entity.Creature;
@@ -13,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -53,6 +55,24 @@ public class WandEffects extends EnchantmentEffect implements Listener {
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player p = (Player) e.getEntity();
+            if (p.getHealth() - e.getDamage() <= 0) {
+                ItemStack rStone = new ResurrectionStone().getItem();
+                if (p.getInventory().contains(rStone)) {
+                    e.setCancelled(true);
+                    p.getInventory().remove(rStone);
+                    p.updateInventory();
+                    p.setHealth(p.getMaxHealth());
+                    p.setFoodLevel(20);
+                    p.sendMessage("§aYou have been resurrected!");
                 }
             }
         }

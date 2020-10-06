@@ -1,9 +1,7 @@
 package me.ayushdev.runesenchant;
 
 import com.codingforcookies.armorequip.ArmorListener;
-import me.ayushdev.runesenchant.commands.IDCommand;
-import me.ayushdev.runesenchant.commands.RItemCommand;
-import me.ayushdev.runesenchant.commands.RunesCommand;
+import me.ayushdev.runesenchant.commands.*;
 import me.ayushdev.runesenchant.effects.*;
 import me.ayushdev.runesenchant.listeners.*;
 
@@ -51,6 +49,8 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getCommand("runes").setExecutor(new RunesCommand());
         getCommand("ritem").setExecutor(new RItemCommand());
         getCommand("id").setExecutor(new IDCommand());
+        getCommand("tinkerer").setExecutor(new TinkererCommand());
+        getCommand("enchanter").setExecutor(new EnchanterCommand());
 
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         RunesEnchant.version = Integer.parseInt(version.replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));

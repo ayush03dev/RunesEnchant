@@ -1,7 +1,9 @@
 package me.ayushdev.runesenchant.listeners;
 
 import me.ayushdev.runesenchant.*;
+import me.ayushdev.runesenchant.events.RuneApplyEvent;
 import me.ayushdev.runesenchant.inventoryholders.GUIHolder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -51,6 +53,12 @@ public class RuneApplyListener implements Listener {
 
                     if (ce.getType().isApplicableItem(current)) {
                         ApplicableItem item = new ApplicableItem(current);
+
+                        RuneApplyEvent event = new RuneApplyEvent(p, item, rune, false, null, null);
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.isCancelled()) {
+                            return;
+                        }
 
                         if (!item.hasEnchantment(ce)) {
                             Response response = item.verifyAddEnchantment(ce, level);

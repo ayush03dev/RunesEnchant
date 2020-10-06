@@ -2,3 +2,4 @@ item-id: 'COAL:0'
 display-name: '&c&lThe Resurrection Stone'
 lore:
   - '&7Prevents the item in the Enchanter GUI from getting destroyed'
+  - '&7If a player has this in their inventory, they will get one extra life when they are about to die'

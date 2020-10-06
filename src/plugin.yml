@@ -1,5 +1,5 @@
 name: RunesEnchant
-version: 1.0.2
+version: 1.0.5
 main: me.ayushdev.runesenchant.RunesEnchant
 desscription: A premium custom enchantment plugin for Miencraft servers!
 api-version: 1.16
@@ -16,3 +16,12 @@ commands:
   id:
     usage: /<command>
     description: Shows the item which you should use in the config.
+
+  enchanter:
+    usage: /<command>
+    description: Opens the Enchanter GUI.
+
+
+  tinkerer:
+    usage: /<command>
+    description: Opens the Tinkerer GUI.
