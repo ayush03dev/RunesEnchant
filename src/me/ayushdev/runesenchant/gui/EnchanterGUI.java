@@ -30,7 +30,11 @@ public class EnchanterGUI {
 
         ItemStack resultant = new ItemStack(Material.REDSTONE_BLOCK);
         ItemMeta meta = resultant.getItemMeta();
-        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "NOT READY");
+        String name = ChatColor.translateAlternateColorCodes('&', FileManager.getInstance().getEnchanterConfig().getString(
+                "display-names.not-ready-button"
+        ));
+//        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "NOT READY");
+        meta.setDisplayName(name);
         resultant.setItemMeta(meta);
 
         for (int i = 0; i < 54; i++) {

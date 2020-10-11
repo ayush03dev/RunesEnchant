@@ -72,7 +72,7 @@ public class PotionArmorEffects extends EnchantmentEffect implements Listener {
 
             if (enchants.containsKey(CustomEnchant.STRENGTH) && CustomEnchant.STRENGTH.getConfig().isEnabled()) {
                 int level = enchants.get(CustomEnchant.STRENGTH);
-                p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE,
+                p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE,
                         (int) getValue(CustomEnchant.STRENGTH, level, "potion-level") - 1));
             }
 
