@@ -1,0 +1,24 @@
+enabled: true
+
+description: 'A chance to give bleeding effect to enemy'
+
+display-name: 'Bleed'
+
+lore-display: '&7Bleed %level%'
+
+max-level: 5
+
+enchant-type: 'WEAPON'
+
+chance:
+  expression: '%level%'
+
+bleed-duration:
+  expression: '%level% * 1.1'
+
+bleed-damage:
+  expression: '0.5'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

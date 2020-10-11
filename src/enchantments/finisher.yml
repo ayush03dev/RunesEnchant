@@ -1,0 +1,24 @@
+enabled: true
+
+description: 'A chance to immediately kill the opponent having a low health'
+
+display-name: 'Finisher'
+
+lore-display: '&7Finisher %level%'
+
+max-level: 5
+
+enchant-type: 'WEAPON'
+
+chance:
+  expression: '%level% * 12'
+
+# 20 = full health (10 hearts)
+# 0.5 = one heart
+# Here health means, the health below which enchantment effect takes place.
+health:
+  expression: '0.8 * %level%'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

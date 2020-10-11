@@ -11,10 +11,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -185,7 +182,36 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
                 for (ItemStack armor : getArmor(p)) {
                     ApplicableItem item = new ApplicableItem(armor);
                     if (item.getAllCustomEnchantments().containsKey(CustomEnchant.MONSTER)) {
-                        if (CustomEnchant.MONSTER.isEnabled()) e.setCancelled(true);
+                        if (CustomEnchant.MONSTER.isEnabled()) {
+                            if (e.getReason() == EntityTargetEvent.TargetReason.CLOSEST_PLAYER)
+                            e.setCancelled(true);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (e.getEntity() instanceof Enderman) {
+            if (e.getTarget() instanceof Player) {
+                Player p = (Player) e.getTarget();
+                if (p.getInventory().getHelmet() != null) {
+                    if (CustomEnchant.ENDER.isEnabled()) {
+                        if (new ApplicableItem(p.getInventory().getHelmet()).hasEnchantment(CustomEnchant.ENDER)) {
+                            if (e.getReason() == EntityTargetEvent.TargetReason.CLOSEST_PLAYER) e.setCancelled(true);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (e.getEntity() instanceof Creeper) {
+            if (e.getTarget() instanceof Player) {
+                Player p = (Player) e.getTarget();
+                if (p.getInventory().getHelmet() != null) {
+                    if (CustomEnchant.CREEPER.isEnabled()) {
+                        if (new ApplicableItem(p.getInventory().getHelmet()).hasEnchantment(CustomEnchant.CREEPER)) {
+                            if (e.getReason() == EntityTargetEvent.TargetReason.CLOSEST_PLAYER) e.setCancelled(true);
+                        }
                     }
                 }
             }

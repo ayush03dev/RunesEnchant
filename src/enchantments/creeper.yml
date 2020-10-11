@@ -1,0 +1,15 @@
+enabled: true
+
+description: 'Creeper will not be hostile when you are around him'
+
+lore-display: '&7Creeper %level%'
+
+display-name: 'Creeper'
+
+max-level: 1
+
+enchant-type: 'HELMET'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

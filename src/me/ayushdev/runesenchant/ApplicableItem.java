@@ -129,24 +129,25 @@ public class ApplicableItem {
     }
 
     public boolean hasEnchantment(CustomEnchant ce) {
-        if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
-
-            if (RunesEnchant.is13()) {
-                PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
-                return data.has(new NamespacedKey(instance, "re.ce." + ce.toString()),
-                        PersistentDataType.STRING);
-            }
-
-            for (String str : item.getItemMeta().getLore()) {
-                if (HiddenStringUtils.hasHiddenString(str) && HiddenStringUtils.extractHiddenString(str).contains("ce-")) {
-                    String hidden = HiddenStringUtils.extractHiddenString(str);
-                    hidden = hidden.replace("ce-", "");
-                    String[] args = hidden.split(":");
-                    return ce == CustomEnchant.fromString(args[0]);
-                }
-            }
-        }
-        return false;
+        return getAllCustomEnchantments().containsKey(ce);
+//        if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
+//
+//            if (RunesEnchant.is13()) {
+//                PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
+//                return data.has(new NamespacedKey(instance, "re.ce." + ce.toString()),
+//                        PersistentDataType.STRING);
+//            }
+//
+//            for (String str : item.getItemMeta().getLore()) {
+//                if (HiddenStringUtils.hasHiddenString(str) && HiddenStringUtils.extractHiddenString(str).contains("ce-")) {
+//                    String hidden = HiddenStringUtils.extractHiddenString(str);
+//                    hidden = hidden.replace("ce-", "");
+//                    String[] args = hidden.split(":");
+//                    return ce == CustomEnchant.fromString(args[0]);
+//                }
+//            }
+//        }
+//        return false;
     }
 
     /**

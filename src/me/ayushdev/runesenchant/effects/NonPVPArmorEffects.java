@@ -39,6 +39,15 @@ public class NonPVPArmorEffects extends EnchantmentEffect implements Listener {
                     }
                 }
 
+                if (enchants.containsKey(CustomEnchant.BOMB_SUIT)) {
+                    CustomEnchant ce = CustomEnchant.BOMB_SUIT;
+                    if (ce.isEnabled()) {
+                        if (e.getCause().toString().contains("EXPLOSION")) {
+                            e.setDamage(0);
+                        }
+                    }
+                }
+
                 if ((e.getCause() == DamageCause.FIRE)
                         || (e.getCause() == DamageCause.FIRE_TICK)) {
                     if (enchants.containsKey(CustomEnchant.PYROMANIAC)) {
@@ -47,6 +56,12 @@ public class NonPVPArmorEffects extends EnchantmentEffect implements Listener {
                         if (proc(ce, level)) {
                             e.setDamage(0);
                             p.setHealth(p.getMaxHealth());
+                        }
+                    }
+
+                    if (enchants.containsKey(CustomEnchant.PHOENIX)) {
+                        if (CustomEnchant.PHOENIX.isEnabled()) {
+                            e.setDamage(0);
                         }
                     }
                 }

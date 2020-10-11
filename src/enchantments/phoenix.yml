@@ -1,0 +1,15 @@
+enabled: true
+
+description: 'Fire will not damage you'
+
+lore-display: '&7Phoenix %level%'
+
+display-name: 'Phoenix'
+
+max-level: 1
+
+enchant-type: 'ARMOR'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

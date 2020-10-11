@@ -1,0 +1,15 @@
+enabled: true
+
+description: 'Item with this enchantment will not get dropped a player dies'
+
+display-name: 'Bind'
+
+lore-display: '&7Bind %level%'
+
+max-level: 1
+
+enchant-type: 'ANY'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

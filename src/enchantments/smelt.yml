@@ -1,0 +1,18 @@
+enabled: true
+
+description: 'Drops the smelted mineral instead of the ore'
+
+display-name: 'Smelt'
+
+lore-display: '&7Smelt %level%'
+
+max-level: 1
+
+enchant-type: 'PICKAXE'
+
+chance:
+  expression: '%level% * 12'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

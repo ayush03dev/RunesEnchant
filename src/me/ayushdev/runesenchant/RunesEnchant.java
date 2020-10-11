@@ -10,13 +10,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RunesEnchant extends JavaPlugin implements Listener {
+
+    public static Map<Player, List<ItemStack>> reDrop = new HashMap<>();
 
     private static RunesEnchant instance;
     public static RunesEnchant getInstance() {

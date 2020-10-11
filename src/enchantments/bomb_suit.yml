@@ -1,0 +1,15 @@
+enabled: true
+
+description: 'Explosions will not damage you'
+
+display-name: 'Bomb Suit'
+
+lore-display: '&7Bomb Suit %level%'
+
+max-level: 1
+
+enchant-type: 'CHESTPLATE'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

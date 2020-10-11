@@ -1,10 +1,8 @@
 package me.ayushdev.runesenchant.effects;
 
-import me.ayushdev.runesenchant.ApplicableItem;
-import me.ayushdev.runesenchant.CustomEnchant;
-import me.ayushdev.runesenchant.EnchantmentEffect;
-import me.ayushdev.runesenchant.Placeholder;
+import me.ayushdev.runesenchant.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
@@ -16,12 +14,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -45,7 +46,7 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                 Arrow a = (Arrow) e.getDamager();
                 if (a.hasMetadata("re.enchants")) {
                     damager = Bukkit.getPlayer((String) Objects.requireNonNull(a.getMetadata("re.shooter").get(0).value()));
-                    enchants = (Map <CustomEnchant, Integer>) a.getMetadata("re.enchants").get(0).value();
+                    enchants = (Map<CustomEnchant, Integer>) a.getMetadata("re.enchants").get(0).value();
                 }
             } else {
                 damager = (Player) e.getDamager();
@@ -93,7 +94,7 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                 int level = enchants.get(ce);
                 if (proc(ce, level)) {
                     if (((Player) en).getItemInHand().getType() != Material.AIR) {
-                        Player pl =  (Player) en;
+                        Player pl = (Player) en;
                         ItemStack hand = pl.getItemInHand();
                         ApplicableItem item = new ApplicableItem(hand);
                         Map<CustomEnchant, Integer> secondMap = item.getAllCustomEnchantments();
@@ -102,6 +103,29 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                             pl.setItemInHand(new ItemStack(Material.AIR));
                             pl.getWorld().playSound(pl.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
                         }
+                    }
+                }
+            }
+
+            if (enchants.containsKey(CustomEnchant.DISARM)) {
+                CustomEnchant ce = CustomEnchant.DISARM;
+                int level = enchants.get(ce);
+                if (proc(ce, level)) {
+                    if (((Player) en).getItemInHand().getType() != Material.AIR) {
+                        Player pl = (Player) en;
+                        ItemStack hand = pl.getItemInHand();
+                        pl.getWorld().dropItem(pl.getLocation(), hand);
+                    }
+                }
+            }
+
+            if (enchants.containsKey(CustomEnchant.FINISHER)) {
+                CustomEnchant ce = CustomEnchant.FINISHER;
+                int level = enchants.get(ce);
+                float threshold = getValue(ce, level, "health");
+                if (en.getHealth() - e.getDamage() <= threshold) {
+                    if (proc(ce, level)) {
+                        en.setHealth(0);
                     }
                 }
             }
@@ -204,6 +228,33 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                 }
             }
 
+            if (enchants.containsKey(CustomEnchant.BLEED)) {
+                CustomEnchant ce = CustomEnchant.BLEED;
+                int level = enchants.get(ce);
+                if (proc(ce, level)) {
+                    int duration = (int) getValue(ce, level, "bleed-duration") * 20;
+                    float damage = getValue(ce, level, "bleed-damage");
+                    en.sendMessage(ChatColor.DARK_RED + "You are bleeding!");
+
+                    new BukkitRunnable() {
+                        int counter = 0;
+
+                        @Override
+                        public void run() {
+                            if (!en.isValid()) {
+                                cancel();
+                            }
+
+                            if (counter >= duration) cancel();
+                            en.damage(damage);
+                            counter++;
+                        }
+                    }.runTaskTimer(RunesEnchant.getInstance(), 0, 20);
+
+                }
+            }
+
+
             if (enchants.containsKey(CustomEnchant.CRUSHING)) {
                 CustomEnchant ce = CustomEnchant.CRUSHING;
                 int level = enchants.get(ce);
@@ -249,6 +300,24 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
+        List<ItemStack> drops = new ArrayList<>();
+        drops.addAll(e.getDrops());
+
+        List<ItemStack> save = new ArrayList<>();
+
+        for (ItemStack item : drops) {
+            ApplicableItem ai = new ApplicableItem(item);
+            if (ai.hasEnchantment(CustomEnchant.BIND)) {
+                if (CustomEnchant.BIND.isEnabled()) {
+                    e.getDrops().remove(item);
+                    save.add(item);
+                }
+            }
+        }
+
+        RunesEnchant.reDrop.put(p, save);
+
+
         if (p.getKiller() == null) return;
 
         Player killer = p.getKiller();
@@ -275,7 +344,7 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
             CustomEnchant ce = CustomEnchant.BEHEAD;
             if (ce.isEnabled()) {
                 int level = enchants.get(ce);
-                int potionDuration = (int) getValue(ce, level, "potion-duration");
+                int potionDuration = (int) getValue(ce, level, "potion-duration") * 20;
                 int potionLevel = (int) getValue(ce, level, "potion-level");
 
                 PotionEffect pe1 = new PotionEffect(PotionEffectType.ABSORPTION, potionDuration, potionLevel - 1);
@@ -296,5 +365,28 @@ public class PVPWeaponEffects extends EnchantmentEffect implements Listener {
                 }
             }
         }
+
+        if (enchants.containsKey(CustomEnchant.DECEPTION)) {
+            CustomEnchant ce = CustomEnchant.DECEPTION;
+            if (ce.isEnabled()) {
+                int level = enchants.get(ce);
+                int potionDuration = (int) getValue(ce, level, "potion-duration") * 20;
+                int potionLevel = (int) getValue(ce, level, "potion-level") - 1;
+                killer.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, potionDuration, potionLevel));
+            }
+        }
+    }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent e) {
+        Player p = e.getPlayer();
+        if (RunesEnchant.reDrop.containsKey(p)) {
+            List<ItemStack> list = RunesEnchant.reDrop.get(p);
+            list.forEach(i -> {
+                p.getInventory().addItem(i);
+            });
+        }
+        p.updateInventory();
+        RunesEnchant.reDrop.remove(p);
     }
 }

@@ -1,0 +1,15 @@
+enabled: true
+
+description: 'Enderman will not be hostile if you look at him'
+
+lore-display: '&7Ender %level%'
+
+display-name: 'Ender'
+
+max-level: 1
+
+enchant-type: 'HELMET'
+
+# Cost per level in XP.
+cost:
+  expression: '25 * %level%'

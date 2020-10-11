@@ -21,7 +21,10 @@ public enum CustomEnchant {
     NECROMANCER(EnchantType.ARMOR), WOLVES(EnchantType.ARMOR), SOFT_TOUCH(EnchantType.PICKAXE),
     DEATH_HAMMER(EnchantType.BOW), THOR_HAMMER(EnchantType.SWORD), CANON(EnchantType.BOW),
     MONSTER(EnchantType.ARMOR), ALOHOMORA(EnchantType.STICK), PUNCH(EnchantType.WEAPON),
-    REPEL(EnchantType.ARMOR), QUAKE(EnchantType.BOOTS), DEVOUR(EnchantType.WEAPON);
+    REPEL(EnchantType.ARMOR), QUAKE(EnchantType.BOOTS), DEVOUR(EnchantType.WEAPON), DECEPTION(EnchantType.CHESTPLATE),
+    BIND(EnchantType.ANY), FINISHER(EnchantType.SWORD), SMELT(EnchantType.PICKAXE), DISARM(EnchantType.WEAPON),
+    BOMB_SUIT(EnchantType.CHESTPLATE), PHOENIX(EnchantType.ARMOR), BLEED(EnchantType.WEAPON),
+    CREEPER(EnchantType.HELMET), ENDER(EnchantType.HELMET);
 
     private EnchantType type;
     private EnchantmentConfig config;
