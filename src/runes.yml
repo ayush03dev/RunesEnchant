@@ -1,16 +1,19 @@
+# For random chances in range use "-" (hyphen) in between two limits; for example, a random number between
+# 50 to 100 would be "50-100".
+
 default:
   display-name: '&7%enchantment% %level%'
   item-id: 'EMERALD:0'
   success-rate: 92
-  destroy-rate: 8
+  destroy-rate: 8-15
   lore:
     - '&e&lRune of %enchantment% %level%'
     - '&a%success% % success rate &7and &c%destroy% % destroy rate'
     - '&7%type% Enchantment'
     - '&d&lRight click with the Rune for more info'
 
-# You can override the default configuration fields. Like for Aegis display-name and success-rate have been overriden.
+# You can override the default configuration fields. Like for Aegis display-name and success-rate have been overridden.
 
 aegis:
   display-name: '&c&lRune of Aegis %level%'
-  success-rate: 94
+  success-rate: 50-100

@@ -1,10 +1,13 @@
 package me.ayushdev.runesenchant.listeners;
 
 import me.ayushdev.runesenchant.*;
+import me.ayushdev.runesenchant.utils.HiddenStringUtils;
 import me.ayushdev.runesenchant.utils.RuneUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.TileState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,12 +15,17 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 public class SignEvents implements Listener {
 
     @EventHandler
     public void onSignCreate(SignChangeEvent e) {
         Player p = e.getPlayer();
+        Block b = e.getBlock();
+        Sign sign = (Sign) b.getState();
+
         if (!p.hasPermission("runesenchant.sign.create")) return;
         String[] lines = e.getLines();
         if (lines[0].equalsIgnoreCase("[RunesEnchant]")) {
@@ -52,6 +60,12 @@ public class SignEvents implements Listener {
                     RunesEnchant.getInstance(), ce.toString() + ':' + level + ':' + xp
             ));
 
+            if (RunesEnchant.is13()) {
+                TileState state = (TileState) sign.getBlock().getState();
+                state.getPersistentDataContainer().set(new NamespacedKey(RunesEnchant.getInstance(), "re.sign"),
+                        PersistentDataType.STRING, ce.toString() + ':' + level + ':' + xp);
+                state.update();
+            }
         }
     }
 
@@ -64,8 +78,16 @@ public class SignEvents implements Listener {
             if (b.getState() instanceof Sign) {
                 Sign sign = (Sign) b.getState();
 
-                if (sign.hasMetadata("re.sign")) {
-                    String data = (String) sign.getMetadata("re.sign").get(0).value();
+                if (sign.hasMetadata("re.sign") || (RunesEnchant.is13() && sign.getPersistentDataContainer().has(
+                        new NamespacedKey(RunesEnchant.getInstance(), "re.sign"), PersistentDataType.STRING))) {
+                    String data;
+                    if (RunesEnchant.is13()) {
+                        data = sign.getPersistentDataContainer().get(new NamespacedKey(RunesEnchant.getInstance(), "re.sign"),
+                                PersistentDataType.STRING);
+                    } else {
+                        data = (String) sign.getMetadata("re.sign").get(0).value();
+                    }
+
                     String[] args = data.split(":");
                     CustomEnchant ce = CustomEnchant.fromString(args[0]);
                     int level = Integer.parseInt(args[1]);

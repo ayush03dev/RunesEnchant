@@ -1,8 +1,10 @@
 package me.ayushdev.runesenchant;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
+import java.util.Random;
 
 public class RuneConfig {
 
@@ -30,19 +32,19 @@ public class RuneConfig {
     }
 
     public int getSuccessRate() {
-        int success = fc.getInt(section + ".success-rate");
-        if (success == 0) {
-            return fc.getInt("default.success-rate");
+        if (!fc.isSet(section + ".success-rate")) {
+            return getValue("default.success-rate");
+        } else {
+            return getValue(section + ".success-rate");
         }
-        return success;
     }
 
     public int getDestroyRate() {
-        int destroy = fc.getInt(section + ".destroy-rate");
-        if (destroy == 0) {
-            return fc.getInt("default.destroy-rate");
+        if (!fc.isSet(section + ".destroy-rate")) {
+            return getValue("default.destroy-rate");
+        } else {
+            return getValue(section + ".destroy-rate");
         }
-        return destroy;
     }
 
     public String getItemId() {
@@ -51,6 +53,33 @@ public class RuneConfig {
             return fc.getString("default.item-id");
         }
         return itemId;
+    }
+
+    private int getValue(String path) {
+        if (!fc.isSet(path)) return 0;
+
+        if (fc.get(path) instanceof Integer) {
+            return fc.getInt(path);
+        } else if (fc.get(path) instanceof Double) {
+            return (int) fc.getDouble(path);
+        } else {
+            String str = fc.getString(path);
+            if (str.contains("-")) {
+                String[] args = str.split("-");
+                try {
+                    int a = Integer.parseInt(args[0]);
+                    int b = Integer.parseInt(args[1]);
+
+                    Random rand = new Random();
+                    return rand.ints(a, b + 1).findFirst().getAsInt();
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                    System.out.println("ERROR: Rune chances are invalid!");
+                    return 0;
+                }
+            }
+        }
+        return 0;
     }
 
 }

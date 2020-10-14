@@ -26,7 +26,8 @@ public abstract class EnchantmentEffect {
             String expression = config.getConfigFile().getString(section.getName() + ".expression");
             if (expression == null) return 0;
             try {
-                return ExpressionResolver.getInstance().solve(expression.replace("%level%", level + ""));
+//                return ExpressionResolver.getInstance().solve(expression.replace("%level%", level + ""));
+                return ExpressionResolver.getInstance().solveForFloat(expression.replace("%level%", level + ""));
             } catch (ScriptException e) {
                 e.printStackTrace();
                 System.out.println("Invalid chance expression!");
@@ -50,7 +51,8 @@ public abstract class EnchantmentEffect {
             if (expression == null) return 0;
 
             try {
-                return ExpressionResolver.getInstance().solve(expression.replace("%level%", level + ""));
+//                return ExpressionResolver.getInstance().solve(expression.replace("%level%", level + ""));
+                return ExpressionResolver.getInstance().solveForFloat(expression.replace("%level%", level + ""));
             } catch (ScriptException e) {
                 e.printStackTrace();
                 System.out.println("Invalid expression!");
@@ -81,7 +83,9 @@ public abstract class EnchantmentEffect {
             }
 
             try {
-                return ExpressionResolver.getInstance().solve(expression.replace("%level%", level + ""));
+//                return ExpressionResolver.getInstance().solve(expression.replace("%level%", level + ""));
+                return ExpressionResolver.getInstance().solveForFloat(expression.replace("%level%", level + ""));
+
             } catch (ScriptException e) {
                 e.printStackTrace();
                 System.out.println("Invalid expression!");

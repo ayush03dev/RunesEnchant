@@ -6,6 +6,8 @@ import me.ayushdev.runesenchant.effects.*;
 import me.ayushdev.runesenchant.listeners.*;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,7 +52,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new WandEffects(), this);
         getServer().getPluginManager().registerEvents(new SignEvents(), this);
         getServer().getPluginManager().registerEvents(new TinkererListener(), this);
-
+        getServer().getPluginManager().registerEvents(new MobDropListener(), this);
 
         getCommand("runes").setExecutor(new RunesCommand());
         getCommand("ritem").setExecutor(new RItemCommand());
@@ -97,11 +99,20 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         if (item != null) {
             if (Rune.isRune(item)) {
                 Rune rune = new Rune(item);
-                p.sendMessage("Enchantment: " + rune.getEnchantment().getDisplayName());
-                p.sendMessage("Level: " + rune.getLevel());
-                p.sendMessage("Success Rate: " + rune.getSuccessRate() + '%');
-                p.sendMessage("Destroy Rate: " + rune.getDestroyRate() + '%');
-                p.sendMessage("Description: " + rune.getEnchantment().getDescription());
+                getConfig().getStringList("rune-right-click-message").forEach(str -> {
+                    str = ChatColor.translateAlternateColorCodes('&', str);
+                    str = str.replace("%enchantment%", rune.getEnchantment().getDisplayName());
+                    str = str.replace("%level%", rune.getLevel() + "");
+                    str = str.replace("%success%", rune.getSuccessRate() + "");
+                    str = str.replace("%destroy%", rune.getDestroyRate() + "");
+                    str = str.replace("%description%", rune.getEnchantment().getDescription());
+                    p.sendMessage(str);
+                });
+//                p.sendMessage("Enchantment: " + rune.getEnchantment().getDisplayName());
+//                p.sendMessage("Level: " + rune.getLevel());
+//                p.sendMessage("Success Rate: " + rune.getSuccessRate() + '%');
+//                p.sendMessage("Destroy Rate: " + rune.getDestroyRate() + '%');
+//                p.sendMessage("Description: " + rune.getEnchantment().getDescription());
             }
         }
     }

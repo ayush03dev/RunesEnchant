@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RuneUtils {
 
@@ -140,5 +141,13 @@ public class RuneUtils {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_DOWN);
         return bd.floatValue();
+    }
+
+    public double generateRandomFloat() {
+        double r =  ThreadLocalRandom.current().nextDouble(0, 100);
+        double scale = Math.pow(10, 2);
+        r = Math.round(r * scale) / scale;
+
+        return r;
     }
 }

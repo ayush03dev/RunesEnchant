@@ -1,8 +1,38 @@
-rune-item: 'EMERALD:0'
-
 slots-enabled: true
 slots: 5
 slot-display: '&6Slots: %slots%'
 
 rune-drag-drop-enabled: true
 enchanter-enabled: true
+
+# Configuration for mob drops ---
+# You can set default drops for each type of mob or you can set drops particularly for some mob.
+# From the config below, for all mobs other than Creeper, drops would be taken from the "default" field.
+# For Creeper, the drops would be taken from the "CREEPER" field.
+# You can add more mobs like this. Choose the enums from here:
+# https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
+
+# Drop format is [enchantment name];[enchantment level] : [chance of drop]
+# If you want any level to be dropped, you can ignore the ";[enchantment level]" part.
+
+mob-drops:
+ enabled: true
+ chance: 25
+ drop:
+   default:
+      lifesteal;1 : 50
+      shadowstep : 60
+
+   CREEPER:
+      speed;1 : 50
+      lifesteal;1 : 25
+      demonic_aura : 5
+      shadowstep;1 : 20
+
+
+rune-right-click-message:
+- '&7Enchantment: &b%enchantment%'
+- '&7Level: &b%level%'
+- '&7Success Rate: &a%success% %'
+- '&7Destroy Rate: &c%destroy% %'
+- '&7Description: &b%description%'

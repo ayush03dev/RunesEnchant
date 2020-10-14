@@ -44,4 +44,8 @@ public class Settings {
     public String getSlotsDisplay() {
         return getConfig().getString("slot-display");
     }
+
+    public boolean dropsEnabled() {
+        return getConfig().getBoolean("mob-drops.enabled");
+    }
 }
