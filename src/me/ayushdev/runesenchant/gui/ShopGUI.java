@@ -15,11 +15,18 @@ public class ShopGUI {
         Inventory inv = Bukkit.createInventory(new ShopGUIHolder(p), rows * 9, "Runes Shop");
 
         int index = 0;
-        EnchantmentGroup.getAllGroups().forEach(group -> {
+        for (EnchantmentGroup group : EnchantmentGroup.getAllGroups()) {
             if (group.listInShop()) {
                 inv.setItem(index, group.getDisplayItem());
+                index++;
             }
-        });
+        }
+//        EnchantmentGroup.getAllGroups().forEach(group -> {
+//            if (group.listInShop()) {
+//                inv.setItem(index, group.getDisplayItem());
+//                index++;
+//            }
+//        });
 
         p.openInventory(inv);
     }
