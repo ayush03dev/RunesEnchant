@@ -2,6 +2,7 @@ package me.ayushdev.runesenchant.commands;
 
 import me.ayushdev.runesenchant.*;
 import me.ayushdev.runesenchant.gui.EnchanterGUI;
+import me.ayushdev.runesenchant.gui.EnchantmentsGUI;
 import me.ayushdev.runesenchant.gui.ShopGUI;
 import me.ayushdev.runesenchant.gui.Tinkerer;
 import me.ayushdev.runesenchant.utils.RuneUtils;
@@ -241,6 +242,12 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
 
                         new Tinkerer().openInventory(p);
                     }
+                } else if (args[0].equalsIgnoreCase("list")) {
+                    if (sender instanceof Player) {
+                        Player p = (Player) sender;
+                        new EnchantmentsGUI().openMenu(p);
+//                        p.openInventory(new EnchantmentsGUI().openGroupGUI(p, new EnchantmentGroup("weapon"), 1));
+                    }
                 }
 
                 else if (args[0].equalsIgnoreCase("give")) {
@@ -277,6 +284,7 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
                 list.add("enchanter");
                 list.add("shop");
                 list.add("tinkerer");
+                list.add("list");
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("give")) {
                     Bukkit.getServer().getOnlinePlayers().forEach(p -> {
@@ -337,6 +345,7 @@ public class RunesCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(ChatColor.YELLOW + "/runes tinkerer");
 
         sender.sendMessage(ChatColor.YELLOW +  "/runes shop");
+        sender.sendMessage(ChatColor.YELLOW +  "/runes list");
 
         sender.sendMessage(ChatColor.YELLOW + "/ritem <type> <player> <level>");
 

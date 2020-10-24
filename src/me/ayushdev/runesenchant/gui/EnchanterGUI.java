@@ -79,7 +79,8 @@ public class EnchanterGUI {
     }
 
     public ItemStack getDemoRune() {
-        ItemStack demoRune = RuneUtils.getInstance().buildItemStack(Settings.getInstance().getItemId());
+//        ItemStack demoRune = RuneUtils.getInstance().buildItemStack(Settings.getInstance().getItemId());
+        ItemStack demoRune = new ItemStack(Material.EMERALD);
         ItemMeta runeMeta = demoRune.getItemMeta();
         String name = ChatColor.translateAlternateColorCodes('&', fc.getString(
                 "display-names.rune"

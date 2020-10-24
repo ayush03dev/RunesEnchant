@@ -4,7 +4,7 @@ import org.bukkit.inventory.ItemStack;
 
 public enum EnchantType {
 
-    ARMOR, WEAPON, SWORD, AXE, BOOTS, HELMET, CHESTPLATE, BOW, HOE, PICKAXE, STICK, ANY;
+    ARMOR, WEAPON, SWORD, AXE, BOOTS, HELMET, CHESTPLATE, BOW, PICKAXE, STICK, ANY;
 
     public static EnchantType fromString(String str) {
         for (EnchantType type : values()) {

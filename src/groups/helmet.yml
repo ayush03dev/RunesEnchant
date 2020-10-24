@@ -1,0 +1,26 @@
+description: 'All the Helmet enchantments here'
+
+list-in-shop: true
+list-in-gui: true
+
+price: 250
+
+shop-display:
+  item-id: 'DIAMOND_HELMET:0'
+  display-name: '&cHelmet Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'DIAMOND_HELMET:0'
+  display-name: '&cHelmet Enchantments'
+  lore:
+    - '&e%description%'
+
+enchantments:
+  - lumos
+  - eyepatch
+  - swimmer
+  - creeper
+  - ender

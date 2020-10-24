@@ -1,0 +1,30 @@
+description: 'All the Axe enchantments here'
+
+list-in-shop: true
+list-in-gui: true
+
+price: 250
+
+shop-display:
+  item-id: 'DIAMOND_AXE:0'
+  display-name: '&cAxe Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'DIAMOND_AXE:0'
+  display-name: '&cAxe Enchantments'
+  lore:
+    - '&e%description%'
+
+enchantments:
+  - purge
+  - battlecry
+  - corruption
+  - turmoil
+  - holy_smite
+  - petrify
+  - plunder
+  - lumberjack
+  - thor_hammer

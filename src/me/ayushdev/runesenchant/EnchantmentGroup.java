@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.ChatPaginator;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,17 +57,6 @@ public class EnchantmentGroup {
         return fc.getBoolean("list-in-shop");
     }
 
-    public String getDisplayName() {
-        try {
-            return ChatColor.translateAlternateColorCodes('&', fc.getString("shop-display.display-name"));
-        } catch (NullPointerException ex) {
-            ex.printStackTrace();
-            System.out.println("Display Name of the group: " + name + " is not set!");
-            return null;
-
-        }
-    }
-
     public Rune getRandomRune() {
         Random random = new Random();
         List<EnchantmentData> list = getEnchantments();
@@ -112,41 +102,88 @@ public class EnchantmentGroup {
         return enchants;
     }
 
+    public boolean listInGUI() {
+        return fc.getBoolean("list-in-gui");
+    }
+
     public int getPrice() {
         return fc.getInt("price");
     }
 
-    public List<String> getLore() {
-        return fc.getStringList("shop-display.lore");
-    }
-
-    public String getDisplayItemId() {
-        return fc.getString("shop-display.item-id");
-    }
-
-    public ItemStack getDisplayItem() {
-        ItemStack item = RuneUtils.getInstance().buildItemStack(getDisplayItemId());
+    public ItemStack getShopDisplayItem() {
+        ItemStack item = RuneUtils.getInstance().buildItemStack(fc.getString("shop-display.item-id"));
         ItemMeta meta = item.getItemMeta();
+        String display = ChatColor.translateAlternateColorCodes('&', fc.getString("shop-display.display-name"));;
+        if (RunesEnchant.is13()) {
+            PersistentDataContainer data = meta.getPersistentDataContainer();
+            data.set(new NamespacedKey(RunesEnchant.getInstance(),
+                    "re.group"), PersistentDataType.STRING, name.toLowerCase());
+            meta.setDisplayName(display);
+
+        } else {
+            meta.setDisplayName(display
+            + HiddenStringUtils.encodeString("re.group." + name.toLowerCase()));
+        }
+
+        List<String> lore = fc.getStringList("shop-display.lore");
+        List<String> list = new ArrayList<>();
+
+        lore.forEach(s -> {
+            String copy = s;
+            s = s.replace("%description%", getDescription());
+            s = s.replace("%price%", getPrice() + "");
+            s = ChatColor.translateAlternateColorCodes('&', s);
+
+            if (copy.contains("%description%")) {
+                String[] args = ChatPaginator.wordWrap(s, 30);
+                for (String str : args) {
+                    list.add(str);
+                }
+            } else {
+                list.add(s);
+            }
+//            list.add(s);
+        });
+
+        meta.setLore(list);
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
+    public ItemStack getGUIDisplayItem() {
+        ItemStack item = RuneUtils.getInstance().buildItemStack(fc.getString("gui-display.item-id"));
+        ItemMeta meta = item.getItemMeta();
+
+        String display = ChatColor.translateAlternateColorCodes('&', fc.getString("gui-display.display-name"));;
 
         if (RunesEnchant.is13()) {
             PersistentDataContainer data = meta.getPersistentDataContainer();
             data.set(new NamespacedKey(RunesEnchant.getInstance(),
                     "re.group"), PersistentDataType.STRING, name.toLowerCase());
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getDisplayName()));
+            meta.setDisplayName(display);
 
         } else {
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getDisplayName())
-            + HiddenStringUtils.encodeString("re.group." + name.toLowerCase()));
+            meta.setDisplayName(display
+                    + HiddenStringUtils.encodeString("re.group." + name.toLowerCase()));
         }
 
-        List<String> lore = getLore();
+        List<String> lore = fc.getStringList("gui-display.lore");
         List<String> list = new ArrayList<>();
 
         lore.forEach(s -> {
+            String copy = s;
             s = s.replace("%description%", getDescription());
-            s = s.replace("%price%", getPrice() + "");
             s = ChatColor.translateAlternateColorCodes('&', s);
-            list.add(s);
+
+            if (copy.contains("%description%")) {
+                String[] args = ChatPaginator.wordWrap(s, 30);
+                for (String str : args) {
+                    list.add(str);
+                }
+            } else {
+                list.add(s);
+            }
         });
 
         meta.setLore(list);

@@ -1,0 +1,29 @@
+description: 'All the Chestplate enchantments here'
+
+list-in-shop: true
+list-in-gui: true
+
+price: 250
+
+shop-display:
+  item-id: 'DIAMOND_CHESTPLATE:0'
+  display-name: '&cChestplate Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'DIAMOND_CHESTPLATE:0'
+  display-name: '&cChestplate Enchantments'
+  lore:
+    - '&e%description%'
+
+enchantments:
+  - platemail
+  - flame_cloak
+  - molten
+  - strength
+  - immolation
+  - suicide
+  - necromancer
+  - bomb_suit

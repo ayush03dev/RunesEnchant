@@ -1,0 +1,22 @@
+description: 'All the Stick enchantments here'
+
+list-in-shop: true
+list-in-gui: true
+
+price: 250
+
+shop-display:
+  item-id: 'STICK:0'
+  display-name: '&cStick Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'STICK:0'
+  display-name: '&cStick Enchantments'
+  lore:
+    - '&e%description%'
+
+enchantments:
+  - alohomora

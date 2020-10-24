@@ -1,6 +1,7 @@
 description: 'All the boots enchantments here'
 
 list-in-shop: true
+list-in-gui: true
 
 price: 250
 
@@ -10,6 +11,12 @@ shop-display:
   lore:
     - '&e%description%'
     - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'DIAMOND_BOOTS:0'
+  display-name: '&cBoots Enchantments'
+  lore:
+    - '&e%description%'
 
 enchantments:
   - 'speed'

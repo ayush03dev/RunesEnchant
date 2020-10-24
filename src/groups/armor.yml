@@ -1,0 +1,34 @@
+description: 'All the Armor Enchantments here'
+
+list-in-shop: true
+list-in-gui: true
+
+price: 250
+
+shop-display:
+  item-id: 'CHAINMAIL_CHESTPLATE:0'
+  display-name: '&cArmor Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'CHAINMAIL_CHESTPLATE:0'
+  display-name: '&cArmor Enchantments'
+  lore:
+    - '&e%description%'
+
+enchantments:
+  - aegis
+  - demonic_aura
+  - dodge
+  - blessed
+  - stealth
+  - pyromaniac
+  - spiked
+  - shadowstep
+  - paralyze
+  - wolves
+  - monster
+  - repel
+  - phoenix

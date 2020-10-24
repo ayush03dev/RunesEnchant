@@ -1,0 +1,29 @@
+description: 'All the Bow enchantments here'
+
+list-in-shop: true
+list-in-gui: true
+
+price: 250
+
+shop-display:
+  item-id: 'BOW:0'
+  display-name: '&cBow Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'BOW:0'
+  display-name: '&cBow Enchantments'
+  lore:
+    - '&e%description%'
+
+enchantments:
+  - zeus
+  - arrow_rain
+  - entangle
+  - wild_mark
+  - detonate
+  - triplet
+  - death_hammer
+  - canon

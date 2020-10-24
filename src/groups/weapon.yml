@@ -1,0 +1,33 @@
+description: 'All the Weapon enchantments here'
+
+list-in-shop: true
+list-in-gui: true
+
+price: 250
+
+shop-display:
+  item-id: 'DIAMOND_SWORD:0'
+  display-name: '&cWeapon Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'DIAMOND_SWORD:0'
+  display-name: '&cWeapon Enchantments'
+  lore:
+    - '&e%description%'
+
+enchantments:
+  - curse
+  - crushing
+  - execute
+  - divine
+  - reversal
+  - reborn
+  - punch
+  - devour
+  - deception
+  - finisher
+  - disarm
+  - bleed

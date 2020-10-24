@@ -8,6 +8,7 @@ import me.ayushdev.runesenchant.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +34,9 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     }
     private static int version;
     protected static String userID = "%%__USER__%%";
+//    public static List<Player> search = new ArrayList<>();
+    public static Map<Player, EnchantmentGroup> search = new HashMap<>();
+
 
     @Override
     public void onEnable() {
@@ -53,6 +58,9 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new SignEvents(), this);
         getServer().getPluginManager().registerEvents(new TinkererListener(), this);
         getServer().getPluginManager().registerEvents(new MobDropListener(), this);
+        getServer().getPluginManager().registerEvents(new EnchantmentsGUIListener(), this);
+        getServer().getPluginManager().registerEvents(new ChatEvent(), this);
+
 
         getCommand("runes").setExecutor(new RunesCommand());
         getCommand("ritem").setExecutor(new RItemCommand());
@@ -74,7 +82,6 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 
         saveDefaultEnchantments();
         saveDefaultTiers();
-        saveDefaultTiers();
         saveDefaultConfig();
         saveDefaultFile("runes.yml");
         saveDefaultFile("protection-charm.yml");
@@ -85,6 +92,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         saveDefaultFile("messages.yml");
         saveDefaultFile("enchantment-orb.yml");
         saveDefaultFile("shop.yml");
+
     }
 
     @Override
@@ -134,10 +142,18 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     }
 
     private void saveDefaultTiers() {
-        File f = new File(getDataFolder() + File.separator + "groups" + File.separator + "boots.yml");
-        if (!f.exists()) {
-            saveResource("groups/boots.yml", false);
+
+        for (EnchantType type : EnchantType.values()) {
+            File f = new File(getDataFolder() + File.separator + "groups" + File.separator + type.toString().toLowerCase() + ".yml");
+            if (!f.exists()) {
+                saveResource("groups/" + type.toString().toLowerCase() + ".yml", false);
+            }
         }
+
+//        File f = new File(getDataFolder() + File.separator + "groups" + File.separator + "boots.yml");
+//        if (!f.exists()) {
+//            saveResource("groups/boots.yml", false);
+//        }
     }
 
     public void saveDefaultFile(String name) {
@@ -146,4 +162,20 @@ public class RunesEnchant extends JavaPlugin implements Listener {
             saveResource(name, false);
         }
     }
+
+//    private void sortEnchantments() {
+//        FileConfiguration fc = FileManager.getInstance().getGroupConfig("boots");
+//        for (CustomEnchant ce : CustomEnchant.values()) {
+//            EnchantType type = ce.getType();
+//            List<String> list = fc.getStringList(type.toString());
+//            list.add(ce.toString().toLowerCase());
+//            fc.set(type.toString(), list);
+//        }
+//
+//        try {
+//            fc.save(new File(getDataFolder() + File.separator + "groups" + File.separator + "boots.yml"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

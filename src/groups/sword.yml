@@ -1,0 +1,27 @@
+description: 'All the Sword enchantments here'
+
+list-in-shop: true
+list-in-gui: true
+
+price: 250
+
+shop-display:
+  item-id: 'IRON_SWORD:0'
+  display-name: '&cSword Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'IRON_SWORD:0'
+  display-name: '&cSword Enchantments'
+  lore:
+    - '&e%description%'
+
+enchantments:
+  - assassin
+  - behead
+  - hex
+  - riftslayer
+  - demon_siphon
+  - lifesteal

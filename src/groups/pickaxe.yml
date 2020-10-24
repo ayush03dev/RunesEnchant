@@ -1,0 +1,24 @@
+description: 'All the Pickaxe enchantments here'
+
+list-in-shop: true
+list-in-gui: true
+
+price: 250
+
+shop-display:
+  item-id: 'DIAMOND_PICKAXE:0'
+  display-name: '&cPickaxe Enchantments'
+  lore:
+    - '&e%description%'
+    - '&aPrice: %price% xp'
+
+gui-display:
+  item-id: 'DIAMOND_PICKAXE:0'
+  display-name: '&cPickaxe Enchantments'
+  lore:
+    - '&e%description%'
+
+enchantments:
+  - haste
+  - soft_touch
+  - smelt
