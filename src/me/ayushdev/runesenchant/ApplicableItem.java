@@ -4,6 +4,7 @@ import me.ayushdev.runesenchant.utils.HiddenStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -59,6 +60,21 @@ public class ApplicableItem {
 
         } else {
             this.initialized = false;
+
+            FileConfiguration fc = RunesEnchant.getInstance().getConfig();
+            if (fc.getConfigurationSection("slots-per-item") != null) {
+                for (String str : fc.getConfigurationSection("slots-per-item").getKeys(false)) {
+                    if (item.getType().toString().equalsIgnoreCase(str)) {
+                        if (Settings.getInstance().slotsEnabled()) {
+                            this.slots = fc.getInt("slots-per-item." + str);
+                        } else {
+                            this.slots = 1;
+                        }
+                        return;
+                    }
+                }
+            }
+
             this.slots = Settings.getInstance().slotsEnabled() ? Settings.getInstance().getSlots() : 1;
         }
     }

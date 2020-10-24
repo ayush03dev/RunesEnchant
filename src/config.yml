@@ -10,7 +10,7 @@ slots-enabled: true
 slots: 5
 
 slots-per-item:
-   DIAMOND_SWORD: 5
+   DIAMOND_SWORD: 8
 
 enchantment-list-gui:
       enchantment-item:
