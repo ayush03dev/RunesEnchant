@@ -53,4 +53,8 @@ public class LuckStoneConfig {
             return override;
         }
     }
+
+    public boolean isGlowing() {
+        return fc.getBoolean("item.glow");
+    }
 }

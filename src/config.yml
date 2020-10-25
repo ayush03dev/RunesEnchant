@@ -1,11 +1,3 @@
-# IMPORTANT: If you enable the "check-lore" option, the plugin will consider that the item has enchantment if
-# it contains the enchantment's display in its lore. That means an item might have an enchantment effect without
-# having a Rune applied on it (mostly useful when you want custom enchantment effect on items in a pre-made kit).
-
-# If you modify the lore display of any enchantment, items having older display would stop having that enchantment's effect.
-
-check-lore: false
-
 slots-enabled: true
 slots: 5
 

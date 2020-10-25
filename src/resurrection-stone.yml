@@ -1,4 +1,5 @@
 item-id: 'COAL:0'
+glow: true
 display-name: '&c&lThe Resurrection Stone'
 lore:
   - '&7Prevents the item in the Enchanter GUI from getting destroyed'

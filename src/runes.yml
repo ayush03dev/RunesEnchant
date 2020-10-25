@@ -4,6 +4,7 @@
 default:
   display-name: '&7%enchantment% %level%'
   item-id: 'EMERALD:0'
+  glow: false
   success-rate: 92
   destroy-rate: 8-15
   lore:

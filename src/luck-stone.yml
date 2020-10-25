@@ -1,5 +1,6 @@
 item:
   item-id: 'GLOWSTONE_DUST:0'
+  glow: true
   display-name: '&a&lLuck Stone &7(&dLevel %level%&7)'
   lore:
     - '&7Increases the success rate of enchanting'

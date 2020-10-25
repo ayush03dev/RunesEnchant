@@ -4,6 +4,8 @@ import me.ayushdev.runesenchant.utils.HiddenStringUtils;
 import me.ayushdev.runesenchant.utils.RuneUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -120,6 +122,12 @@ public class ProtectionCharm {
         } else {
             meta.setDisplayName(config.getItemDisplayName() + HiddenStringUtils.encodeString("pc-PROTECTION:" + level + ":" + left));
         }
+
+        if (config.isGlowing()) {
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.addEnchant(Enchantment.LURE, 1, false);
+        }
+
         meta.setLore(config.getItemLore());
         item.setItemMeta(meta);
         return item;

@@ -34,4 +34,8 @@ public class EnchantmentOrbConfig {
         return lore;
     }
 
+    public boolean isGlowing() {
+        return fc.getBoolean("item.glow");
+    }
+
 }

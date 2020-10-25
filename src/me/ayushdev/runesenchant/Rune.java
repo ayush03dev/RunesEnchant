@@ -7,6 +7,8 @@ import me.ayushdev.runesenchant.utils.RuneUtils;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -144,6 +146,12 @@ public class Rune {
             line = toColor(line);
             list.add(line);
         });
+
+       if (cfg.isGlowing()) {
+           meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+           meta.addEnchant(Enchantment.LURE, 1, false);
+       }
+
         meta.setLore(list);
 
         rune.setItemMeta(meta);

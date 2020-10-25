@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -122,6 +123,14 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 //                p.sendMessage("Destroy Rate: " + rune.getDestroyRate() + '%');
 //                p.sendMessage("Description: " + rune.getEnchantment().getDescription());
             }
+        }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e) {
+        Player p = e.getPlayer();
+        if (search.containsKey(p)) {
+            search.remove(p);
         }
     }
 

@@ -1,6 +1,5 @@
 package me.ayushdev.runesenchant;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
@@ -53,6 +52,18 @@ public class RuneConfig {
             return fc.getString("default.item-id");
         }
         return itemId;
+    }
+
+    public boolean isGlowing() {
+        if (fc.isSet(section + ".glow")) {
+            return fc.getBoolean(section + ".glow");
+        } else {
+            if (fc.isSet("default.glow")) {
+                return fc.getBoolean("default.glow");
+            }
+        }
+
+        return false;
     }
 
     private int getValue(String path) {

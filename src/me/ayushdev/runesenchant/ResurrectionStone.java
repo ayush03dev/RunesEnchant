@@ -5,6 +5,8 @@ import me.ayushdev.runesenchant.utils.RuneUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -37,6 +39,12 @@ public class ResurrectionStone {
         } else {
             meta.setDisplayName(displayName + HiddenStringUtils.encodeString("rs-RESURRECTION"));
         }
+
+        if (fc.getBoolean("glow")) {
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.addEnchant(Enchantment.LURE, 1, false);
+        }
+
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;

@@ -85,6 +85,10 @@ public class ProtectionCharmConfig {
         }
     }
 
+    public boolean isGlowing() {
+        return config.getBoolean("item.glow");
+    }
+
     public String getItemId() {
         return config.getString("item.item-id");
     }
