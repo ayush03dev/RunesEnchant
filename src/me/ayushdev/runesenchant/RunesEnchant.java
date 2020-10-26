@@ -61,6 +61,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new MobDropListener(), this);
         getServer().getPluginManager().registerEvents(new EnchantmentsGUIListener(), this);
         getServer().getPluginManager().registerEvents(new ChatEvent(), this);
+        getServer().getPluginManager().registerEvents(new PreCommandListener(), this);
 
 
         getCommand("runes").setExecutor(new RunesCommand());
@@ -93,6 +94,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         saveDefaultFile("messages.yml");
         saveDefaultFile("enchantment-orb.yml");
         saveDefaultFile("shop.yml");
+        saveDefaultFile("command-aliases.yml");
 
     }
 

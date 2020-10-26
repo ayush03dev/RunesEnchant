@@ -83,6 +83,12 @@ public class FileManager {
         return YamlConfiguration.loadConfiguration(f);
     }
 
+    public FileConfiguration getAliasConfig() {
+        File f = new File(dataFolder + File.separator + "command-aliases.yml");
+        if (!f.exists()) return null;
+        return YamlConfiguration.loadConfiguration(f);
+    }
+
     public FileConfiguration getEnchanterConfig() {
         File f = new File(dataFolder + File.separator + "enchanter.yml");
 

@@ -111,7 +111,16 @@ public class EnchantmentGroup {
     }
 
     public ItemStack getShopDisplayItem() {
-        ItemStack item = RuneUtils.getInstance().buildItemStack(fc.getString("shop-display.item-id"));
+        String id = fc.getString("shop-display.item-id");
+        ItemStack item = RuneUtils.getInstance().buildItemStack(id);
+        if (item == null) {
+            if (id.contains("SHOVEL")) {
+                id = id.replace("SHOVEL", "SPADE");
+                item = RuneUtils.getInstance().buildItemStack(id);
+            } else {
+                throw new NullPointerException("Invalid GUI Item ID of the group: " + getName());
+            }
+        }
         ItemMeta meta = item.getItemMeta();
         String display = ChatColor.translateAlternateColorCodes('&', fc.getString("shop-display.display-name"));;
         if (RunesEnchant.is13()) {
@@ -152,7 +161,16 @@ public class EnchantmentGroup {
     }
 
     public ItemStack getGUIDisplayItem() {
-        ItemStack item = RuneUtils.getInstance().buildItemStack(fc.getString("gui-display.item-id"));
+        String id = fc.getString("gui-display.item-id");
+        ItemStack item = RuneUtils.getInstance().buildItemStack(id);
+        if (item == null) {
+            if (id.contains("SHOVEL")) {
+                id = id.replace("SHOVEL", "SPADE");
+                item = RuneUtils.getInstance().buildItemStack(id);
+            } else {
+                throw new NullPointerException("Invalid GUI Item ID of the group: " + getName());
+            }
+        }
         ItemMeta meta = item.getItemMeta();
 
         String display = ChatColor.translateAlternateColorCodes('&', fc.getString("gui-display.display-name"));;

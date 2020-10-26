@@ -59,7 +59,7 @@ public class ShopListener implements Listener {
 
                             utils.setTotalExperience(utils.getTotalExperience(p) - price, p);
                             Rune rune = group.getRandomRune();
-                            p.closeInventory();;
+                            p.closeInventory();
                             p.getInventory().addItem(rune.getItem());
                         }
                     }

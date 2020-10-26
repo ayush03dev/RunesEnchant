@@ -1,0 +1,12 @@
+# Only supports commands which do not require dynamic/variable arguments.
+# These aliases are only applicable for Players, not for the console!
+# Format (everything without '/'):
+# alias: original-command
+
+enchanter: runes enchanter
+
+tinkerer: runes tinkerer
+
+rshop: runes shop
+
+ce: runes list

@@ -69,10 +69,22 @@ public class EnchantmentsGUI {
     public Inventory openGroupGUI(Player p, EnchantmentGroup group, int page) {
         List<EnchantmentData> list = group.getEnchantments();
         Inventory inv = Bukkit.createInventory(new EnchantmentsGUIHolder(p, group, page), 54, "Enchantments");
+
+        Material mat;
+        try {
+            mat = Material.WHITE_STAINED_GLASS_PANE;
+        } catch (NoSuchFieldError e) {
+            mat = Material.matchMaterial("STAINED_GLASS_PANE");
+        }
+
+        ItemStack glass = new ItemStack(mat);
+        ItemMeta gMeta = glass.getItemMeta();
+        gMeta.setDisplayName(ChatColor.BLACK + "");
+        glass.setItemMeta(gMeta);
         for (int i = 0; i < 54; i++) {
 
             if (i >= 0 && i <= 8 || i >= 45 && i <= 53 || (i+1)%9 == 0 || i%9==0) {
-                inv.setItem(i, new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
+                inv.setItem(i, glass);
             }
         }
         int size = list.size();
@@ -156,10 +168,23 @@ public class EnchantmentsGUI {
 
     public Inventory openGroupGUI(Player p, List<CustomEnchant> list, int page) {
         Inventory inv = Bukkit.createInventory(new EnchantmentsSearchGUIHolder(p, list, page), 54, "Enchantments");
+        Material mat;
+        try {
+            mat = Material.WHITE_STAINED_GLASS_PANE;
+        } catch (NoSuchFieldError e) {
+            mat = Material.matchMaterial("STAINED_GLASS_PANE");
+        }
+
+        ItemStack glass = new ItemStack(mat);
+        ItemMeta gMeta = glass.getItemMeta();
+        gMeta.setDisplayName(ChatColor.BLACK + "");
+        glass.setItemMeta(gMeta);
+
         for (int i = 0; i < 54; i++) {
 
             if (i >= 0 && i <= 8 || i >= 45 && i <= 53 || (i+1)%9 == 0 || i%9==0) {
-                inv.setItem(i, new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
+
+                inv.setItem(i, glass);
             }
         }
         int size = list.size();
