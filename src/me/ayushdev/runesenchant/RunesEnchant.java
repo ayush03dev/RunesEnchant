@@ -69,6 +69,7 @@ public class RunesEnchant extends JavaPlugin implements Listener {
         getCommand("id").setExecutor(new IDCommand());
         getCommand("tinkerer").setExecutor(new TinkererCommand());
         getCommand("enchanter").setExecutor(new EnchanterCommand());
+        getCommand("setslots").setExecutor(new SetSlotsCommand());
 
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         RunesEnchant.version = Integer.parseInt(version.replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));
