@@ -138,6 +138,7 @@ public class Rune {
 
        cfg.getLore().forEach(line -> {
             line = replace(line, "%enchant%", ChatColor.stripColor(ce.getLoreDisplay(level)));
+            line = replace(line, "%description%", ce.getDescription());
            line = replace(line, "%enchantment%", ce.getDisplayName());
            line = replace(line, "%level%", level + "");
             line = line.replace("%success%", successRate + "");

@@ -109,7 +109,8 @@ public class EnchantmentsGUI {
                 if (i >= list.size()) break;
                 EnchantmentData data = list.get(i);
                 int slot = slots[slotIndex];
-                CustomEnchant ce=  data.getCustomEnchant();
+                CustomEnchant ce = data.getCustomEnchant();
+                if (!ce.isEnabled()) continue;
                 RuneConfig cfg = new RuneConfig(ce);
 
                 ItemStack item = RuneUtils.getInstance().buildItemStack(cfg.getItemId());

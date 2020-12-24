@@ -46,6 +46,8 @@ public class SetSlotsCommand implements CommandExecutor {
                 new ApplicableItem(p.getItemInHand()).setSlots(slots);
                 p.sendMessage(ChatColor.GREEN + "Number of slots on the item in hand has been set to " + slots + '!');
 
+            } else {
+                sender.sendMessage(ChatColor.RED + "Only players can execute this command!");
             }
         }
         return true;

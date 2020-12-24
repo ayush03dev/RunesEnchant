@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -303,7 +304,7 @@ public class EnchanterListener implements Listener {
 
     private boolean isDemoItem(ItemStack item) {
         if (item == null || item.getType() == Material.AIR) return true;
-        return item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.ARROW_DAMAGE);
+        return item.hasItemMeta() && item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ENCHANTS) && item.getItemMeta().hasEnchant(Enchantment.ARROW_DAMAGE);
     }
 
     private boolean isGlass(ItemStack item) {

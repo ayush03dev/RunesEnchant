@@ -96,8 +96,12 @@ public class EnchantmentGroup {
         List<EnchantmentData> enchants = new ArrayList<>();
 
         if (!list.isEmpty()) {
-            list.forEach(string ->
-                enchants.add(new EnchantmentData(string)));
+            list.forEach(string -> {
+                EnchantmentData data = new EnchantmentData(string);
+                if (data.getCustomEnchant().isEnabled()) {
+                    enchants.add(new EnchantmentData(string));
+                }
+            });
         }
         return enchants;
     }
