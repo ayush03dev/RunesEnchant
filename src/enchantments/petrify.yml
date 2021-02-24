@@ -2,9 +2,9 @@ enabled: true
 
 description: 'A chance to give slowness effect to your enemy'
 
-display-name: 'Paralyze'
+display-name: 'Petrfiy'
 
-lore-display: '&7Paralyze %level%'
+lore-display: '&7Petrify %level%'
 
 max-level: 3
 

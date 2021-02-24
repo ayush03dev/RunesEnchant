@@ -24,6 +24,8 @@ public class MobDropListener implements Listener {
         if (!(en instanceof Player)) {
             EntityType type = en.getType();
 
+            if (type == EntityType.ARMOR_STAND) return;
+
             FileConfiguration config = RunesEnchant.getInstance().getConfig();
             float chance = (float) config.getDouble("mob-drops.chance");
             if (RuneUtils.getInstance().generateRandomFloat() <= chance) {

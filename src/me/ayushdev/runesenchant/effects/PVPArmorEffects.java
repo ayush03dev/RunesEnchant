@@ -246,8 +246,15 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
                     if (en instanceof Player) {
                         Player player = (Player) en;
 
-                        EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(player, en, EntityDamageEvent.DamageCause.CUSTOM,
-                                new HashMap<>(), new HashMap<>());
+                        EntityDamageByEntityEvent event;
+
+                        if (RunesEnchant.is13()) {
+                            event = new EntityDamageByEntityEvent(p, player, EntityDamageEvent.DamageCause.CUSTOM,
+                                    new HashMap<>(), new HashMap<>());
+                        } else {
+                            event = new EntityDamageByEntityEvent(p, player, EntityDamageEvent.DamageCause.CUSTOM, 0);
+                        }
+
                         Bukkit.getPluginManager().callEvent(event);
                         if (event.isCancelled()) continue;
 

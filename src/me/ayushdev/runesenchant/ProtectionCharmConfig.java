@@ -64,7 +64,9 @@ public class ProtectionCharmConfig {
 
     public int getStartingDurability(int level) {
         String expression = config.getString("durability.expression");
-        expression = expression.replace("%level%", level + "");
+        if (expression != null) {
+            expression = expression.replace("%level%", level + "");
+        }
         int override = config.getInt("durability.level_" + level);
 
         if (override == 0) {
