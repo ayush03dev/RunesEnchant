@@ -1,0 +1,6 @@
+gui:
+  title: '&aRunes Shop'
+
+# Use 'XP' to cost XP points for purchasing enchantments from Shop GUI.
+# Use 'MONEY' to cost money (vault).
+currency: 'XP'

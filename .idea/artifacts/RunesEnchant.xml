@@ -1,8 +1,9 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="RunesEnchant">
-    <output-path>D:/Spigot 1.16/plugins</output-path>
+    <output-path>D:/Tuinity/plugins</output-path>
     <root id="archive" name="RunesEnchant.jar">
       <element id="module-output" name="RunesEnchant" />
+      <element id="library" level="project" name="Maven: com.fathzer:javaluator:3.0.3" />
     </root>
   </artifact>
 </component>
