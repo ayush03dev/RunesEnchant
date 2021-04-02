@@ -249,8 +249,12 @@ public class PVPArmorEffects extends EnchantmentEffect implements Listener {
                         EntityDamageByEntityEvent event;
 
                         if (RunesEnchant.is13()) {
-                            event = new EntityDamageByEntityEvent(p, player, EntityDamageEvent.DamageCause.CUSTOM,
-                                    new HashMap<>(), new HashMap<>());
+                            try {
+                                event = new EntityDamageByEntityEvent(p, player, EntityDamageEvent.DamageCause.CUSTOM,
+                                        new HashMap<>(), new HashMap<>());
+                            } catch (IllegalArgumentException ex) {
+                                event = new EntityDamageByEntityEvent(p, player, EntityDamageEvent.DamageCause.CUSTOM, 0);
+                            }
                         } else {
                             event = new EntityDamageByEntityEvent(p, player, EntityDamageEvent.DamageCause.CUSTOM, 0);
                         }

@@ -5,6 +5,7 @@ import me.ayushdev.runesenchant.commands.*;
 import me.ayushdev.runesenchant.effects.*;
 import me.ayushdev.runesenchant.listeners.*;
 
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,17 +37,25 @@ public class RunesEnchant extends JavaPlugin implements Listener {
     public static Map<Player, EnchantmentGroup> search = new HashMap<>();
 
     public static Economy econ = null;
+    public static boolean vault_init = false;
 
 
     @Override
     public void onEnable() {
         instance = this;
 
-        if (!setupEconomy()) {
-            getServer().getConsoleSender().sendMessage(ChatColor.RED + "Disablind RunesEnchant due to " +
-                    "unavailability of RunesEnchant!");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
+
+        if (setupEconomy()) {
+            vault_init = true;
+//            getServer().getConsoleSender().sendMessage(ChatColor.RED + "Disabling RunesEnchant due to " +
+//                    "unavailability of Vault!");
+//            getServer().getConsoleSender().sendMessage(ChatColor.RED + "Disabling RunesEnchant due to " +
+//                    "unavailability of Vault!");
+//            getServer().getPluginManager().disablePlugin(this);
+//            return;
+        } else {
+            getServer().getConsoleSender().sendMessage(ChatColor.RED + "[RunesEnchant] Either Vault has not been installed on the server," +
+                    " or there is no economy plugin hooked up with Vault.");
         }
 
         getServer().getPluginManager().registerEvents(this, this);
@@ -80,6 +89,11 @@ public class RunesEnchant extends JavaPlugin implements Listener {
 
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         RunesEnchant.version = Integer.parseInt(version.replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));
+//        int test = Integer.parseInt("1_16_R3".replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));
+//
+//        getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RunesEnchant] Version Read: " + version);
+//        getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "[RunesEnchant] Version Read: " + test);
+
 
         Settings.getInstance().setup(this);
         FileManager.getInstance().setup(this);

@@ -56,7 +56,7 @@ public class ShopListener implements Listener {
                             if (FileManager.getInstance().getShopConfig().isSet("currency")) {
                                 FileConfiguration fc = FileManager.getInstance().getShopConfig();
 
-                                if (fc.getString("currency").equalsIgnoreCase("money")) {
+                                if (fc.getString("currency").equalsIgnoreCase("money") && RunesEnchant.vault_init) {
                                     if (RunesEnchant.econ.getBalance(p) < price) {
                                         MessageManager.getInstance().sendMessage(p, Message.NO_MONEY);
                                         return;
